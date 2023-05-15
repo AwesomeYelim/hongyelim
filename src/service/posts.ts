@@ -1,7 +1,7 @@
 import path from "path";
 import { promises as fs } from "fs";
 
-type Post = {
+export type Post = {
   id: number;
   title: string;
   content: string;

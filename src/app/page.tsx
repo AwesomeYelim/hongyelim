@@ -2,7 +2,6 @@ import { getPosts } from "@/service/posts";
 import Image from "next/image";
 import Link from "next/link";
 import main from "../../public/images/main.png";
-import Category from "./components/category";
 
 export default async function Home() {
   const posts = await getPosts();
