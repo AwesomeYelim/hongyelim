@@ -10,22 +10,24 @@ export default function Category({ posts }: { posts: Post[] }) {
   const tag = posts.map((item) => item.tag).filter((item, i, arr) => arr.indexOf(item) === i);
 
   return (
-    <>
-      {["All", ...tag].map((keyword) => {
-        return (
-          <p
-            style={{ cursor: "pointer" }}
-            key={keyword}
-            onClick={() => {
-              const select = posts.filter((el) => el.tag === keyword);
-              setSelected(select);
-              if (keyword === "All") setSelected([...posts]);
-            }}>
-            {keyword}
-          </p>
-        );
-      })}
-      <ul>
+    <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+      <nav>
+        {["All", ...tag].map((keyword) => {
+          return (
+            <p
+              style={{ cursor: "pointer" }}
+              key={keyword}
+              onClick={() => {
+                const select = posts.filter((el) => el.tag === keyword);
+                setSelected(select);
+                if (keyword === "All") setSelected([...posts]);
+              }}>
+              {keyword}
+            </p>
+          );
+        })}
+      </nav>
+      <ul style={{ display: "flex" }}>
         {selected.map(({ id, title, image }) => {
           return (
             <li key={id}>
@@ -37,6 +39,6 @@ export default function Category({ posts }: { posts: Post[] }) {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 }
