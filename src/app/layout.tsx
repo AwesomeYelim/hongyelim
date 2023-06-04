@@ -1,18 +1,28 @@
-import { Inter } from "next/font/google";
+import { Inter, Notable } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
-import "./globals.css";
+import logo from "../../public/images/logo.svg";
+import "./reset.scss";
 
 const inter = Inter({ subsets: ["latin"] });
+const notable = Notable({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
   title: "ylblog",
   description: "this is yelim blog :)",
+  icons: {
+    shortcut: "/images/favicon.png",
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" style={{ height: "100%" }}>
+    <html lang="ko" style={{ height: "100%" }}>
       <body className={inter.className}>
         <div style={{ position: "relative" }}>
           <div
@@ -24,20 +34,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               position: "fixed",
               top: 0,
               backgroundColor: "#D6D6D6",
-            }}>
+            }}
+          >
             <Link href="/" style={{ fontWeight: 650, fontSize: "1.5rem" }}>
-              AwesomeYelim
+              <Image src={logo} alt="logo" width={20} height={10} priority />
             </Link>
 
-            <nav style={{ display: "flex", gap: 10, alignItems: "center" }}>
+           
+          </div>
+
+          <div style={{ marginTop: 200, padding: 20 }}>{children}</div>
+          <nav
+              className={notable.className}
+              style={{ display: "flex", gap: 10, alignItems: "center" }}
+            >
               <Link href="/">Home</Link>
               <Link href="/about">About</Link>
               <Link href="/posts">Post</Link>
               <Link href="/contact">Contact</Link>
             </nav>
-          </div>
-
-          <div style={{ marginTop: 200, padding: 20 }}>{children}</div>
         </div>
       </body>
     </html>
