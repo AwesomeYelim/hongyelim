@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import Head from "next/head";
@@ -24,7 +25,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               position: "fixed",
               top: 0,
               backgroundColor: "#D6D6D6",
-            }}>
+            }}
+            className={classNames()}>
             <Link href="/" style={{ fontWeight: 650, fontSize: "1.5rem" }}>
               AwesomeYelim
             </Link>
