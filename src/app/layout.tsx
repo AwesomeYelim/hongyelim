@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" style={{ height: "100%" }}>
+    <html lang="ko">
       <body className={inter.className}>
         <div style={{ position: "relative" }}>
           <div
@@ -30,29 +30,29 @@ export default function RootLayout({
               width: "100%",
               padding: "15px 20px",
               display: "flex",
-              justifyContent: "space-between",
               position: "fixed",
               top: 0,
-              backgroundColor: "#D6D6D6",
             }}
           >
             <Link href="/" style={{ fontWeight: 650, fontSize: "1.5rem" }}>
-              <Image src={logo} alt="logo" width={20} height={10} priority />
+              <Image src={logo} alt="logo" width={100} height={50} priority />
             </Link>
-
-           
           </div>
 
           <div style={{ marginTop: 200, padding: 20 }}>{children}</div>
           <nav
-              className={notable.className}
-              style={{ display: "flex", gap: 10, alignItems: "center" }}
-            >
-              <Link href="/">Home</Link>
-              <Link href="/about">About</Link>
-              <Link href="/posts">Post</Link>
-              <Link href="/contact">Contact</Link>
-            </nav>
+            className={notable.className}
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: 10,
+              alignItems: "center",
+            }}
+          >
+            <Link href="/about">Profile</Link>
+            <Link href="/posts">Tech blog</Link>
+            <Link href="/contact">Contact</Link>
+          </nav>
         </div>
       </body>
     </html>
