@@ -16,11 +16,7 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <body className={inter.className}>
@@ -32,8 +28,7 @@ export default function RootLayout({
               display: "flex",
               position: "fixed",
               top: 0,
-            }}
-          >
+            }}>
             <Link href="/" style={{ fontWeight: 650, fontSize: "1.5rem" }}>
               <Image src={logo} alt="logo" width={100} height={50} priority />
             </Link>
