@@ -16,25 +16,20 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <div style={{ width: 768, margin: "0 auto" }}>
+        <div style={{ width: 768, margin: "5rem auto 0px;" }}>
           <div
             style={{
               padding: 15,
               display: "flex",
               position: "fixed",
               top: 0,
-            }}
-          >
+            }}>
             <Link href="/" style={{ fontWeight: 650, fontSize: "1.5rem" }}>
-              <Image src={logo} alt="logo" width={100} height={50} priority />
+              <Image src={logo} alt="logo" width={50} height={50} priority />
             </Link>
           </div>
 
@@ -48,8 +43,7 @@ export default function RootLayout({
               display: "flex",
               justifyContent: "space-between",
               padding: 30,
-            }}
-          >
+            }}>
             <Link href="/about">Profile</Link>
             <Link href="/posts">Tech blog</Link>
             <Link href="/contact">Contact</Link>

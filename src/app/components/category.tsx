@@ -13,19 +13,7 @@ export default function Category({ posts }: { posts: Post[] }) {
   const submitHandler = async (e: any) => {
     e.preventDefault();
     const name = e.target.name.value;
-    // try {
-    //   await fetch("/api/contact", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       name,
-    //     }),
-    //   }).then((result) => console.log(result));
-    // } catch (err) {
-    //   return console.log(err);
-    // }
+
     await axios
       .post(
         "/api/contact",
@@ -41,23 +29,11 @@ export default function Category({ posts }: { posts: Post[] }) {
       .then((res) => {
         console.log(res);
       });
-    // await fetch(`/api/contact`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name,
-    //   }),
-    // }).then((result) => console.log(result));
-    // const result = await res.json();
-
-    // console.log(res, result);
   };
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-        <nav>
+      <div style={{ width: "inherit", display: "flex", flexDirection: "row-reverse" }}>
+        <nav style={{ position: "fixed", right: 500, borderLeft: "3px solid grey", paddingLeft: 10 }}>
           {["All", ...tag].map((keyword) => {
             return (
               <p
@@ -73,20 +49,22 @@ export default function Category({ posts }: { posts: Post[] }) {
             );
           })}
         </nav>
-        <ul style={{ display: "flex", gap: 30 }}>
+        <ul style={{ display: "flex", flexWrap: "wrap", gap: 30 }}>
           {selected.map(({ id, title, image }) => {
             return (
               <li key={id}>
-                <Link href={`/posts/${title}`}>
-                  {title}
+                <Link
+                  href={`/posts/${title}`}
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                   <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
+                  {title}
                 </Link>
               </li>
             );
           })}
         </ul>
       </div>
-      <form
+      {/* <form
         style={{ display: "flex", flexDirection: "column", backgroundColor: "gray", width: 500 }}
         onSubmit={submitHandler}>
         <label htmlFor="name" className="mb-2 italic">
@@ -99,7 +77,7 @@ export default function Category({ posts }: { posts: Post[] }) {
           style={{ backgroundColor: "white", border: "solid 1px black" }}>
           전송
         </button>
-      </form>
+      </form> */}
     </>
   );
 }

@@ -18,13 +18,13 @@ export default async function Home() {
       <Image style={{ borderRadius: "100%" }} src={main} alt="main yelim" width={300} height={300} priority />
       <p>Hi there! this is yelim, I am frontEnd Developer</p>
 
-      <ul style={{ display: "flex", gap: 40, width: '100%', flexWrap :'wrap', padding: 30 }}>
+      <ul style={{ display: "flex", gap: 10, flexWrap: "wrap", padding: 30 }}>
         {posts.map(({ id, title, image }) => {
           return (
-            <li key={id} style={{height : 200, overflow : 'hidden'}}>
+            <li key={id} style={{ height: 200, overflow: "hidden" }}>
               <Link href={`/posts/${title}`}>
                 {title}
-                <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
+                <Image src={`/images/${image}.png`} alt={image} width={100} height={100} />
               </Link>
             </li>
           );
