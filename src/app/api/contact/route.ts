@@ -6,7 +6,7 @@ export async function POST(request: Request, response: Response) {
   // const posts = await getPosts();
   console.log(data);
 
-  return NextResponse.json({ message: "" });
+  return NextResponse.json({ message: "성공쓰~" });
 }
 
 // export const POST = async (req: Request, res: Response) => {

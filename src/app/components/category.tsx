@@ -44,19 +44,26 @@ export default function Category({ posts }: { posts: Post[] }) {
           flexDirection: "row-reverse",
         }}
       >
-        <ul style={{ display: "flex", flexWrap: "wrap", justifyContent: 'space-between', gap: 30 }}>
+        <ul
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            gap: 30,
+          }}
+        >
           {selected.map(({ id, title, image }) => {
             return (
-              <li key={id}>
-                <Link
-                  href={`/posts/${title}`}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 30
-                  }}
-                >
+              <li
+                key={id}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 30,
+                }}
+              >
+                <Link href={`/posts/${title}`}>
                   <Image
                     src={`/images/${image}.png`}
                     alt={image}
@@ -65,13 +72,12 @@ export default function Category({ posts }: { posts: Post[] }) {
                   />
                   {title}
                 </Link>
-                <Heart/>
+                <Heart />
               </li>
             );
           })}
         </ul>
       </div>
-     
     </>
   );
 }
