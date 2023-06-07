@@ -14,17 +14,41 @@ export default async function Home() {
         flexDirection: "column",
         alignItems: "center",
         gap: 50,
-      }}>
-      <Image style={{ borderRadius: "100%" }} src={main} alt="main yelim" width={300} height={300} priority />
+      }}
+    >
+      <Image
+        style={{ borderRadius: "100%" }}
+        src={main}
+        alt="main yelim"
+        width={300}
+        height={300}
+        priority
+      />
       <p>Hi there! this is yelim, I am frontEnd Developer</p>
 
       <ul style={{ display: "flex", gap: 10, flexWrap: "wrap", padding: 30 }}>
         {posts.map(({ id, title, image }) => {
           return (
-            <li key={id} style={{ height: 200, overflow: "hidden" }}>
-              <Link href={`/posts/${title}`}>
+            <li
+              key={id}
+              style={{  overflow: "hidden" }}
+            >
+              <Link
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 20,
+                }}
+                href={`/posts/${title}`}
+              >
+                <Image
+                  src={`/images/${image}.png`}
+                  alt={image}
+                  width={200}
+                  height={200}
+                />
                 {title}
-                <Image src={`/images/${image}.png`} alt={image} width={100} height={100} />
               </Link>
             </li>
           );
