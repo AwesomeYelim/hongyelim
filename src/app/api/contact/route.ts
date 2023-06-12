@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request, response: Response) {
   const data = await request.json();
-  // const posts = await getPosts();
-  console.log(data);
+  const posts = await getPosts();
 
   return NextResponse.json({ message: "성공쓰~" });
 }

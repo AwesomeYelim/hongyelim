@@ -4,19 +4,21 @@ import axios from "axios";
 import { Post } from "@/service/posts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import "./heart.scss";
 
-export default function Heart() {
+export default function Heart({ id }: { id: number }) {
   /** tag 별 category 생성  */
   const inputStyle = { backgroundColor: "black", color: "white", margin: 10 };
   const submitHandler = async (e: any) => {
     e.preventDefault();
+
     // const name = e.target.name.value;
 
     await axios
       .post(
         "/api/contact",
         JSON.stringify({
-          name: 99,
+          id,
         }),
         {
           headers: {
@@ -28,8 +30,10 @@ export default function Heart() {
         console.log(res);
       });
   };
+
   return (
     <button onClick={submitHandler}>
+      {/* <i className="heart" /> */}
       <FontAwesomeIcon icon={faHeart} />
     </button>
     // <form

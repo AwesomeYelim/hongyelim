@@ -7,6 +7,7 @@ export type Post = {
   content: string;
   image: string;
   tag: string;
+  like: number;
 };
 
 export async function getPosts(): Promise<Post[]> {

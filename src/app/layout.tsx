@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 import logo from "../../public/images/logo.svg";
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 import "./reset.scss";
 
 const inter = Inter({ subsets: ["latin"] });

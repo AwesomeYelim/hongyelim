@@ -49,7 +49,7 @@ export default function Category({ posts }: { posts: Post[] }) {
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "space-between",
-            gap: 30,
+            gap: 20,
           }}
         >
           {selected.map(({ id, title, image }) => {
@@ -72,7 +72,7 @@ export default function Category({ posts }: { posts: Post[] }) {
                   />
                   {title}
                 </Link>
-                <Heart />
+                <Heart id={id} />
               </li>
             );
           })}
