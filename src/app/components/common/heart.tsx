@@ -28,6 +28,7 @@ export default function Heart({ id }: { id: number }) {
       )
       .then((res) => {
         console.log(res);
+        location.reload();
       });
   };
 

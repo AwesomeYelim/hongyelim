@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Post } from "@/service/posts";
@@ -8,9 +8,7 @@ import Heart from "./common/heart";
 export default function Category({ posts }: { posts: Post[] }) {
   const [selected, setSelected] = useState<Post[]>(posts);
   /** tag 별 category 생성  */
-  const tag = posts
-    .map((item) => item.tag)
-    .filter((item, i, arr) => arr.indexOf(item) === i);
+  const tag = posts.map((item) => item.tag).filter((item, i, arr) => arr.indexOf(item) === i);
 
   return (
     <>
@@ -19,8 +17,7 @@ export default function Category({ posts }: { posts: Post[] }) {
           position: "fixed",
           borderLeft: "3px solid grey",
           paddingLeft: 10,
-        }}
-      >
+        }}>
         {["All", ...tag].map((keyword) => {
           return (
             <p
@@ -30,8 +27,7 @@ export default function Category({ posts }: { posts: Post[] }) {
                 const select = posts.filter((el) => el.tag === keyword);
                 setSelected(select);
                 if (keyword === "All") setSelected([...posts]);
-              }}
-            >
+              }}>
               {keyword}
             </p>
           );
@@ -42,17 +38,15 @@ export default function Category({ posts }: { posts: Post[] }) {
           width: "inherit",
           display: "flex",
           flexDirection: "row-reverse",
-        }}
-      >
+        }}>
         <ul
           style={{
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "space-between",
             gap: 20,
-          }}
-        >
-          {selected.map(({ id, title, image }) => {
+          }}>
+          {selected.map(({ id, title, image, like }) => {
             return (
               <li
                 key={id}
@@ -61,17 +55,12 @@ export default function Category({ posts }: { posts: Post[] }) {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 30,
-                }}
-              >
+                }}>
                 <Link href={`/posts/${title}`}>
-                  <Image
-                    src={`/images/${image}.png`}
-                    alt={image}
-                    width={300}
-                    height={300}
-                  />
+                  <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
                   {title}
                 </Link>
+                {like}
                 <Heart id={id} />
               </li>
             );
