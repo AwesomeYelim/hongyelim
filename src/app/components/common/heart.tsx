@@ -37,27 +37,5 @@ export default function Heart({ id }: { id: number }) {
       {/* <i className="heart" /> */}
       <FontAwesomeIcon icon={faHeart} />
     </button>
-    // <form
-    //   style={{
-    //     display: "flex",
-    //     flexDirection: "column",
-    //     backgroundColor: "gray",
-    //     width: 500,
-    //   }}
-
-    // >
-    //   <label htmlFor="name" className="mb-2 italic">
-    //     Name
-    //   </label>
-    //   <input
-    //     type="text"
-
-    //     required
-    //   />
-    //   <button type="submit">
-    // <FontAwesomeIcon icon={faHeart} />
-
-    //   </button>
-    // </form>
   );
 }
