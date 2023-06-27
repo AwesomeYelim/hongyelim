@@ -11,17 +11,11 @@ export default function Category({ posts }: { posts: Post[] }) {
   const tag = posts.map((item) => item.tag).filter((item, i, arr) => arr.indexOf(item) === i);
 
   return (
-    <>
-      <nav
-        style={{
-          position: "fixed",
-          borderLeft: "3px solid grey",
-          paddingLeft: 10,
-        }}>
+    <div className="posts_wrapper">
+      <nav className="category">
         {["All", ...tag].map((keyword) => {
           return (
             <p
-              style={{ cursor: "pointer" }}
               key={keyword}
               onClick={() => {
                 const select = posts.filter((el) => el.tag === keyword);
@@ -33,40 +27,24 @@ export default function Category({ posts }: { posts: Post[] }) {
           );
         })}
       </nav>
-      <div
-        style={{
-          width: "inherit",
-          display: "flex",
-          flexDirection: "row-reverse",
-        }}>
-        <ul
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            gap: 20,
-          }}>
+      <div className="list_wrapper">
+        <ul className="list">
           {selected.map(({ id, title, image, like }) => {
             return (
-              <li
-                key={id}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 30,
-                }}>
+              <li key={id}>
                 <Link href={`/posts/${title}`}>
                   <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
                   {title}
+                  <div className="like_wrap">
+                    <span className="like">{like}</span>
+                    <Heart id={id} />
+                  </div>
                 </Link>
-                {like}
-                <Heart id={id} />
               </li>
             );
           })}
         </ul>
       </div>
-    </>
+    </div>
   );
 }

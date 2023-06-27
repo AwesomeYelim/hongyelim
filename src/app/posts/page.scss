@@ -1,0 +1,48 @@
+.techpost_page {
+  position: relative;
+  .title {
+    display: block;
+    font-size: 40px;
+    margin-bottom: 100px;
+    color: rgb(187, 187, 187);
+  }
+  .posts_wrapper {
+    .category {
+      position: absolute;
+      border-left: 3px solid grey;
+      padding-left: 10px;
+      right: -130px;
+      box-sizing: border-box;
+      p {
+        cursor: pointer;
+        margin-bottom: 5px;
+        font-size: 15px;
+        letter-spacing: 2px;
+      }
+    }
+
+    .list_wrapper {
+      width: inherit;
+      display: flex;
+      flex-direction: row-reverse;
+      .list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        li {
+          a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            .like_wrap {
+              display: flex;
+              justify-content: flex-end;
+            }
+          }
+        }
+      }
+    }
+  }
+}

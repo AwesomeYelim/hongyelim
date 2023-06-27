@@ -1,0 +1,25 @@
+.wrapper {
+  width: 768px;
+  margin: 5rem auto 0px;
+
+  .logo {
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    z-index: 99;
+  }
+
+  .content {
+    margin-top: 120px;
+    padding: 20px;
+  }
+
+  .__className_e8225d {
+    width: inherit;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+  }
+}
