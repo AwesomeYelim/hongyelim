@@ -25,12 +25,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="logo">
             <Image src={logo} alt="logo" width={50} height={50} priority />
           </Link>
-          <div className="content">{children}</div>
           <nav className={notable.className}>
             <Link href="/about">Profile</Link>
-            <Link href="/posts">Tech blog</Link>
+            <Link href="/posts">TechLog</Link>
             <Link href="/contact">Contact</Link>
           </nav>
+          <div className="content">{children}</div>
         </div>
       </body>
     </html>

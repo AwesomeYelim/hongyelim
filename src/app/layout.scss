@@ -1,5 +1,5 @@
 .wrapper {
-  width: 768px;
+  width: 1024px;
   margin: 5rem auto 0px;
 
   .logo {
@@ -14,12 +14,17 @@
     padding: 20px;
   }
 
-  .__className_e8225d {
+  > nav {
     width: inherit;
     position: fixed;
-    bottom: 0;
+    top: 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 30px;
     padding: 30px;
+    > a {
+      color: #565656;
+      font-weight: 700;
+    }
   }
 }
