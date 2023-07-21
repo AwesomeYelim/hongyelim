@@ -1,4 +1,4 @@
-import { MdfileViewer } from "@/app/posts/[slug]/MdfileViewer";
+import { MdfileViewer } from "@/app/components/common/MdfileViewer";
 import { getPost } from "@/service/posts";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -21,7 +21,7 @@ export default async function page({ params: { slug } }: Props) {
       <h1>{title}`s Detail Page</h1>
       <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
       <p>{content}</p>
-      <MdfileViewer post="asdasda" />
+      <MdfileViewer post={title} />
     </>
   );
 }
