@@ -17,7 +17,7 @@ export default async function Home() {
           return (
             <li key={id}>
               <Link href={`/posts/${title}`}>
-                <Image src={`/images/${image}.png`} alt={image} width={200} height={200} />
+                {/* <Image src={`/images/${image}.png`} alt={image} width={200} height={200} /> */}
                 {title}
               </Link>
             </li>

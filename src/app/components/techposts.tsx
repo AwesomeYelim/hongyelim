@@ -33,12 +33,9 @@ export default function Category({ posts }: { posts: Post[] }) {
             return (
               <li key={id}>
                 <Link href={`/posts/${title}`}>
-                  <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
+                  {/* <Image src={`/images/${image}.png`} alt={image} width={300} height={300} /> */}
                   {title}
-                  <div className="like_wrap">
-                    <span className="like">{like}</span>
-                    <Heart id={id} />
-                  </div>
+                  <Heart id={id} like={like} />
                 </Link>
               </li>
             );

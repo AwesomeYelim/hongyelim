@@ -16,7 +16,11 @@ export async function getPosts(): Promise<Post[]> {
   return JSON.parse(data);
 }
 
-export async function getPost(id: string): Promise<Post | undefined> {
+export async function getPost(title: string): Promise<{ post?: Post; mdPost: string }> {
+  const mdPath = path.join(process.cwd(), "data/md", `${title}.md`);
+  const mdPost = await fs.readFile(mdPath, "utf-8");
   const posts = await getPosts();
-  return posts.find((item: Post) => item.title === id);
+  const post = posts.find((item: Post) => item.title === title);
+
+  return { post, mdPost };
 }

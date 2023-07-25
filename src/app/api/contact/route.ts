@@ -24,6 +24,12 @@ export async function POST(req: Request, res: Response) {
   fs.writeFile(filePath, JSON.stringify(posts, null, 3), (err) => {
     NextResponse.json({ message: err });
   });
+  const target = posts.find((item) => {
+    return item.id === data.id;
+  });
 
-  return NextResponse.json({ message: "성공쓰~" });
+  return NextResponse.json({
+    message: "성공쓰~",
+    res: posts,
+  });
 }

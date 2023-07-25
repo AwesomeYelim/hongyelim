@@ -1,63 +1,59 @@
 // 맑은고딕
 @mixin fontM {
-    font-family: 'MalgunGothic', sans-serif !important;
-    font-variant-ligatures: normal;
-    font-variant-caps: normal;
-    font-variant-numeric: normal;
-    font-variant-east-asian: normal;
-    font-stretch: normal;
-  }
-  // 기본 폰트
-  @mixin fontP {
-    font-family: 'Pretendard', 'MalgunGothic', sans-serif !important;
-    font-variant-ligatures: normal;
-    font-variant-caps: normal;
-    font-variant-numeric: normal;
-    font-variant-east-asian: normal;
-    font-stretch: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  // transition
-  @mixin transition($time, $target) {
-    transition: ease-in $target $time;
-    will-change: $target;
-  }
-  
-  // display flex
-  @mixin flex($align, $justify) {
-    display: flex;
-    align-items: $align;
-    justify-content: $justify;
-  }
-  
-  // 메티아이 메인칼라
-  $mainColor: #2680a2;
-  
-  // 이미지 경로
-  $imgsrc: '/public/images/image.svg';
-  
-  // 말줄임표
-  @mixin ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: block;
-  }
-  
-  // 세로로 자를때
-  @mixin vertical-ellipsis {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    white-space: normal;
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-  }
-  
-  // 함부로 쓰지말것. 폰트가 깨져보일때만 쓰기.
-  @mixin anti-alias {
-    transform: rotate(-0.03deg);
-  }
-  
+  font-family: "MalgunGothic", sans-serif !important;
+  font-variant-ligatures: normal;
+  font-variant-caps: normal;
+  font-variant-numeric: normal;
+  font-variant-east-asian: normal;
+  font-stretch: normal;
+}
+// 기본 폰트
+@mixin fontP {
+  font-family: "Pretendard", "MalgunGothic", sans-serif !important;
+  font-variant-ligatures: normal;
+  font-variant-caps: normal;
+  font-variant-numeric: normal;
+  font-variant-east-asian: normal;
+  font-stretch: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// transition
+@mixin transition($time, $target) {
+  transition: ease-in $target $time;
+  will-change: $target;
+}
+
+// display flex
+@mixin flex($align, $justify) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+// 이미지 경로
+$imgsrc: "/public/images/image.svg";
+
+// 말줄임표
+@mixin ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+// 세로로 자를때
+@mixin vertical-ellipsis {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+}
+
+// 함부로 쓰지말것. 폰트가 깨져보일때만 쓰기.
+@mixin anti-alias {
+  transform: rotate(-0.03deg);
+}

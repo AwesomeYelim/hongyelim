@@ -1,7 +1,26 @@
-@import '/src/app/components/common/scss/utils.scss';
+@import "/src/app/components/common/scss/utils.scss";
 
-.heart{
-    background: url($imgsrc) no-repeat -3px -4px;
-	width: 27px;
-	height: 24px;
+.heart {
+  width: 10px;
+  height: 10px;
+  background: #ea2027;
+  position: relative;
+  transform: rotate(45deg);
+}
+.heart::before,
+.heart::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  border-radius: 50%;
+  background: #ea2027;
+}
+.heart::before {
+  left: -50%;
+  right: 0;
+}
+.heart::after {
+  top: -50%;
+  right: 0;
 }

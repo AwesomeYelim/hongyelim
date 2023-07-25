@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default async function page({ params: { slug } }: Props) {
-  const post = await getPost(slug);
+  const { post, mdPost } = await getPost(slug);
   if (!post) {
     notFound();
   }
@@ -21,7 +21,7 @@ export default async function page({ params: { slug } }: Props) {
       <h1>{title}`s Detail Page</h1>
       <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
       <p>{content}</p>
-      <MdfileViewer post={title} />
+      <MdfileViewer post={mdPost} />
     </>
   );
 }

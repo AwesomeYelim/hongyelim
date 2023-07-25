@@ -7,7 +7,7 @@ import "./reset.scss";
 import "./layout.scss";
 
 const inter = Inter({ subsets: ["latin"] });
-const notable = Notable({ subsets: ["latin"], weight: "400" });
+// const notable = Notable({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
   title: "ylblog",
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="logo">
             <Image src={logo} alt="logo" width={50} height={50} priority />
           </Link>
-          <nav className={notable.className}>
+          <nav>
             <Link href="/about">Profile</Link>
             <Link href="/posts">TechLog</Link>
             <Link href="/contact">Contact</Link>
