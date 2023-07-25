@@ -8,7 +8,9 @@ import Heart from "./common/heart";
 export default function Category({ posts }: { posts: Post[] }) {
   const [selected, setSelected] = useState<Post[]>(posts);
   /** tag 별 category 생성  */
-  const tag = posts.map((item) => item.tag).filter((item, i, arr) => arr.indexOf(item) === i);
+  const tag = posts
+    .map((item) => item.tag)
+    .filter((item, i, arr) => arr.indexOf(item) === i);
 
   return (
     <div className="posts_wrapper">
@@ -21,7 +23,8 @@ export default function Category({ posts }: { posts: Post[] }) {
                 const select = posts.filter((el) => el.tag === keyword);
                 setSelected(select);
                 if (keyword === "All") setSelected([...posts]);
-              }}>
+              }}
+            >
               {keyword}
             </p>
           );
@@ -33,9 +36,12 @@ export default function Category({ posts }: { posts: Post[] }) {
             return (
               <li key={id}>
                 <Link href={`/posts/${title}`}>
-                  {/* <Image src={`/images/${image}.png`} alt={image} width={300} height={300} /> */}
+                  <Image src={`/images/${image}.png`} alt={image} width={200} height={200} />
                   {title}
-                  <Heart id={id} like={like} />
+                  <div className="like_wrap">
+                    <span className="like">{like}</span>
+                    <i className="heart" />
+                  </div>
                 </Link>
               </li>
             );

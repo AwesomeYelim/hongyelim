@@ -1,4 +1,5 @@
 import { MdfileViewer } from "@/app/components/common/MdfileViewer";
+import Heart from "@/app/components/common/heart";
 import { getPost } from "@/service/posts";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -14,7 +15,7 @@ export default async function page({ params: { slug } }: Props) {
   if (!post) {
     notFound();
   }
-  const { title, image, content } = post;
+  const { title, image, content, id,like } = post;
 
   return (
     <>
@@ -22,6 +23,7 @@ export default async function page({ params: { slug } }: Props) {
       <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
       <p>{content}</p>
       <MdfileViewer post={mdPost} />
+      <Heart id={id} like={like} />
     </>
   );
 }
