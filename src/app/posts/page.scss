@@ -40,40 +40,47 @@
             display: flex;
             align-items: center;
             width: inherit;
-            height: 50px;
+            height: 80px;
             box-sizing: border-box;
             margin-bottom: 30px;
             padding: 30px;
             background-color: aliceblue;
             border-bottom: 2px solid transparent;
             transition: 0.3s linear;
-            gap: 100px;
+            justify-content: space-between;
 
-            > h4 {
-              width: 100px;
-              line-height: 60px;
+            .text_wrapper {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
               &::after {
                 content: "";
                 position: absolute;
                 left: 0;
+                line-height: 100px;
                 display: block;
                 width: 0px;
-                height: 1px;
-                background-color: rgb(65, 108, 173);
+                height: 50px;
+                background-color: rgba(255, 255, 255, 0.822);
                 transition: 0.3s linear;
+                z-index: 5;
               }
-            }
-            &:hover {
-              > h4 {
-                &::after {
-                  width: 100%;
-                }
+
+              > span,
+              h4 {
+                z-index: 99;
+              }
+              span {
+                font-size: 13px;
               }
             }
 
-            > span {
-              width: 600px;
-              font-size: 13px;
+            &:hover {
+              .text_wrapper {
+                &::after {
+                  width: 20%;
+                }
+              }
             }
             // img {
             //   justify-content: flex-start;

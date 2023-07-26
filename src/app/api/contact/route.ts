@@ -34,5 +34,3 @@ export async function POST(req: Request, res: Response) {
     res: posts,
   });
 }
-
-export async function GET() {}
