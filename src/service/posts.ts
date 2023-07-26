@@ -7,7 +7,8 @@ export type Post = {
   content: string;
   image: string;
   tag: string;
-  like: number;
+  like: boolean;
+  like_count: number;
 };
 
 export async function getPosts(): Promise<Post[]> {
@@ -17,6 +18,10 @@ export async function getPosts(): Promise<Post[]> {
 }
 
 export async function getPost(title: string): Promise<{ post?: Post; mdPost: string }> {
+  // const { v4 } = require("uuid");
+  // const uuid = v4();
+  // console.log(uuid);
+
   const mdPath = path.join(process.cwd(), "data/md", `${title}.md`);
   const mdPost = await fs.readFile(mdPath, "utf-8");
   const posts = await getPosts();

@@ -15,15 +15,15 @@ export default async function page({ params: { slug } }: Props) {
   if (!post) {
     notFound();
   }
-  const { title, image, content, id,like } = post;
+  const { title, image, content } = post;
 
   return (
     <>
       <h1>{title}`s Detail Page</h1>
-      <Image src={`/images/${image}.png`} alt={image} width={300} height={300} />
+      <Image src={`/images/${image}.png`} alt={image} width={500} height={200} />
       <p>{content}</p>
-      <MdfileViewer post={mdPost} />
-      <Heart id={id} like={like} />
+      <MdfileViewer mdPost={mdPost} />
+      <Heart {...post} />
     </>
   );
 }

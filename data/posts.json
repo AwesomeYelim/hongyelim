@@ -4,47 +4,53 @@
       "title": "deepdive",
       "content": "deepdive content",
       "image": "deepdive",
-      "tag": "study",
-      "like": 2
+      "tag": "javascript",
+      "like": true,
+      "like_count": 1
    },
    {
       "id": 2,
       "title": "typescript",
       "content": "typescript content",
       "image": "thinking",
-      "tag": "study",
-      "like": 2
+      "tag": "typescript",
+      "like": true,
+      "like_count": 1
    },
    {
       "id": 3,
       "title": "nextjs",
       "content": "Nextjs content",
       "image": "tuttle",
-      "tag": "study",
-      "like": 3
+      "tag": "nextjs",
+      "like": true,
+      "like_count": 1
    },
    {
       "id": 4,
       "title": "regex",
       "content": "regex content",
       "image": "zingzing",
-      "tag": "study",
-      "like": 3
+      "tag": "regex",
+      "like": true,
+      "like_count": 1
    },
    {
       "id": 5,
       "title": "axiostype",
       "content": "axiostype content",
       "image": "ball",
-      "tag": "enjoy",
-      "like": 4
+      "tag": "typescript",
+      "like": true,
+      "like_count": 1
    },
    {
       "id": 6,
       "title": "nodejs",
       "content": "nodejs memories",
       "image": "star",
-      "tag": "memory",
-      "like": 6
+      "tag": "nodejs",
+      "like": true,
+      "like_count": 1
    }
 ]

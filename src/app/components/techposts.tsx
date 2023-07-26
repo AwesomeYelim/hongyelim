@@ -1,15 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Post } from "@/service/posts";
+import classNames from "classnames";
 
-export default function Category({ posts }: { posts: Post[] }) {
-  const [selected, setSelected] = useState<Post[]>(posts);
+export default function Techlog({ posts }: { posts: Post[] }) {
+  const [selected, setSelected] = useState<{ keyword: string; posts: Post[] }>({ keyword: "All", posts: [...posts] });
   /** tag 별 category 생성  */
-  const tag = posts
-    .map((item) => item.tag)
-    .filter((item, i, arr) => arr.indexOf(item) === i);
+  const tag = posts.map((item) => item.tag).filter((item, i, arr) => arr.indexOf(item) === i);
 
   return (
     <div className="posts_wrapper">
@@ -18,12 +16,14 @@ export default function Category({ posts }: { posts: Post[] }) {
           return (
             <p
               key={keyword}
-              onClick={() => {
+              className={classNames({ active: keyword === selected.keyword })}
+              onClick={(e) => {
                 const select = posts.filter((el) => el.tag === keyword);
-                setSelected(select);
-                if (keyword === "All") setSelected([...posts]);
-              }}
-            >
+
+                setSelected({ keyword: e.currentTarget.innerText, posts: select });
+
+                if (keyword === "All") setSelected({ keyword: "All", posts: [...posts] });
+              }}>
               {keyword}
             </p>
           );
@@ -31,26 +31,22 @@ export default function Category({ posts }: { posts: Post[] }) {
       </nav>
       <div className="list_wrapper">
         <ul className="list">
-          {selected.map(({ id, title, image, like }) => {
-            return (
-              <li key={id}>
-                <Link href={`/posts/${title}`}>
-                  <Image
-                    src={`/images/${image}.png`}
-                    alt={image}
-                    width={200}
-                    height={200}
-                  />
-                  {title}
-                </Link>
-
-                  <div className="like_wrap">
-                    <span className="like">{like}</span>
-                    <i className="static_heart" />
-                  </div>
-              </li>
-            );
-          })}
+          {selected &&
+            selected.posts.map(({ id, title, image, like, like_count, content }) => {
+              return (
+                <li key={id}>
+                  <Link href={`/posts/${title}`}>
+                    <h4>{title}</h4>
+                    <span>{content}</span>
+                    {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
+                    <div className="like_wrap">
+                      <span className="like">{like_count}</span>
+                      <i className="static_heart" />
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
         </ul>
       </div>
     </div>

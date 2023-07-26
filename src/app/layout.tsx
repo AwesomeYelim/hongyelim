@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 import logo from "../../public/images/logo.svg";
+import NavBar from "./components/NavBar";
 import "./reset.scss";
 import "./layout.scss";
 
@@ -25,11 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="logo">
             <Image src={logo} alt="logo" width={50} height={50} priority />
           </Link>
-          <nav>
-            <Link href="/about">Profile</Link>
-            <Link href="/posts">TechLog</Link>
-            <Link href="/contact">Contact</Link>
-          </nav>
+          <div className="nav_wrapper">
+            <NavBar />
+          </div>
+
           <div className="content">{children}</div>
         </div>
       </body>

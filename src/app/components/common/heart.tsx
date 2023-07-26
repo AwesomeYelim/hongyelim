@@ -1,21 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Post } from "@/service/posts";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { getPost, Post } from "@/service/posts";
+import classNames from "classnames";
 import "./heart.scss";
 
-export default function Heart({ id, like }: { id: number; like: number }) {
-  const [data, setdata] = useState({
-    id,
-    like,
-  });
+export default function Heart(props: Post) {
+  const { id, like, like_count, title } = props;
+  const [heartNum, setHeartNum] = useState({ like, like_count });
 
-  /** tag 별 category 생성  */
   const submitHandler = async (e: any) => {
     e.preventDefault();
-
     await axios
       .post(
         "/api/contact",
@@ -29,32 +24,22 @@ export default function Heart({ id, like }: { id: number; like: number }) {
         }
       )
       .then((res) => {
-        console.log(res.data);
-        const resdata = res.data.map((el: any) => {
-          return {
-            id: el.id,
-            like: el.like,
-          };
+        const target = res.data.res.find((el: Post) => el.title === title);
+        setHeartNum({
+          like: target.like,
+          like_count: target.like_count,
         });
-        setdata(resdata);
-        console.log(resdata, data);
-
-        // location.reload();
       });
   };
 
-  // useEffect(() => {
-  //   setdata({ id, like });
-  //   console.log(data);
-  // }, [data.like]);
-
   return (
-    <div className="heart_wrap">
-      <span className="like">{data.like}</span>
-      <button onClick={submitHandler}>
-        <i className="heart" />
-        {/* <FontAwesomeIcon icon={faHeart} /> */}
-      </button>
+    <div className="side_area">
+      <div className="heart_wrap">
+        <button onClick={submitHandler}>
+          <i className={classNames("heart", { active: heartNum.like })} />
+        </button>
+        <span className="like">{heartNum.like_count}</span>
+      </div>
     </div>
   );
 }

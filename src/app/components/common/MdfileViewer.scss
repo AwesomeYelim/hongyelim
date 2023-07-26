@@ -1,0 +1,27 @@
+.md_wrapper {
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 30px 0;
+  }
+  ul {
+    // margin: 50px 0;
+    li {
+      margin: 20px 0;
+    }
+  }
+
+  p {
+    margin: 20px 0;
+  }
+  table {
+    margin: 30px 0;
+    tr {
+      &:first-child {
+        background-color: aliceblue;
+        border-bottom: 1px solid navy;
+      }
+    }
+  }
+}

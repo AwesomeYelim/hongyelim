@@ -15,7 +15,8 @@ export async function POST(req: Request, res: Response) {
     if (item.id === data.id) {
       return {
         ...item,
-        like: item.like + 1,
+        like: !item.like,
+        like_count: item.like ? item.like_count - 1 : item.like_count + 1,
       };
     }
     return item;
@@ -33,3 +34,5 @@ export async function POST(req: Request, res: Response) {
     res: posts,
   });
 }
+
+export async function GET() {}

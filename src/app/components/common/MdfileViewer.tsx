@@ -4,14 +4,17 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkCold } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
+import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
-  post: string;
+  mdPost: string;
 }
 
-export const MdfileViewer = ({ post }: MarkdownViewProps): JSX.Element => {
+export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
+  console.log(mdPost, mdPost.match(/-/g));
+
   return (
-    <div>
+    <div className="md_wrapper">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -20,7 +23,7 @@ export const MdfileViewer = ({ post }: MarkdownViewProps): JSX.Element => {
 
             return !inline && match ? (
               <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkCold}>
-                {String(children).replace(/\n$/, "/n")}
+                {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
             ) : (
               <code className={className} {...props}>
@@ -29,7 +32,7 @@ export const MdfileViewer = ({ post }: MarkdownViewProps): JSX.Element => {
             );
           },
         }}>
-        {post}
+        {mdPost}
       </ReactMarkdown>
     </div>
   );
