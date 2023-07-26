@@ -37,13 +37,40 @@
             flex-direction: column;
             align-items: center;
             gap: 30px;
-            .like_wrap {
-              display: flex;
-              justify-content: flex-end;
+          
+          }
+          .like_wrap {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
               width: 100%;
-              gap: 10px;
+            gap: 10px;
+            .static_heart {
+              width: 10px;
+              height: 10px;
+              background: black;
+              position: relative;
+              transform: rotate(45deg);
+            }
+            .static_heart::before,
+            .static_heart::after {
+              content: "";
+              width: 10px;
+              height: 10px;
+              position: absolute;
+              border-radius: 50%;
+              background: black;
+            }
+            .static_heart::before {
+              left: -50%;
+              right: 0;
+            }
+            .static_heart::after {
+              top: -50%;
+              right: 0;
             }
           }
+          
         }
       }
     }

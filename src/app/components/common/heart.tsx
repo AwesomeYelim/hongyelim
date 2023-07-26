@@ -49,7 +49,7 @@ export default function Heart({ id, like }: { id: number; like: number }) {
   // }, [data.like]);
 
   return (
-    <div className="like_wrap">
+    <div className="heart_wrap">
       <span className="like">{data.like}</span>
       <button onClick={submitHandler}>
         <i className="heart" />

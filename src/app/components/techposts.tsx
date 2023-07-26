@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Post } from "@/service/posts";
-import Heart from "./common/heart";
 
 export default function Category({ posts }: { posts: Post[] }) {
   const [selected, setSelected] = useState<Post[]>(posts);
@@ -36,13 +35,19 @@ export default function Category({ posts }: { posts: Post[] }) {
             return (
               <li key={id}>
                 <Link href={`/posts/${title}`}>
-                  <Image src={`/images/${image}.png`} alt={image} width={200} height={200} />
+                  <Image
+                    src={`/images/${image}.png`}
+                    alt={image}
+                    width={200}
+                    height={200}
+                  />
                   {title}
+                </Link>
+
                   <div className="like_wrap">
                     <span className="like">{like}</span>
-                    <i className="heart" />
+                    <i className="static_heart" />
                   </div>
-                </Link>
               </li>
             );
           })}
