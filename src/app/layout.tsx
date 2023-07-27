@@ -1,8 +1,6 @@
 import { Inter, Notable } from "next/font/google";
-import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
-import logo from "../../public/images/logo.svg";
 import NavBar from "./components/NavBar";
 import "./reset.scss";
 import "./layout.scss";
@@ -23,13 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body className={inter.className}>
         <div className="wrapper">
-          <Link href="/" className="logo">
-            <Image src={logo} alt="logo" width={50} height={50} priority />
-          </Link>
-          <div className="nav_wrapper">
-            <NavBar />
-          </div>
-
+          <NavBar />
           <div className="content">{children}</div>
         </div>
       </body>

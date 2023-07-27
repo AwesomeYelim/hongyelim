@@ -20,7 +20,9 @@ export default async function page({ params: { slug } }: Props) {
   return (
     <>
       <h1>{title}`s Detail Page</h1>
-      <Image src={`/images/${image}.png`} alt={image} width={500} height={200} />
+      <div className="detail_img">
+        <Image src={`/images/${image}.png`} alt={image} width={1000} height={1000} />
+      </div>
       <p>{content}</p>
       <MdfileViewer mdPost={mdPost} />
       <Heart {...post} />

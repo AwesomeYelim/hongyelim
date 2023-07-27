@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkCold } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
@@ -11,11 +12,10 @@ interface MarkdownViewProps {
 }
 
 export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
-  console.log(mdPost, mdPost.match(/-/g));
-
   return (
     <div className="md_wrapper">
       <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm]}
         components={{
           code({ inline, className, children, ...props }) {
