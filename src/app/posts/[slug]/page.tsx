@@ -24,8 +24,8 @@ export default async function page({ params: { slug } }: Props) {
         <Image src={`/images/${image}.png`} alt={image} width={1000} height={1000} />
       </div>
       <p>{content}</p>
-      <MdfileViewer mdPost={mdPost} />
       <Heart {...post} />
+      <MdfileViewer mdPost={mdPost} />
     </>
   );
 }

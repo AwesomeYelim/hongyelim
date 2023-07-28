@@ -7,7 +7,7 @@ yarn add fs http path
 yarn add -D @types/node
 ```
 
-#### 다음과 같이 타이핑 해준다.
+## 다음과 같이 타이핑 해준다.
 
 ```ts
 import fs = require("fs");
