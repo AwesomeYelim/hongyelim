@@ -42,14 +42,14 @@ const TOCwrapper = styled.div`
 export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
   const post: { [key in string]: number } = {};
   // const [post, setPost] = useState<{ [key in string]: number }>();
-  const innerText = mdPost.match(/#+\s(.+)/g)?.join("\n\n");
+  const innerText = mdPost.match(/#+\s(.+)/g);
 
   const heading = ({
     level,
     children,
   }: {
     level: number;
-    children: React.ReactNode[];
+    children: string;
   }) => {
     const style = {
       style: {
@@ -73,6 +73,7 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
     );
   };
 
+  // 초기 md h tag 위치값 표기 및 h hag 랜더링
   const tocHandler = ({
     level,
     children,
@@ -95,6 +96,7 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
   };
   return (
     <>
+      {/* markdown contents */}
       <div className="md_wrapper">
         <ReactMarkdown
           rehypePlugins={[rehypeRaw]}
@@ -128,19 +130,13 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
           {mdPost}
         </ReactMarkdown>
       </div>
+      {/* 오른쪽 TOC */}
       <TOCwrapper>
         <div className="toc_content">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              h1: heading,
-              h2: heading,
-              h3: heading,
-              h4: heading,
-            }}
-          >
-            {innerText!}
-          </ReactMarkdown>
+          {innerText?.map((el) => {
+            const [level, children] = el.split("# ");
+            return heading({ level: level.length + 1, children });
+          })}
         </div>
       </TOCwrapper>
     </>
