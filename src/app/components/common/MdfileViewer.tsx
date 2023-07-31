@@ -44,10 +44,8 @@ const TOCwrapper = styled.div`
     span {
       font-size: 15px;
       font-weight: bold;
-      // border-left: 4px solid #ccc;
       border-bottom: 2px solid #ccc;
       cursor: pointer;
-
       padding-left: 4px;
       padding-bottom: 5px;
       margin-bottom: 10px;
@@ -102,8 +100,8 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
         {...titleCondition}
         onClick={(e) => {
           e.preventDefault();
-          window.scroll({ left: 0, top: post![e.currentTarget.innerHTML] + 300, behavior: "smooth" });
-          setTarget(e.currentTarget.innerHTML);
+          window.scroll({ left: 0, top: post![e.currentTarget.innerHTML] + 100, behavior: "smooth" });
+          // setTarget(e.currentTarget.innerHTML);
         }}>
         {children}
       </HeadingTag>
@@ -112,7 +110,7 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
 
   const scrollEffect = () => {
     Object.entries(post).forEach(([key, scrollY]) => {
-      if (window.scrollY === window.scrollY || window.scrollY + 110 > scrollY) {
+      if (window.scrollY === scrollY || window.scrollY + 110 > scrollY) {
         setTarget(key);
       }
     });

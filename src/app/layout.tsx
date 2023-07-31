@@ -4,6 +4,7 @@ import Head from "next/head";
 import NavBar from "./components/NavBar";
 import "./reset.scss";
 import "./layout.scss";
+import "./dark.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
