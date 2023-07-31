@@ -7,6 +7,9 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
 import { ElementContent } from "react-markdown/lib/ast-to-react";
+import { useEffect, useState } from "react";
+import classNames from "classnames";
+import { titleCondition } from "./functions/ellipsis";
 import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
@@ -31,47 +34,33 @@ const TOCwrapper = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
       cursor: pointer;
-      transition: 0.2s linear;
+      transition: 0.25s linear;
+      font-size: 15px;
+      height: 20px;
       &:hover {
         color: #858585;
       }
+    }
+    span {
+      font-size: 15px;
+      font-weight: bold;
+      // border-left: 4px solid #ccc;
+      border-bottom: 2px solid #ccc;
+      cursor: pointer;
+
+      padding-left: 4px;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
     }
   }
 `;
 
 export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
-  const post: { [key in string]: number } = {};
-  // const [post, setPost] = useState<{ [key in string]: number }>();
   const innerText = mdPost.match(/#+\s(.+)/g);
-
-  const heading = ({
-    level,
-    children,
-  }: {
-    level: number;
-    children: string;
-  }) => {
-    const style = {
-      style: {
-        marginLeft: level * 20,
-        fontSize: 25 - level * 4,
-        fontWeight: 700 - level * 100,
-      },
-    };
-    const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
-
-    return (
-      <HeadingTag
-        {...style}
-        onClick={(e) => {
-          e.preventDefault();
-          window.scrollTo(0, post![e.currentTarget.innerHTML] + 300);
-        }}
-      >
-        {children}
-      </HeadingTag>
-    );
-  };
+  const [target, setTarget] = useState("");
+  const post: {
+    [key in string]: number;
+  } = {};
 
   // 초기 md h tag 위치값 표기 및 h hag 랜더링
   const tocHandler = ({
@@ -85,15 +74,54 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
     children: React.ReactNode[];
     node: any;
   }) => {
-    // setPost((post[value] = position?.end.offset));
     const { value, position } = el as ElementContent & {
       value: string;
     };
+
     post[value] = position?.end.offset as number;
     const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
 
     return <HeadingTag>{children}</HeadingTag>;
   };
+
+  // 오른쪽 toc
+  const heading = ({ level, children }: { level: number; children: string }) => {
+    const style = {
+      style: {
+        marginLeft: level * 20,
+        fontSize: target === children ? 15 : 13,
+        fontWeight: target === children ? 700 : 700 - level * 150,
+      },
+    };
+    const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+
+    return (
+      <HeadingTag
+        key={children}
+        {...style}
+        {...titleCondition}
+        onClick={(e) => {
+          e.preventDefault();
+          window.scroll({ left: 0, top: post![e.currentTarget.innerHTML] + 300, behavior: "smooth" });
+          setTarget(e.currentTarget.innerHTML);
+        }}>
+        {children}
+      </HeadingTag>
+    );
+  };
+
+  const scrollEffect = () => {
+    Object.entries(post).forEach(([key, scrollY]) => {
+      if (window.scrollY === window.scrollY || window.scrollY + 110 > scrollY) {
+        setTarget(key);
+      }
+    });
+  };
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollEffect);
+  }, []);
+
   return (
     <>
       {/* markdown contents */}
@@ -104,15 +132,8 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
           components={{
             code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
-              // setPost(children, props.node.position?.end.offset!);
-
               return !inline && match ? (
-                <SyntaxHighlighter
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                  style={coldarkCold}
-                >
+                <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkCold}>
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
@@ -125,14 +146,20 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
             h2: tocHandler,
             h3: tocHandler,
             h4: tocHandler,
-          }}
-        >
+          }}>
           {mdPost}
         </ReactMarkdown>
       </div>
       {/* 오른쪽 TOC */}
       <TOCwrapper>
         <div className="toc_content">
+          <span
+            onClick={() => {
+              window.scroll({ left: 0, top: 0, behavior: "smooth" });
+              setTarget("");
+            }}>
+            목차
+          </span>
           {innerText?.map((el) => {
             const [level, children] = el.split("# ");
             return heading({ level: level.length + 1, children });

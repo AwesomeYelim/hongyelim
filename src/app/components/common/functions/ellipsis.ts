@@ -14,13 +14,13 @@ export interface TitleEl extends Element {
 }
 
 export type TitleType<T = { display?: "block" }> = {
-  onFocus: (e: React.FocusEvent<TitleEl>) => void;
-  onMouseOver: (e: React.MouseEvent<TitleEl>) => void;
+  onFocus: (e: React.FocusEvent<TitleEl | SVGElement>) => void;
+  onMouseOver: (e: React.MouseEvent<TitleEl | SVGElement>) => void;
   style?: React.CSSProperties & T;
 };
 
 export const titleCondition: TitleType = {
-  style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" },
+  // style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" },
   onFocus: (e) => {
     e.stopPropagation();
   },
@@ -28,10 +28,10 @@ export const titleCondition: TitleType = {
     e.stopPropagation();
     if (
       !e.currentTarget.children.length &&
-      e.currentTarget.innerText &&
+      (e.currentTarget as TitleEl).innerText &&
       e.currentTarget.clientWidth < e.currentTarget.scrollWidth
     ) {
-      e.currentTarget.title = e.currentTarget.innerText;
+      (e.currentTarget as TitleEl).title = (e.currentTarget as TitleEl).innerText;
     }
   },
 };
