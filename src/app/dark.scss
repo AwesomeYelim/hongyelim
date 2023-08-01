@@ -1,13 +1,51 @@
 body {
   transition: 0.2s ease-in-out;
+  &[data-theme="dark"] {
+    --bg-color: #252527;
+    --w: #fff;
+    --font: #ccc;
+    --mdblock: #2d2d2d;
+    --active: #b3b3b3;
 
-  &.dark {
-    background-color: #1e1e20;
+    background-color: var(--bg-color);
+
     p {
-      color: white;
+      color: var(--w);
     }
     .nav_wrapper {
-      background-color: #1e1e20;
+      background-color: var(--bg-color);
+    }
+
+    nav > a,
+    p,
+    ul li,
+    h1,
+    h2,
+    h3,
+    h4 {
+      color: var(--font) !important;
+
+      &.active {
+        color: var(--active) !important;
+      }
+    }
+
+    .toc_content {
+      > span {
+        color: var(--font);
+      }
+    }
+    pre {
+      > div {
+        background: var(--mdblock) !important;
+        span {
+          color: var(--font);
+
+          &.token {
+            color: var(--font);
+          }
+        }
+      }
     }
   }
 }
