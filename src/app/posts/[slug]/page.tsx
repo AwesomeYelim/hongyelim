@@ -21,7 +21,7 @@ export default async function page({ params: { slug } }: Props) {
     <>
       <h1>{title}`s Detail Page</h1>
       <div className="detail_img">
-        <Image src={`/images/${image}.png`} alt={image} width={1000} height={1000} />
+        <Image src={`/images/${image}.png`} alt={image} width={1000} height={1000} priority />
       </div>
       <p>{content}</p>
       <Heart {...post} />
