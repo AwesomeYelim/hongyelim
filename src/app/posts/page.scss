@@ -1,3 +1,5 @@
+@import "src/app/components/common/scss/utils.scss";
+
 .techpost_page {
   position: relative;
   .title {
@@ -92,28 +94,9 @@
               gap: 10px;
 
               .static_heart {
-                width: 10px;
-                height: 10px;
-                background: black;
-                position: relative;
-                transform: rotate(45deg);
-              }
-              .static_heart::before,
-              .static_heart::after {
-                content: "";
-                width: 10px;
-                height: 10px;
-                position: absolute;
-                border-radius: 50%;
-                background: black;
-              }
-              .static_heart::before {
-                left: -50%;
-                right: 0;
-              }
-              .static_heart::after {
-                top: -50%;
-                right: 0;
+                background: url($img) no-repeat -4px -5px;
+                width: 25px;
+                height: 22px;
               }
             }
           }

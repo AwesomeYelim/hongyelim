@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import axios from "axios";
-import { getPost, Post } from "@/service/posts";
+import { Post } from "@/service/posts";
 import classNames from "classnames";
 import "./heart.scss";
 
