@@ -2,7 +2,7 @@
 
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { coldarkCold } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
@@ -10,6 +10,7 @@ import { ElementContent } from "react-markdown/lib/ast-to-react";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { titleCondition } from "./functions/ellipsis";
+// import { useDark } from "../hooks";
 import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
@@ -56,9 +57,12 @@ const TOCwrapper = styled.div`
 export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
   const innerText = mdPost.match(/#+\s(.+)/g);
   const [target, setTarget] = useState("");
+
   const post: {
     [key in string]: number;
   } = {};
+
+  // const [dark] = useDark();
 
   // 초기 md h tag 위치값 표기 및 h hag 랜더링
   const tocHandler = ({
@@ -70,7 +74,9 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
   }: {
     level: number;
     children: React.ReactNode[];
-    node: any;
+    node: {
+      children: ElementContent[];
+    };
   }) => {
     const { value, position } = el as ElementContent & {
       value: string;
@@ -131,7 +137,7 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
             code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
-                <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkCold}>
+                <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkDark}>
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
