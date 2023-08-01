@@ -8,7 +8,6 @@ import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
 import { ElementContent } from "react-markdown/lib/ast-to-react";
 import { useEffect, useState } from "react";
-import classNames from "classnames";
 import { titleCondition } from "./functions/ellipsis";
 // import { useDark } from "../hooks";
 import "./MdfileViewer.scss";

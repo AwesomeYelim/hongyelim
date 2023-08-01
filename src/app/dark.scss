@@ -9,6 +9,20 @@ body {
 
     background-color: var(--bg-color);
 
+    /** main  */
+    .main_wrapper {
+      svg {
+        g {
+          path {
+            stroke: var(--w);
+          }
+        }
+      }
+      ul li a {
+        color: var(--w);
+      }
+    }
+
     /** nav bar  */
     .nav_wrapper {
       background-color: var(--bg-color);
@@ -42,6 +56,7 @@ body {
     .md_wrapper {
       nav > a,
       ul li,
+      ol li,
       h1,
       h2,
       h3,

@@ -32,8 +32,8 @@
       "content": "regex content",
       "image": "zingzing",
       "tag": "regex",
-      "like": true,
-      "like_count": 1
+      "like": false,
+      "like_count": 0
    },
    {
       "id": 5,
@@ -59,7 +59,7 @@
       "content": "markdown memories",
       "image": "star",
       "tag": "markdown",
-      "like": false,
-      "like_count": 0
+      "like": true,
+      "like_count": 1
    }
 ]

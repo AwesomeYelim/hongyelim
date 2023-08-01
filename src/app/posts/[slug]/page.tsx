@@ -1,4 +1,5 @@
 import { MdfileViewer } from "@/app/components/common/MdfileViewer";
+import fs from "fs";
 import Heart from "@/app/components/common/heart";
 import { getPost } from "@/service/posts";
 import Image from "next/image";
@@ -15,7 +16,14 @@ export default async function page({ params: { slug } }: Props) {
   if (!post) {
     notFound();
   }
-  const { title, image, content } = post;
+  const { title, content } = post;
+
+  let { image } = post;
+  fs.access(`public/images/${image}.png`, async (err) => {
+    if (err) {
+      image = "empty";
+    }
+  });
 
   return (
     <>

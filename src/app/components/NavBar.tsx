@@ -10,7 +10,7 @@ const Nav = styled.div<{ $hide: boolean }>`
   height: ${({ $hide }) => ($hide ? "80px" : "0px")};
 `;
 export default function NavBar() {
-  let $ = document.body;
+  let $ = document?.body;
   const lo = localStorage;
 
   const location = usePathname();

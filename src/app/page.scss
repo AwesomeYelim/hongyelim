@@ -3,11 +3,20 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-top: 20%;
   gap: 50px;
 
-  .main_img {
-    border-radius: 100%;
+  .start {
+    stroke-dasharray: 13337 13339;
+    stroke-dashoffset: 13338;
+    animation: draw 3000ms linear 0ms forwards;
   }
+  @keyframes draw {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
   .main_posts {
     display: flex;
     gap: 10px;
