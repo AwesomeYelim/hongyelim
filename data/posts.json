@@ -5,8 +5,8 @@
       "content": "deepdive content",
       "image": "deepdive",
       "tag": "javascript",
-      "like": true,
-      "like_count": 1
+      "like": false,
+      "like_count": 0
    },
    {
       "id": 2,
@@ -14,8 +14,8 @@
       "content": "typescript content",
       "image": "thinking",
       "tag": "typescript",
-      "like": true,
-      "like_count": 1
+      "like": false,
+      "like_count": 0
    },
    {
       "id": 3,
@@ -23,8 +23,8 @@
       "content": "Nextjs content",
       "image": "tuttle",
       "tag": "nextjs",
-      "like": true,
-      "like_count": 1
+      "like": false,
+      "like_count": 0
    },
    {
       "id": 4,
@@ -32,8 +32,8 @@
       "content": "regex content",
       "image": "zingzing",
       "tag": "regex",
-      "like": false,
-      "like_count": 0
+      "like": true,
+      "like_count": 1
    },
    {
       "id": 5,
@@ -59,7 +59,7 @@
       "content": "markdown memories",
       "image": "star",
       "tag": "markdown",
-      "like": true,
-      "like_count": 1
+      "like": false,
+      "like_count": 0
    }
 ]

@@ -1,9 +1,11 @@
 import { MdfileViewer } from "@/app/components/common/MdfileViewer";
 import fs from "fs";
 import Heart from "@/app/components/common/heart";
+import axios from "axios";
 import { getPost } from "@/service/posts";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { GET } from "@/app/api/posts/route";
 
 type Props = {
   params: {
