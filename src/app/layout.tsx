@@ -20,16 +20,6 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              const theme = localStorage.getItem("data-theme");
-              document.body.setAttribute("data-theme", theme);
-              console.log(theme);
-            `,
-          }}></script>
-      </head>
       <body className={inter.className}>
         <div className="wrapper">
           <NavBar />

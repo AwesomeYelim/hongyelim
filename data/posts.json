@@ -23,8 +23,8 @@
       "content": "Nextjs content",
       "image": "tuttle",
       "tag": "nextjs",
-      "like": false,
-      "like_count": 0
+      "like": true,
+      "like_count": 1
    },
    {
       "id": 4,

@@ -6,6 +6,9 @@ import path from "path";
 export async function POST(req: Request, res: Response) {
   const data = await req.json();
   let posts = await getPosts();
+  const clientIp = req.headers.get("x-forwarded-for");
+
+  console.log(clientIp);
 
   process.cwd();
   const filePath = path.join(process.cwd(), "data", "posts.json");
@@ -32,6 +35,7 @@ export async function POST(req: Request, res: Response) {
   return NextResponse.json({
     message: "성공쓰~",
     res: posts,
+    clientIp,
   });
 }
 

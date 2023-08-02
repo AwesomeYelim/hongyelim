@@ -25,6 +25,8 @@ export default function Heart(props: Post) {
         }
       )
       .then((res) => {
+        console.log(res.data.clientIp);
+
         const target = res.data.res.find((el: Post) => el.title === title);
         setHeartNum({
           like: target.like,

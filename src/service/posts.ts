@@ -1,7 +1,5 @@
 import path from "path";
 import { promises as fs } from "fs";
-// import { networkInterfaces } from "os";
-import ip from "ip";
 
 export type Post = {
   id: number;
@@ -32,8 +30,18 @@ export async function getPost(title: string): Promise<{ post?: Post; mdPost: str
   // const uuid = v4();
   // console.log(uuid);
   // const nets = networkInterfaces();
+  // console.log(ip.address());
 
-  console.log(ip.address());
+  // const app = express();
+  // app.get("/main", (req, res) => {
+  //   res.send("main");
+  //   // console.log(getClientIp(req));
+  // });
+
+  // app.listen(3001, () => {
+  //   console.log("Express server started at port 3003");
+  // });
+
   const mdPath = path.join(process.cwd(), "data/md", `${title}.md`);
   const mdPost = await fs.readFile(mdPath, "utf-8");
   const posts = await getPosts();
