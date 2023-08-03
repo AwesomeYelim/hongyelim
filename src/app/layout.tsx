@@ -2,10 +2,10 @@ import { Inter, Notable } from "next/font/google";
 import Link from "next/link";
 import Head from "next/head";
 import NavBar from "./components/NavBar";
+import Cookies from "js-cookie";
 import "./reset.scss";
 import "./layout.scss";
 import "./dark.scss";
-import Cookies from "js-cookie";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
@@ -42,6 +42,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="wrapper">
           <NavBar />
           <div className="content">{children}</div>
+          <div className="footer_wrapper">
+            <footer>
+              <div className="icon_group">
+                <Link href="mailto:uiop01900@gmail.com" target="_blank">
+                  <i className="email" />
+                </Link>
+                <Link href="https://github.com/AwesomeYelim" target="_blank">
+                  <i className="github" />
+                </Link>
+                <Link href="https://www.instagram.com/honyelim" target="_blank">
+                  <i className="instagram" />
+                </Link>
+              </div>
+              <div className="detail">
+                <Link href="/">hongyelim.com</Link>
+              </div>
+            </footer>
+          </div>
         </div>
       </body>
     </html>

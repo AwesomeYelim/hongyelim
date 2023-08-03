@@ -2,17 +2,19 @@
 
 .wrapper {
   width: 1024px;
+  @include flex(center, space-between);
+  flex-direction: column;
   margin: 5rem auto 0px;
   position: relative;
+  height: calc(100vh - 80px);
+
   .nav_wrapper {
+    @include flex(center, space-between);
     position: fixed;
     top: 0;
     z-index: 99;
     width: inherit;
-    display: flex;
-    justify-content: space-between;
     background-color: white;
-    align-items: center;
     transition: 0.2s ease-in-out;
     // box-shadow: 5px 5px 10px;
     overflow: hidden;
@@ -25,8 +27,7 @@
       }
     }
     nav {
-      display: flex;
-      justify-content: flex-end;
+      @include flex(center, flex-end);
       gap: 30px;
       padding: 30px;
       > a {
@@ -47,16 +48,55 @@
 
   .content {
     position: relative;
-    margin-top: 120px;
+    width: inherit;
+    margin-top: 100px;
     padding: 20px;
 
     .detail_img {
+      @include flex(center, initial);
       width: 100% !important;
       height: 300px !important;
       opacity: 0.7;
       overflow: hidden;
-      display: flex;
-      align-items: center;
+    }
+  }
+  .footer_wrapper {
+    footer {
+      @include flex(center, initial);
+      width: 100%;
+      flex-direction: column;
+      // background-color: #565656;
+      padding: 20px;
+      gap: 10px;
+
+      .icon_group {
+        @include flex(center, initial);
+        gap: 20px;
+
+        i {
+          &.email {
+            background: url($img) no-repeat -57px -48px;
+            width: 22px;
+            height: 18px;
+          }
+          &.github {
+            background: url($img) no-repeat -90px -41px;
+            width: 25px;
+            height: 25px;
+          }
+          &.instagram {
+            background: url($img) no-repeat -125px -44px;
+            width: 23px;
+            height: 22px;
+          }
+        }
+      }
+      .detail {
+        > a {
+          color: #ccc;
+          font-size: 12px;
+        }
+      }
     }
   }
 }

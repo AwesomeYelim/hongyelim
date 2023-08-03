@@ -55,7 +55,7 @@ export default function Techlog({ posts }: { posts: Post[] }) {
                     {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
                     <div className="like_wrap">
                       <span className="like">{like_count}</span>
-                      <i className="static_heart" />
+                      <i className={classNames("static_heart", { like })} />
                     </div>
                   </Link>
                 </li>

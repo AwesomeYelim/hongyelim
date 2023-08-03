@@ -97,6 +97,13 @@
                 background: url($img) no-repeat -4px -5px;
                 width: 25px;
                 height: 22px;
+
+                &.like {
+                  transform: rotateY(180deg);
+                  background: url($img) no-repeat -32px -5px;
+                  width: 25px;
+                  height: 22px;
+                }
               }
             }
           }

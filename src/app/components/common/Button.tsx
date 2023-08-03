@@ -54,8 +54,8 @@ export const Button = ({ id }: { id: number }): JSX.Element => {
 
   return (
     <BtnWrap className="btn_wrap">
-      <Link href={`/posts/${idTitle.prev[2]}`}>◀ 이전글 {idTitle.prev[1]}</Link>
-      <Link href={`/posts/${idTitle.next[2]}`}>{idTitle.next[1]} 다음글 ▶</Link>
+      {idTitle.prev[2] && <Link href={`/posts/${idTitle.prev[2]}`}>◀ 이전글 {idTitle.prev[1]}</Link>}
+      {idTitle.next[2] && <Link href={`/posts/${idTitle.next[2]}`}>{idTitle.next[1]} 다음글 ▶</Link>}
     </BtnWrap>
   );
 };

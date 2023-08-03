@@ -5,8 +5,8 @@
       "content": "deepdive content",
       "image": "deepdive",
       "tag": "javascript",
-      "like": false,
-      "like_count": 0
+      "like": true,
+      "like_count": 1
    },
    {
       "id": 2,
@@ -14,8 +14,8 @@
       "content": "typescript content",
       "image": "thinking",
       "tag": "typescript",
-      "like": true,
-      "like_count": 1
+      "like": false,
+      "like_count": 0
    },
    {
       "id": 3,
@@ -41,8 +41,8 @@
       "content": "axiostype content",
       "image": "ball",
       "tag": "typescript",
-      "like": true,
-      "like_count": 1
+      "like": false,
+      "like_count": 0
    },
    {
       "id": 6,
