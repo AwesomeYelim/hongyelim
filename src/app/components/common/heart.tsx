@@ -37,7 +37,7 @@ export default function Heart(props: Post) {
 
   const callPost = async () => {
     await axios.get("/api/posts").then((res) => {
-      const target = res.data.res.find((el: Post) => el.title === title);
+      const target = res.data.find((el: Post) => el.title === title);
       setHeartNum({ like: target.like, like_count: target.like_count });
     });
   };

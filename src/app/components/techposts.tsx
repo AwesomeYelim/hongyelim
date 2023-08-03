@@ -13,7 +13,7 @@ export default function Techlog({ posts }: { posts: Post[] }) {
 
   const callPost = async () => {
     await axios.get("/api/posts").then((res) => {
-      setSelected({ keyword: "All", posts: res.data.res });
+      setSelected({ keyword: "All", posts: res.data });
     });
   };
 
@@ -47,7 +47,7 @@ export default function Techlog({ posts }: { posts: Post[] }) {
             selected.posts.map(({ id, title, image, like, like_count, content }) => {
               return (
                 <li key={id}>
-                  <Link href={`/posts/${title}`}>
+                  <Link href={`/posts/${id}_${title}`}>
                     <div className="text_wrapper">
                       <h4>{title}</h4>
                       <span>{content}</span>

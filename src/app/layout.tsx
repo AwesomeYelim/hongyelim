@@ -34,7 +34,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `,
           }}></script> */}
       </head>
-      <body className={inter.className} suppressHydrationWarning={true} data-theme="dark">
+      <body
+        className={inter.className}
+        suppressHydrationWarning={true}
+        // data-theme="dark"
+      >
         <div className="wrapper">
           <NavBar />
           <div className="content">{children}</div>

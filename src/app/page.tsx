@@ -20,36 +20,13 @@ export default async function Home() {
             strokeLinejoin="round"
             className="start"></path>
         </g>
-        {/* <defs>
-          <filter
-            id="filter0_i_1102_5"
-            x="0"
-            y="0"
-            width="3793.5"
-            height="2091.21"
-            filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-            <feColorMatrix
-              in="SourceAlpha"
-              type="matrix"
-              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-              result="hardAlpha"></feColorMatrix>
-            <feOffset dy="4"></feOffset>
-            <feGaussianBlur stdDeviation="2"></feGaussianBlur>
-            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"></feComposite>
-            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
-            <feBlend mode="normal" in2="shape" result="effect1_innerShadow_1102_5"></feBlend>
-          </filter>
-        </defs> */}
       </svg>
 
       <ul className="main_posts">
         {posts.map(({ id, title, image }) => {
           return (
             <li key={id}>
-              <Link href={`/posts/${title}`}>
+              <Link href={`/posts/${id}_${title}`}>
                 <Image src={`/images/${image}.png`} alt={image} width={40} height={20} />
                 {title}
               </Link>

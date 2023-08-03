@@ -44,8 +44,5 @@ export async function GET() {
 
   // if (!data) return NextResponse.json({ message: "Missing Data" });
 
-  return NextResponse.json({
-    message: "GET",
-    res: posts,
-  });
+  return NextResponse.json(posts);
 }
