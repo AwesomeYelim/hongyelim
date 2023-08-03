@@ -84,7 +84,7 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
     post[value] = position?.end.offset as number;
     const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
 
-    return <HeadingTag>{children}</HeadingTag>;
+    return <HeadingTag>{children as any}</HeadingTag>;
   };
 
   // 오른쪽 toc

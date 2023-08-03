@@ -1,3 +1,5 @@
+@import "src/app/components/common/scss/utils.scss";
+
 .wrapper {
   width: 1024px;
   margin: 5rem auto 0px;
@@ -15,7 +17,12 @@
     // box-shadow: 5px 5px 10px;
     overflow: hidden;
     .logo {
-      padding: 15px;
+      padding: 30px;
+      > i {
+        background: url($img) no-repeat -4px -31px;
+        width: 17px;
+        height: 51px;
+      }
     }
     nav {
       display: flex;
@@ -30,17 +37,10 @@
         }
       }
       .mode {
+        background: url($img) no-repeat -65px -6px;
         width: 20px;
         height: 20px;
-        background: url("../../public/images/light.svg");
-        background-repeat: no-repeat;
-        background-size: contain;
         cursor: pointer;
-        transition: 0.2s ease-in-out;
-
-        &.dark {
-          background-image: url("../../public/images/dark.svg");
-        }
       }
     }
   }

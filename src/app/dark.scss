@@ -1,3 +1,5 @@
+@import "src/app/components/common/scss/utils.scss";
+
 body {
   transition: 0.2s ease-in-out;
   &[data-theme="dark"] {
@@ -26,6 +28,20 @@ body {
     /** nav bar  */
     .nav_wrapper {
       background-color: var(--bg-color);
+      .logo {
+        > i {
+          background: url($img) no-repeat -26px -31px;
+          width: 17px;
+          height: 51px;
+        }
+      }
+      nav {
+        .mode {
+          background: url($img) no-repeat -95px -6px;
+          width: 12px;
+          height: 20px;
+        }
+      }
     }
 
     .content {

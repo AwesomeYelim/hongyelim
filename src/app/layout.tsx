@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import "./reset.scss";
 import "./layout.scss";
 import "./dark.scss";
+import Cookies from "js-cookie";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
@@ -20,7 +21,20 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <head>
+        {/* <script
+          dangerouslySetInnerHTML={{
+            __html: `
+
+            const cookie = require("cookie");
+            const theme = Cookies.get("theme");
+            document.body.setAttribute("data-theme", theme);
+            console.log(theme);
+
+          `,
+          }}></script> */}
+      </head>
+      <body className={inter.className} suppressHydrationWarning={true} data-theme="dark">
         <div className="wrapper">
           <NavBar />
           <div className="content">{children}</div>
