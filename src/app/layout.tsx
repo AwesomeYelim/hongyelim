@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
-  title: "ylblog",
+  title: "hongyelim",
   description: "this is yelim blog :)",
   icons: {
     shortcut: "/images/favicon.png",
