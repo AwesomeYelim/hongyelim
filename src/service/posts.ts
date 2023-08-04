@@ -9,6 +9,7 @@ export type Post = {
   tag: string;
   like: boolean;
   like_count: number;
+  created_at: number;
 };
 
 export async function getPosts(): Promise<Post[]> {

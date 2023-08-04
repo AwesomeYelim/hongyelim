@@ -31,7 +31,7 @@ export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
   const [idTitle, setIdTitle] = useState<{ prev: string[]; next: string[] }>({ prev: [], next: [] });
 
   const callPost = async () => {
-    await axios.get("/api/posts").then((res) => {
+    await axios.get("/api/heart").then((res) => {
       const prev = res.data.find((el: Post) => el.id === id - 1);
       const next = res.data.find((el: Post) => el.id === id + 1);
 

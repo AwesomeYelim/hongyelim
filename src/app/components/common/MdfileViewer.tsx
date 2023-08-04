@@ -106,7 +106,9 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
         onClick={(e) => {
           e.preventDefault();
           window.scroll({ left: 0, top: post![e.currentTarget.innerHTML] + 100, behavior: "smooth" });
-          // setTarget(e.currentTarget.innerHTML);
+          // if (target !== e.currentTarget.innerHTML) {
+          //   setTarget(e.currentTarget.innerHTML);
+          // }
         }}>
         {children}
       </HeadingTag>
@@ -114,8 +116,12 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
   };
 
   const scrollEffect = () => {
-    Object.entries(post).forEach(([key, scrollY]) => {
-      if (window.scrollY === scrollY || window.scrollY + 110 > scrollY) {
+    Object.entries(post).forEach(([key, scrollY], i, arr) => {
+      if (!i || arr[arr.length - 1]) {
+        if (window.scrollY === scrollY || window.scrollY > scrollY) {
+          setTarget(key);
+        }
+      } else if (window.scrollY === scrollY || window.scrollY + 110 > scrollY) {
         setTarget(key);
       }
     });

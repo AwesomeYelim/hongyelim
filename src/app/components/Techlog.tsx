@@ -12,7 +12,7 @@ export default function Techlog({ posts }: { posts: Post[] }) {
   const tag = posts.map((item) => item.tag).filter((item, i, arr) => arr.indexOf(item) === i);
 
   const callPost = async () => {
-    await axios.get("/api/posts").then((res) => {
+    await axios.get("/api/heart").then((res) => {
       setSelected({ keyword: "All", posts: res.data });
     });
   };
@@ -44,7 +44,13 @@ export default function Techlog({ posts }: { posts: Post[] }) {
       <div className="list_wrapper">
         <ul className="list">
           {selected &&
-            selected.posts.map(({ id, title, image, like, like_count, content }) => {
+            selected.posts.map(({ id, title, image, like, like_count, content, created_at }) => {
+              const date = new Date(created_at * 1000).toLocaleDateString("ko-kr", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              });
+
               return (
                 <li key={id}>
                   <Link href={`/posts/${id}_${title}`}>
@@ -53,7 +59,8 @@ export default function Techlog({ posts }: { posts: Post[] }) {
                       <span>{content}</span>
                     </div>
                     {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
-                    <div className="like_wrap">
+                    <div className="bottom_wrap">
+                      <span className="date">{date}</span>
                       <i className={classNames("static_heart", { like })} />
                       <span className="like">{like_count}</span>
                     </div>
