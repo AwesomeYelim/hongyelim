@@ -9,20 +9,24 @@
   }
   .posts_wrapper {
     .category {
+      @include flex(initial, initial);
       position: absolute;
-      display: flex;
       flex-direction: column;
-      border-left: 3px solid grey;
-      padding-left: 10px;
+      margin: 10px 0 10px 0;
+      padding-left: 20px;
+      top: 125px;
       right: -130px;
-      width: 100px;
+      width: 150px;
+
       box-sizing: border-box;
       p {
         cursor: pointer;
-        margin-bottom: 5px;
+        margin: 5px 0 5px 0;
         font-size: 15px;
         &:first-child {
           color: orange;
+          border-bottom: 1px solid black;
+          padding-bottom: 10px;
         }
 
         &.active {
@@ -33,66 +37,64 @@
 
     .list_wrapper {
       .list {
-        width: 100%;
-        display: flex;
+        @include flex(center, initial);
         flex-wrap: wrap;
+        width: 98%;
         li {
           width: inherit;
           a {
-            display: flex;
-            align-items: center;
+            @include flex(flex-start, initial);
+            flex-direction: column;
             width: inherit;
-            height: 80px;
+            height: 170px;
+            gap: 30px;
             box-sizing: border-box;
-            margin-bottom: 30px;
-            padding: 30px;
-            background-color: aliceblue;
-            border-bottom: 2px solid transparent;
+            padding: 30px 30px 50px 20px;
+            border-bottom: 1px solid rgb(0, 0, 0);
             transition: 0.3s linear;
-            justify-content: space-between;
 
             .text_wrapper {
-              display: flex;
+              @include flex(initial, initial);
               flex-direction: column;
               gap: 10px;
-              &::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                line-height: 100px;
-                display: block;
-                width: 0px;
-                height: 50px;
-                background-color: rgba(255, 255, 255, 0.822);
-                transition: 0.3s linear;
-                z-index: 5;
-              }
+              // &::after {
+              //   content: "";
+              //   position: absolute;
+              //   left: 0;
+              //   line-height: 100px;
+              //   display: block;
+              //   width: 0px;
+              //   height: 50px;
+              //   background-color: rgba(255, 255, 255, 0.822);
+              //   transition: 0.3s linear;
+              //   z-index: 5;
+              // }
 
-              > span,
-              h4 {
-                z-index: 99;
-              }
+              // > span,
+              // > h4 {
+              //   z-index: 99;
+              // }
               span {
                 font-size: 13px;
               }
             }
 
-            &:hover {
-              .text_wrapper {
-                &::after {
-                  width: 20%;
-                }
-              }
-            }
+            // &:hover {
+            //   .text_wrapper {
+            //     &::after {
+            //       width: 20%;
+            //     }
+            //   }
+            // }
             // img {
             //   justify-content: flex-start;
             //   opacity: 0.7;
             // }
             .like_wrap {
-              display: flex;
-              align-items: center;
+              @include flex(center, initial);
               gap: 10px;
-
+              padding-left: 5px;
+              // height: 100px;
               .static_heart {
                 background: url($img) no-repeat -4px -5px;
                 width: 25px;

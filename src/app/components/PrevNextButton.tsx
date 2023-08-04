@@ -27,7 +27,7 @@ const BtnWrap = styled.div`
   }
 `;
 
-export const Button = ({ id }: { id: number }): JSX.Element => {
+export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
   const [idTitle, setIdTitle] = useState<{ prev: string[]; next: string[] }>({ prev: [], next: [] });
 
   const callPost = async () => {

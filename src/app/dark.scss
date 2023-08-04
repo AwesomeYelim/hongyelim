@@ -50,7 +50,13 @@ body {
       }
       .list {
         li a {
-          background-color: #5b6370 !important;
+          border-bottom: 1px solid var(--w) !important;
+
+          * {
+            color: var(--w) !important;
+
+            // background-color: #5b6370 !important;
+          }
         }
       }
     }
@@ -80,8 +86,13 @@ body {
 
     /** post category  */
     .category {
-      p:not(:first-child) {
-        color: var(--font) !important;
+      p {
+        &:not(:first-child) {
+          color: var(--font) !important;
+        }
+        &:first-child {
+          border-bottom: 1px solid var(--w) !important;
+        }
       }
     }
 

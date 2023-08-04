@@ -4,7 +4,7 @@ import Heart from "@/app/components/common/heart";
 import { getPost } from "@/service/posts";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Button } from "@/app/components/common/Button";
+import { PrevNextButton } from "@/app/components/PrevNextButton";
 
 type Props = {
   params: {
@@ -35,7 +35,7 @@ export default async function page({ params: { slug } }: Props) {
       <p>{content}</p>
       <Heart {...post} />
       <MdfileViewer mdPost={mdPost} />
-      <Button id={id} />
+      <PrevNextButton id={id} />
     </>
   );
 }

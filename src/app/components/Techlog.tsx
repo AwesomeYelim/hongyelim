@@ -49,13 +49,13 @@ export default function Techlog({ posts }: { posts: Post[] }) {
                 <li key={id}>
                   <Link href={`/posts/${id}_${title}`}>
                     <div className="text_wrapper">
-                      <h4>{title}</h4>
+                      <h2>{title}</h2>
                       <span>{content}</span>
                     </div>
                     {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
                     <div className="like_wrap">
-                      <span className="like">{like_count}</span>
                       <i className={classNames("static_heart", { like })} />
+                      <span className="like">{like_count}</span>
                     </div>
                   </Link>
                 </li>
