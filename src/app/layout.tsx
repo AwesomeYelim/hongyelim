@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </Link>
               </div>
               <div className="detail">
-                <Link href="/">hongyelim.com</Link>
+                <Link href="/">© 2023 hongyelim. All Rights Reserved.</Link>
               </div>
             </footer>
           </div>

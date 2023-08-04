@@ -11,8 +11,10 @@
     }
 
     form {
-      @include flex(center, initial);
-      border: 1px solid #ccc;
+      @include flex(initial, initial);
+      flex-direction: column;
+
+      //   border: 1px solid #ccc;
       input {
         border: 1px solid #ccc;
       }

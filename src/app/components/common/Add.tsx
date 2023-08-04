@@ -33,11 +33,14 @@ export const Add = (): JSX.Element => {
         }}
       /> */}
       <form onSubmit={handleSubmit(submitHandler)}>
-        <input {...register("title")} />
+        <label>title</label>
+        <input {...register("title", { required: true })} />
+        {errors.title && <p>Last name is required.</p>}
+        <label>content</label>
         <input {...register("content", { required: true })} />
-        {errors.lastName && <p>Last name is required.</p>}
+        {errors.content && <p>Please enter number for age.</p>}
         {/* <input {...register("age", { pattern: /\d+/ })} /> */}
-        {errors.age && <p>Please enter number for age.</p>}
+
         <input type="submit" />
       </form>
     </div>
