@@ -1,6 +1,6 @@
 @import "src/app/components/common/scss/utils.scss";
 
-body {
+html {
   transition: 0.2s ease-in-out;
   &[data-theme="dark"] {
     --bg-color: #252527;

@@ -37,14 +37,6 @@ export default function NavBar() {
     return () => document.removeEventListener("scroll", scrollToHide);
   }, [navInfo]);
 
-  useEffect(() => {
-    if (dark) {
-      window.document.body.setAttribute("data-theme", "dark");
-    } else {
-      window.document.body.setAttribute("data-theme", "light");
-    }
-  }, []);
-
   return (
     <Nav $hide={navInfo.hide} className="nav_wrapper">
       <Link href="/" className="logo">
@@ -56,10 +48,10 @@ export default function NavBar() {
           onClick={() => {
             setDark(!dark);
             if (dark) {
-              window.document.body.setAttribute("data-theme", "light");
+              document.documentElement.dataset.theme = "light";
               Cookies.set("theme", "light");
             } else {
-              window.document.body.setAttribute("data-theme", "dark");
+              document.documentElement.dataset.theme = "dark";
               Cookies.set("theme", "dark");
             }
           }}

@@ -2,6 +2,7 @@
 
 const nextConfig = {
   // output: "export",
+  // skipTrailingSlashRedirect: true, // middeleware 설정 부분
   experimental: {
     appDir: true,
   },

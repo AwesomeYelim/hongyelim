@@ -2,10 +2,10 @@ import { Inter, Notable } from "next/font/google";
 import Link from "next/link";
 import Head from "next/head";
 import NavBar from "./components/NavBar";
-import Cookies from "js-cookie";
-import "./reset.scss";
-import "./layout.scss";
-import "./dark.scss";
+
+import "./styles/reset.scss";
+import "./styles/layout.scss";
+import "./styles/dark.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
@@ -20,25 +20,17 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning={true}>
       <head>
-        {/* <script
+        <script
           dangerouslySetInnerHTML={{
             __html: `
-
-            const cookie = require("cookie");
-            const theme = Cookies.get("theme");
-            document.body.setAttribute("data-theme", theme);
-            console.log(theme);
-
+            const modecookie = document.cookie.match('theme=([^;]*)(;|$)')
+            document.documentElement.dataset.theme = modecookie[1]
           `,
-          }}></script> */}
+          }}></script>
       </head>
-      <body
-        className={inter.className}
-        suppressHydrationWarning={true}
-        // data-theme="dark"
-      >
+      <body className={inter.className}>
         <div className="wrapper">
           <NavBar />
           <div className="content">{children}</div>
