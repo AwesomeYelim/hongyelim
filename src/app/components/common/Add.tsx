@@ -29,10 +29,14 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
   return (
     <div className="memo_wrap">
       <form onSubmit={handleSubmit(submitHandler)}>
-        <label>title</label>
+        <label>Title</label>
         <input
           {...register("title", {
             required: true,
+            pattern: {
+              value: /^[a-zA-Z0-9]*$/,
+              message: "사용할수 없는 식임",
+            },
             value: selected?.keyword,
             onChange(e) {
               if (setSelected) {
@@ -43,14 +47,14 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
           value={selected?.keyword}
         />
         {errors.title && <p>title is required.</p>}
-        <label>content(추가할 내용 및 생성할 내용들)</label>
+        <label>Content(추가할 내용 및 생성할 내용들)</label>
         <textarea
           {...register("content", { required: true })}
           // onKeyDown={(e) => {
           //   console.log((e.target as EventTarget & { value: string }).value);
           // }}
         />
-        {errors.content && <p>Please enter number for age.</p>}
+        {errors.content && <p>Please enter contnent</p>}
         {/* <input {...register("age", { pattern: /\d+/ })} /> */}
 
         <button type="submit">제출</button>
