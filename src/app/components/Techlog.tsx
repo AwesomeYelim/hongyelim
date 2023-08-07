@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Post } from "@/service/posts";
@@ -6,9 +7,15 @@ import classNames from "classnames";
 import axios from "axios";
 
 export default function Techlog({ posts }: { posts: Post[] }) {
-  const [selected, setSelected] = useState<{ keyword: string; posts: Post[] }>({ keyword: "All", posts: [...posts] });
-  /** tag 별 category 생성  */
+  const [selected, setSelected] = useState<{
+    keyword: string;
+    posts: Post[];
+  }>({
+    keyword: "All",
+    posts: [...posts],
+  });
 
+  /** tag 별 category 생성  */
   const tag = posts.map((item) => item.tag).filter((item, i, arr) => arr.indexOf(item) === i);
 
   const callPost = async () => {

@@ -11,9 +11,13 @@ export async function POST(req: Request, res: Response) {
 
   process.cwd();
 
-  const mdPath = target
-    ? path.join(process.cwd(), "data", "md", `${target?.id}_${target?.title}.md`)
-    : path.join(process.cwd(), "data", "md", `${posts.length + 1}_${data.title}.md`);
+  const mdPath = (() => {
+    if (target) {
+      return path.join(process.cwd(), "data", "md", `${target?.id}_${target?.title}.md`);
+    } else {
+      return path.join(process.cwd(), "data", "md", `${posts.length + 1}_${decodeURI(data.title)}.md`);
+    }
+  })();
 
   const filePath = path.join(process.cwd(), "data", "posts.json");
 
@@ -29,7 +33,7 @@ export async function POST(req: Request, res: Response) {
       {
         id: posts.length + 1,
         title: data.title.replace(/\s/g, ""),
-        content: data.content.match(/#+\s(.+)/g)[0],
+        content: (data.content.match(/#+\s(.+)/g) && data.content.match(/#+\s(.+)/g)[0]) || data.content,
         image: "",
         tag: data.title,
         like: false,

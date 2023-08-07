@@ -45,8 +45,8 @@
     "content": "axiostype content",
     "image": "ball",
     "tag": "typescript",
-    "like": false,
-    "like_count": 0,
+    "like": true,
+    "like_count": 1,
     "created_at": 1691116343
   },
   {
