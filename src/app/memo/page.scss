@@ -1,0 +1,41 @@
+@import "src/app/components/common/scss/utils.scss";
+
+.memo_page {
+  @include flex(center, center);
+  .memo_wrap {
+    @include flex(center, initial);
+    width: 80%;
+    form {
+      @include flex(initial, initial);
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      p {
+        width: fit-content;
+        padding: 5px;
+        background-color: #c95757;
+        color: white;
+        font-size: 0.8rem;
+      }
+      //   border: 1px solid #ccc;
+      input {
+        border: 1px solid #ccc;
+        width: 100%;
+        padding: 10px;
+      }
+
+      textarea {
+        width: 100%;
+        height: 500px;
+        resize: none;
+        padding: 10px;
+      }
+
+      button {
+        margin-top: 10px;
+        background-color: rgb(225, 225, 225);
+        padding: 15px 10px;
+      }
+    }
+  }
+}

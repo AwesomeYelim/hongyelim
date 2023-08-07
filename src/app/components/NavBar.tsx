@@ -70,8 +70,8 @@ export default function NavBar() {
         <Link href="/posts" className={classNames({ active: location?.includes("/posts") })}>
           Posts
         </Link>
-        <Link href="/contact" className={classNames({ active: location?.includes("/contact") })}>
-          Contact
+        <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
+          Memo
         </Link>
       </nav>
     </Nav>

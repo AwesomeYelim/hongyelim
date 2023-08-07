@@ -1,14 +1,15 @@
 "use client";
 
 import axios from "axios";
-import { FormEvent } from "react";
 import { useForm } from "react-hook-form";
+import { Props } from "../Tag";
 
-export const Add = (): JSX.Element => {
+export const Add = ({ selected, setSelected }: Props): JSX.Element => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const submitHandler = async (data: { [key in string]: string }) => {
@@ -20,28 +21,39 @@ export const Add = (): JSX.Element => {
       })
       .then((res) => {
         console.log(res.data);
+        if (setSelected) setSelected({ keyword: "" });
+        setValue("content", "");
+        setValue("title", "");
       });
   };
-
   return (
-    <div className="contact_wrap">
-      {/* <h1>무엇을 추가할 것인가 쿄쿄쿄</h1> */}
-
-      {/* <textarea
-        onKeyDown={(e) => {
-          console.log((e.target as EventTarget & { value: string }).value);
-        }}
-      /> */}
+    <div className="memo_wrap">
       <form onSubmit={handleSubmit(submitHandler)}>
         <label>title</label>
-        <input {...register("title", { required: true })} />
-        {errors.title && <p>Last name is required.</p>}
-        <label>content</label>
-        <input {...register("content", { required: true })} />
+        <input
+          {...register("title", {
+            required: true,
+            value: selected?.keyword,
+            onChange(e) {
+              if (setSelected) {
+                setSelected({ keyword: e.currentTarget.value });
+              }
+            },
+          })}
+          value={selected?.keyword}
+        />
+        {errors.title && <p>title is required.</p>}
+        <label>content(추가할 내용 및 생성할 내용들)</label>
+        <textarea
+          {...register("content", { required: true })}
+          // onKeyDown={(e) => {
+          //   console.log((e.target as EventTarget & { value: string }).value);
+          // }}
+        />
         {errors.content && <p>Please enter number for age.</p>}
         {/* <input {...register("age", { pattern: /\d+/ })} /> */}
 
-        <input type="submit" />
+        <button type="submit">제출</button>
       </form>
     </div>
   );
