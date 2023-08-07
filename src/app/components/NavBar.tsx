@@ -37,6 +37,14 @@ export default function NavBar() {
     return () => document.removeEventListener("scroll", scrollToHide);
   }, [navInfo]);
 
+  useEffect(() => {
+    if (dark) {
+      document.documentElement.dataset.theme = "dark";
+    } else {
+      document.documentElement.dataset.theme = "light";
+    }
+  }, []);
+
   return (
     <Nav $hide={navInfo.hide} className="nav_wrapper">
       <Link href="/" className="logo">
