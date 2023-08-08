@@ -9,25 +9,30 @@ export default function ProfilePage() {
       <h1>About me</h1>
       <div className="contnent_wrap">
         <div>
-          <Image className="main_img" src={main} alt="main yelim" width={150} height={150} priority />
+          <Image
+            className="main_img"
+            src={main}
+            alt="main yelim"
+            width={150}
+            height={150}
+            priority
+          />
           <Footer />
         </div>
         <div>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
-          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>`Hi there! this is yelim :), I am a web developer.`</p>
+          <br />
+          <b>Done is better than perfect</b>
+          <br />
+          <p>I learned how to finish through this work. </p>
+          <p>It was not an easy journey, </p>
+          <p>but I learned to put a lot of effort into making something !</p>
+          <p>it was and will be a very precious time for me.</p>
+          <br />
+
+          <p>
+            <b>Learning</b>, it is a great thing!
+          </p>
         </div>
       </div>
     </div>
