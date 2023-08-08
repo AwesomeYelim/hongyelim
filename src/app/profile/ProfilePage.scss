@@ -1,3 +1,20 @@
-.main_img {
-  border-radius: 100%;
+@import "src/app/components/common/scss/utils.scss";
+
+.profile_wrap {
+  height: calc(100vh - 450px);
+  h1 {
+    display: block;
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+  .contnent_wrap {
+    @include flex(center, center);
+    // height: inherit;
+    gap: 30px;
+    margin-top: 50px;
+    .main_img {
+      border-radius: 100%;
+    }
+  }
 }

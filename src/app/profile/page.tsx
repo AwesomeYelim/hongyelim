@@ -4,9 +4,23 @@ import "./ProfilePage.scss";
 
 export default function ProfilePage() {
   return (
-    <div>
-      <Image className="main_img" src={main} alt="main yelim" width={100} height={100} priority />
-      <p>Hi there! this is yelim, I am frontEnd Developer</p>
+    <div className="profile_wrap">
+      <h1>About me</h1>
+      <div className="contnent_wrap">
+        <Image className="main_img" src={main} alt="main yelim" width={150} height={150} priority />
+        <div>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+          <p>Hi there! this is yelim, I am a web developer.</p>
+        </div>
+      </div>
     </div>
   );
 }

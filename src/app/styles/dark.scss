@@ -1,14 +1,13 @@
 @import "src/app/components/common/scss/utils.scss";
 
 html {
-  transition: 0.2s ease-in-out;
+  // transition: 0.2s ease-in-out;
   &[data-theme="dark"] {
     --bg-color: #252527;
     --w: #fff;
     --font: #ccc;
     --mdblock: #2b2b2b;
     --active: #8a8a8a;
-
     background-color: var(--bg-color);
 
     /** main  */
@@ -24,6 +23,8 @@ html {
         color: var(--w);
       }
     }
+
+    /** profile  */
 
     /** nav bar  */
     .nav_wrapper {
@@ -44,6 +45,7 @@ html {
       }
     }
 
+    /** 공통  */
     .content {
       h1,
       label {
@@ -60,7 +62,29 @@ html {
           }
         }
       }
+      .profile_wrap {
+        h1 {
+          border-bottom: 1px solid #ccc;
+        }
+        p {
+          color: var(--font) !important;
+        }
+      }
+
+      /** post category  */
+      .tag_wrap {
+        p {
+          &:not(:first-child) {
+            color: var(--font) !important;
+          }
+          &:first-child {
+            border-bottom: 1px solid var(--w) !important;
+          }
+        }
+      }
     }
+
+    /** footer  */
     .footer_wrapper {
       footer {
         .icon_group {
@@ -85,14 +109,11 @@ html {
       }
     }
 
-    /** post category  */
-    .tag_wrap {
-      p {
-        &:not(:first-child) {
-          color: var(--font) !important;
-        }
-        &:first-child {
-          border-bottom: 1px solid var(--w) !important;
+    /** post  */
+    .techpost_page {
+      .post_title {
+        h3 {
+          color: var(--w);
         }
       }
     }

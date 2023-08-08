@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Props } from "../Tag";
 
@@ -10,6 +11,7 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
     handleSubmit,
     formState: { errors },
     setValue,
+    // setError,
   } = useForm();
 
   const submitHandler = async (data: { [key in string]: string }) => {
@@ -26,16 +28,17 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
         setValue("title", "");
       });
   };
+
   return (
     <div className="memo_wrap">
       <form onSubmit={handleSubmit(submitHandler)}>
         <label>Title</label>
         <input
           {...register("title", {
-            required: true,
+            required: { value: true, message: "is required" },
             pattern: {
               value: /^[a-zA-Z0-9]*$/,
-              message: "사용할수 없는 식임",
+              message: "only english words and number are allowed",
             },
             value: selected?.keyword,
             onChange(e) {
@@ -46,17 +49,15 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
           })}
           value={selected?.keyword}
         />
-        {errors.title && <p>title is required.</p>}
+        {errors.title && <p>{errors.title.message as string}</p>}
         <label>Content(추가할 내용 및 생성할 내용들)</label>
         <textarea
-          {...register("content", { required: true })}
+          {...register("content", { required: { value: true, message: "is required" } })}
           // onKeyDown={(e) => {
           //   console.log((e.target as EventTarget & { value: string }).value);
           // }}
         />
-        {errors.content && <p>Please enter contnent</p>}
-        {/* <input {...register("age", { pattern: /\d+/ })} /> */}
-
+        {errors.content && <p>{errors.content.message as string}</p>}
         <button type="submit">제출</button>
       </form>
     </div>

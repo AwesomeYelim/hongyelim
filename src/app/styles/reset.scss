@@ -15,6 +15,7 @@
 html,
 body {
   box-sizing: border-box;
+  transition: 0.2s ease-in-out;
 }
 
 form {
@@ -64,4 +65,11 @@ img {
 ul,
 li {
   list-style-type: none;
+}
+
+h1 {
+  font-size: 3rem;
+}
+span {
+  color: rgb(187, 187, 187);
 }

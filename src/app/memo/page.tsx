@@ -10,6 +10,12 @@ export default async function MemoPage() {
 
   return (
     <div className="memo_page">
+      <div className="memo_title">
+        <h1>Memo</h1>
+        <h1>for</h1>
+        <h1>Memories</h1>
+        <span>off the top of my head....</span>
+      </div>
       <Memo posts={posts} />
     </div>
   );

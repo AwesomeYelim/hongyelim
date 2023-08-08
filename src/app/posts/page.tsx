@@ -9,8 +9,8 @@ export default async function PostPage() {
   return (
     <div className="techpost_page">
       <div className="post_title">
-        <h3>기술블로그</h3>
-        this is the title of the post
+        <h1>Just Remember !</h1>
+        <span>off the top of my head....</span>
       </div>
       <Techlog posts={posts} />
     </div>
