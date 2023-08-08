@@ -5,8 +5,8 @@
       "content": "호락호락하진 않은 도마뱀..",
       "image": "deepdive",
       "tag": "javascript",
-      "like": true,
-      "like_count": 1,
+      "like": false,
+      "like_count": 0,
       "created_at": 1691116343
    },
    {
