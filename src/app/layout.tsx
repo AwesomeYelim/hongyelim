@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar";
 import "./styles/reset.scss";
 import "./styles/layout.scss";
 import "./styles/dark.scss";
+import { Footer } from "./Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
@@ -34,24 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="wrapper">
           <NavBar />
           <div className="content">{children}</div>
-          <div className="footer_wrapper">
-            <footer>
-              <div className="icon_group">
-                <Link href="mailto:uiop01900@gmail.com" target="_blank">
-                  <i className="email" />
-                </Link>
-                <Link href="https://github.com/AwesomeYelim" target="_blank">
-                  <i className="github" />
-                </Link>
-                <Link href="https://www.instagram.com/honyelim" target="_blank">
-                  <i className="instagram" />
-                </Link>
-              </div>
-              <div className="detail">
-                <Link href="/">© 2023 hongyelim. All Rights Reserved.</Link>
-              </div>
-            </footer>
-          </div>
+          <Footer detail />
         </div>
       </body>
     </html>
