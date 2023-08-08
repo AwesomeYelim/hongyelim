@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="wrapper">
             <NavBar />
             <div className="content">{children}</div>
-            <Footer detail />
+            <Footer detail={true} />
           </div>
         </body>
       </StyledComponentsRegistry>

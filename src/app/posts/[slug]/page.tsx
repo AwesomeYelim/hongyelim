@@ -34,7 +34,7 @@ export default async function page({ params: { slug } }: Props) {
       </div>
       <p>{content}</p>
       <Heart {...post} />
-      <MdfileViewer mdPost={mdPost} />
+      <MdfileViewer mdPost={mdPost} useToc={true} />
       <PrevNextButton id={id} />
     </>
   );

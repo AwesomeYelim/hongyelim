@@ -26,6 +26,17 @@ html {
 
     /** profile  */
 
+    /** memo  */
+    .memo_page {
+      .memo_wrap {
+        form {
+          .content_wrap {
+            background-color: transparent;
+            border: 1px solid #ffd484;
+          }
+        }
+      }
+    }
     /** nav bar  */
     .nav_wrapper {
       background-color: var(--bg-color);

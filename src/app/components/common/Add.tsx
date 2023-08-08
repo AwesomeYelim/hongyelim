@@ -1,10 +1,13 @@
 "use client";
 
 import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Props } from "../Tag";
+import { MdfileViewer } from "./MdfileViewer";
 
 export const Add = ({ selected, setSelected }: Props): JSX.Element => {
+  const [content, setContent] = useState("");
   const {
     register,
     handleSubmit,
@@ -13,7 +16,6 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
     getValues,
     // setError,
   } = useForm();
-  console.log(getValues("content"));
 
   const submitHandler = async (data: { [key in string]: string }) => {
     await axios
@@ -27,6 +29,7 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
         if (setSelected) setSelected({ keyword: "" });
         setValue("content", "");
         setValue("title", "");
+        setContent("");
       });
   };
 
@@ -51,15 +54,27 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
           value={selected?.keyword}
         />
         {errors.title && <p>{errors.title.message as string}</p>}
-        <label>Content(추가할 내용 및 생성할 내용들)</label>
-        <textarea
-          {...register("content", { required: { value: true, message: "is required" } })}
-          // onKeyDown={(e) => {
-          //   console.log((e.target as EventTarget & { value: string }).value);
-          // }}
-        />
+
+        <div className="content_wrap">
+          <div className="write_area">
+            <label>Content (add / generate)</label>
+            <textarea
+              {...register("content", { required: { value: true, message: "is required" } })}
+              onChange={(e) => {
+                setContent(e.currentTarget.value);
+              }}
+              // onKeyDown={(e) => {
+              //   console.log((e.target as EventTarget & { value: string }).value);
+              // }}
+            />
+          </div>
+          <div className="written_area">
+            <label>Viwer</label>
+            <MdfileViewer mdPost={content} />
+          </div>
+        </div>
         {errors.content && <p>{errors.content.message as string}</p>}
-        <button type="submit">제출</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

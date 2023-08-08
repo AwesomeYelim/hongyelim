@@ -7,13 +7,14 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
 import { ElementContent } from "react-markdown/lib/ast-to-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { titleCondition } from "./functions/ellipsis";
 // import { useDark } from "../hooks";
 import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
   mdPost: string;
+  useToc?: boolean;
 }
 
 const TOCwrapper = styled.div`
@@ -53,9 +54,10 @@ const TOCwrapper = styled.div`
   }
 `;
 
-export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
-  const innerText = mdPost.match(/#+\s(.+)/g);
+export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
+  const innerText = mdPost?.match(/#+\s(.+)/g);
   const [target, setTarget] = useState("");
+  const { mdRef } = { mdRef: useRef<HTMLDivElement>(null) };
 
   const post: {
     [key in string]: number;
@@ -131,10 +133,24 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
     document.addEventListener("scroll", scrollEffect);
   }, []);
 
+  // memo 에서 md 파일 입력시 스크롤 이벤트
+  useEffect(() => {
+    if (mdRef.current && mdRef.current.clientHeight < mdRef.current?.scrollHeight) {
+      mdRef.current.scroll({ top: mdRef.current?.scrollHeight, behavior: "smooth" });
+    }
+  }, [mdPost]);
+
+  const headingTag = useToc && {
+    h1: tocHandler,
+    h2: tocHandler,
+    h3: tocHandler,
+    h4: tocHandler,
+  };
+
   return (
     <>
       {/* markdown contents */}
-      <div className="md_wrapper">
+      <div className="md_wrapper" ref={mdRef}>
         <ReactMarkdown
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
@@ -151,30 +167,29 @@ export const MdfileViewer = ({ mdPost }: MarkdownViewProps): JSX.Element => {
                 </code>
               );
             },
-            h1: tocHandler,
-            h2: tocHandler,
-            h3: tocHandler,
-            h4: tocHandler,
+            ...headingTag,
           }}>
           {mdPost}
         </ReactMarkdown>
       </div>
       {/* 오른쪽 TOC */}
-      <TOCwrapper>
-        <div className="toc_content">
-          <span
-            onClick={() => {
-              window.scroll({ left: 0, top: 0, behavior: "smooth" });
-              setTarget("");
-            }}>
-            목차
-          </span>
-          {innerText?.map((el) => {
-            const [level, children] = el.split("# ");
-            return heading({ level: level.length + 1, children });
-          })}
-        </div>
-      </TOCwrapper>
+      {useToc && (
+        <TOCwrapper>
+          <div className="toc_content">
+            <span
+              onClick={() => {
+                window.scroll({ left: 0, top: 0, behavior: "smooth" });
+                setTarget("");
+              }}>
+              목차
+            </span>
+            {innerText?.map((el) => {
+              const [level, children] = el.split("# ");
+              return heading({ level: level.length + 1, children });
+            })}
+          </div>
+        </TOCwrapper>
+      )}
     </>
   );
 };
