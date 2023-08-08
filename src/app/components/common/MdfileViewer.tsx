@@ -133,7 +133,7 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
     document.addEventListener("scroll", scrollEffect);
   }, []);
 
-  // memo 에서 md 파일 입력시 스크롤 이벤트
+  /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
   useEffect(() => {
     if (mdRef.current && mdRef.current.clientHeight < mdRef.current?.scrollHeight) {
       mdRef.current.scroll({ top: mdRef.current?.scrollHeight, behavior: "smooth" });

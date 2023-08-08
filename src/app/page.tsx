@@ -1,7 +1,6 @@
 import { getPosts } from "@/service/posts";
 import Link from "next/link";
 import Image from "next/image";
-import main from "../../public/images/main.png";
 import "./styles/page.scss";
 
 export default async function HomePage() {
