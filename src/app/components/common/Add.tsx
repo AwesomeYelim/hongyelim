@@ -1,7 +1,6 @@
 "use client";
 
 import axios from "axios";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Props } from "../Tag";
 
@@ -11,8 +10,10 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
     // setError,
   } = useForm();
+  console.log(getValues("content"));
 
   const submitHandler = async (data: { [key in string]: string }) => {
     await axios

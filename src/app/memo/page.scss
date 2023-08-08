@@ -1,11 +1,8 @@
 @import "src/app/components/common/scss/utils.scss";
 
 .memo_page {
-  @include flex(center, center);
-  margin-top: 10%;
-  .memo_title {
-    margin: 0 50px 0 20px;
-    // text-align: end;
+  h1 {
+    margin-bottom: 60px;
   }
   .memo_wrap {
     @include flex(center, initial);
@@ -32,7 +29,7 @@
       textarea {
         border: 1px solid #ccc;
         width: 100%;
-        height: 200px;
+        height: 300px;
         resize: none;
         padding: 10px;
       }

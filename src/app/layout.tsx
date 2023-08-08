@@ -7,6 +7,7 @@ import "./styles/reset.scss";
 import "./styles/layout.scss";
 import "./styles/dark.scss";
 import { Footer } from "./Footer";
+import StyledComponentsRegistry from "./registry";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
@@ -31,13 +32,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `,
           }}></script>
       </head>
-      <body className={inter.className}>
-        <div className="wrapper">
-          <NavBar />
-          <div className="content">{children}</div>
-          <Footer detail />
-        </div>
-      </body>
+      <StyledComponentsRegistry>
+        <body className={inter.className}>
+          <div className="wrapper">
+            <NavBar />
+            <div className="content">{children}</div>
+            <Footer detail />
+          </div>
+        </body>
+      </StyledComponentsRegistry>
     </html>
   );
 }
