@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import LocalStorage from "./common/functions/localstorage";
 import "./Tag.scss";
 
 export type Selected = {
@@ -68,9 +69,9 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
                 href="/posts"
                 onClick={(e) => {
                   if (e.currentTarget.innerText === "Tag") {
-                    localStorage.setItem("tag", "All");
+                    LocalStorage.setItem("tag", "All");
                   }
-                  localStorage.setItem("tag", e.currentTarget.innerText);
+                  LocalStorage.setItem("tag", e.currentTarget.innerText);
                 }}>
                 {keyword}
               </Link>

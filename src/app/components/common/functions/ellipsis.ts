@@ -2,7 +2,7 @@
  * 1. 컴포넌트 : client\src\common\functions\ellipsis.ts
  * 2. 작성일 : 2023.06.14 / 15시 59분 00초
  * 3. 작성자 : 홍예림
- * 4. 설명 : **외국어 적용시** 말줄임표 (...) ellipsis 가 적용된 태그에만 title을 표시
+ * 4. 설명 :  말줄임표 (...) ellipsis 가 적용된 태그에만 title을 표시
  */
 
 export interface TitleEl extends Element {

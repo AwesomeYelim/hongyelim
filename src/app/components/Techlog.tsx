@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import LocalStorage from "./common/functions/localstorage";
 import Link from "next/link";
 import { Post } from "@/service/posts";
 import classNames from "classnames";
@@ -8,7 +9,7 @@ import axios from "axios";
 import { Selected, Tag } from "./Tag";
 
 export default function Techlog({ posts }: { posts: Post[] }) {
-  const lo = localStorage.getItem("tag") as string;
+  const lo = LocalStorage.getItem("tag") as string;
 
   const [selected, setSelected] = useState<Selected>({
     keyword: "All",
@@ -36,7 +37,7 @@ export default function Techlog({ posts }: { posts: Post[] }) {
 
         console.log(selected);
 
-        localStorage.removeItem("tag");
+        LocalStorage.removeItem("tag");
       }
     });
   };
