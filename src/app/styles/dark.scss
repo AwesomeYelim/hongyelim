@@ -10,6 +10,46 @@ html {
     --active: #8a8a8a;
     background-color: var(--bg-color);
 
+    /** 공통  */
+    .content {
+      h1,
+      label,
+      b {
+        color: var(--font) !important;
+      }
+      .list {
+        li {
+          border-bottom: 1px solid var(--w) !important;
+
+          * {
+            color: var(--w) !important;
+
+            // background-color: #5b6370 !important;
+          }
+        }
+      }
+
+      .profile_wrap {
+        h1 {
+          border-bottom: 1px solid #ccc;
+        }
+        p {
+          color: var(--font) !important;
+        }
+      }
+
+      /** post category  */
+      .tag_wrap {
+        p {
+          &:not(:first-child) {
+            color: var(--font) !important;
+          }
+          &:first-child {
+            border-bottom: 1px solid var(--w) !important;
+          }
+        }
+      }
+    }
     /** main  */
     .main_wrapper {
       svg {
@@ -21,6 +61,19 @@ html {
       }
       ul li a {
         color: var(--w);
+      }
+      .tag_wrap {
+        p {
+          background-color: transparent !important;
+
+          border: 1px solid #ccc !important;
+          // &:first-child {
+          //   border-bottom: none !important;
+          // }
+          a {
+            color: var(--font) !important;
+          }
+        }
       }
     }
 
@@ -52,49 +105,6 @@ html {
           background: url($img) no-repeat -95px -6px;
           width: 12px;
           height: 20px;
-        }
-      }
-    }
-
-    /** 공통  */
-    .content {
-      h1,
-      label,
-      b {
-        color: var(--font) !important;
-      }
-      .list {
-        li {
-          border-bottom: 1px solid var(--w) !important;
-
-          * {
-            color: var(--w) !important;
-
-            // background-color: #5b6370 !important;
-          }
-        }
-      }
-      .profile_wrap {
-        h1 {
-          border-bottom: 1px solid #ccc;
-        }
-        p {
-          color: var(--font) !important;
-        }
-      }
-
-      /** post category  */
-      .tag_wrap {
-        p {
-          &:not(:first-child) {
-            color: var(--font) !important;
-          }
-          &:first-child {
-            border-bottom: 1px solid var(--w) !important;
-          }
-          a {
-            color: var(--font) !important;
-          }
         }
       }
     }

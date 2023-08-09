@@ -29,7 +29,7 @@ export default function ProfilePage() {
           </p>
         </div>
       </div>
-      <Link href={"/"} className="resume_wrap">
+      <Link href={"/profile/resume"} className="resume_wrap">
         <b className="resume">→ &nbsp; resume</b>
       </Link>
     </div>

@@ -35,8 +35,6 @@ export default function Techlog({ posts }: { posts: Post[] }) {
           });
         }
 
-        console.log(selected);
-
         LocalStorage.removeItem("tag");
       }
     });
