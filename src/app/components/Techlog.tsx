@@ -8,14 +8,36 @@ import axios from "axios";
 import { Selected, Tag } from "./Tag";
 
 export default function Techlog({ posts }: { posts: Post[] }) {
+  const lo = localStorage.getItem("tag") as string;
+
   const [selected, setSelected] = useState<Selected>({
     keyword: "All",
-    posts: [...posts],
+    posts: [],
   });
 
   const callPost = async () => {
     await axios.get("/api/heart").then((res) => {
-      setSelected({ keyword: "All", posts: res.data });
+      setSelected({
+        keyword: "All",
+        posts: res.data,
+      });
+      if (lo) {
+        if (lo === "Tag") {
+          setSelected({
+            keyword: "All",
+            posts: res.data,
+          });
+        } else {
+          setSelected({
+            keyword: lo as string,
+            posts: res.data.filter((el: Post) => el.tag === lo),
+          });
+        }
+
+        console.log(selected);
+
+        localStorage.removeItem("tag");
+      }
     });
   };
 
@@ -44,18 +66,18 @@ export default function Techlog({ posts }: { posts: Post[] }) {
 
               return (
                 <li key={id}>
-                  <Link href={`/posts/${id}_${title}`}>
-                    <div className="text_wrapper">
+                  <div className="text_wrapper">
+                    <Link href={`/posts/${id}_${title}`}>
                       <h2>{title}</h2>
-                      <span>{content}</span>
-                    </div>
-                    {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
-                    <div className="bottom_wrap">
-                      <span className="date">{date}</span>
-                      <i className={classNames("static_heart", { like })} />
-                      <span className="like">{like_count}</span>
-                    </div>
-                  </Link>
+                    </Link>
+                    <span>{content}</span>
+                  </div>
+                  {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
+                  <div className="bottom_wrap">
+                    <span className="date">{date}</span>
+                    <i className={classNames("static_heart", { like })} />
+                    <span className="like">{like_count}</span>
+                  </div>
                 </li>
               );
             })}

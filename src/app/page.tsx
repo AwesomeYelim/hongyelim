@@ -1,6 +1,7 @@
 import { getPosts } from "@/service/posts";
 import Link from "next/link";
 import Image from "next/image";
+import { Tag } from "./components/Tag";
 import "./styles/page.scss";
 
 export default async function HomePage() {
@@ -20,19 +21,20 @@ export default async function HomePage() {
             className="start"></path>
         </g>
       </svg>
+      <Tag posts={posts} />
 
-      <ul className="main_posts">
+      {/* <ul className="main_posts">
         {posts.map(({ id, title, image }) => {
           return (
             <li key={id}>
               <Link href={`/posts/${id}_${title}`}>
-                <Image src={`/images/${image}.png`} alt={image} width={40} height={20} />
-                {title}
+                <Image className="img" src={`/images/${image}.png`} alt={image} width={40} height={40} />
+                <span>{title}</span>
               </Link>
             </li>
           );
         })}
-      </ul>
+      </ul> */}
     </div>
   );
 }

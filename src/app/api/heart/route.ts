@@ -8,8 +8,6 @@ export async function POST(req: Request, res: Response) {
   let posts = await getPosts();
   const clientIp = req.headers.get("x-forwarded-for");
 
-  console.log(clientIp);
-
   process.cwd();
   const filePath = path.join(process.cwd(), "data", "posts.json");
   if (!data) return NextResponse.json({ message: "Missing Data" });

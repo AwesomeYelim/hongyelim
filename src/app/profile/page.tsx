@@ -1,6 +1,7 @@
 import Image from "next/image";
 import main from "../../../public/images/main.png";
 import { Footer } from "../Footer";
+import Link from "next/link";
 import "./ProfilePage.scss";
 
 export default function ProfilePage() {
@@ -9,18 +10,11 @@ export default function ProfilePage() {
       <h1>About me</h1>
       <div className="contnent_wrap">
         <div>
-          <Image
-            className="main_img"
-            src={main}
-            alt="main yelim"
-            width={150}
-            height={150}
-            priority
-          />
+          <Image className="main_img" src={main} alt="main yelim" width={150} height={150} priority />
           <Footer />
         </div>
         <div>
-          <p>`Hi there! this is yelim :), I am a web developer.`</p>
+          <p>Hi there! this is yelim :), I am a web developer.</p>
           <br />
           <b>Done is better than perfect</b>
           <br />
@@ -35,6 +29,9 @@ export default function ProfilePage() {
           </p>
         </div>
       </div>
+      <Link href={"/"} className="resume_wrap">
+        <b className="resume">→ &nbsp; resume</b>
+      </Link>
     </div>
   );
 }

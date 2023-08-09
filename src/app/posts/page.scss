@@ -13,51 +13,48 @@
         flex-wrap: wrap;
         width: 98%;
         li {
+          @include flex(flex-start, initial);
+          flex-direction: column;
           width: inherit;
-          a {
-            @include flex(flex-start, initial);
+          height: 170px;
+          gap: 30px;
+          box-sizing: border-box;
+          padding: 30px 30px 50px 20px;
+          border-bottom: 1px solid rgb(0, 0, 0);
+          transition: 0.3s linear;
+
+          .text_wrapper {
+            @include flex(initial, initial);
             flex-direction: column;
-            width: inherit;
-            height: 170px;
-            gap: 30px;
-            box-sizing: border-box;
-            padding: 30px 30px 50px 20px;
-            border-bottom: 1px solid rgb(0, 0, 0);
-            transition: 0.3s linear;
+            gap: 10px;
 
-            .text_wrapper {
-              @include flex(initial, initial);
-              flex-direction: column;
-              gap: 10px;
-
-              span {
-                font-size: 13px;
-              }
+            span {
+              font-size: 13px;
             }
+          }
 
-            .bottom_wrap {
-              @include flex(center, initial);
-              gap: 10px;
-              padding-left: 5px;
-              // height: 100px;
-              font-size: 0.9rem;
-              > * {
-                color: rgb(118, 118, 118);
-              }
-              .date {
-                margin-right: 20px;
-              }
-              .static_heart {
-                background: url($img) no-repeat -4px -5px;
+          .bottom_wrap {
+            @include flex(center, initial);
+            gap: 10px;
+            padding-left: 5px;
+            // height: 100px;
+            font-size: 0.9rem;
+            > * {
+              color: rgb(118, 118, 118);
+            }
+            .date {
+              margin-right: 20px;
+            }
+            .static_heart {
+              background: url($img) no-repeat -4px -5px;
+              width: 25px;
+              height: 22px;
+
+              &.like {
+                transform: rotateY(180deg);
+                background: url($img) no-repeat -32px -5px;
                 width: 25px;
                 height: 22px;
-
-                &.like {
-                  transform: rotateY(180deg);
-                  background: url($img) no-repeat -32px -5px;
-                  width: 25px;
-                  height: 22px;
-                }
               }
             }
           }

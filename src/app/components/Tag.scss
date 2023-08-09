@@ -19,6 +19,9 @@
       color: orange;
       border-bottom: 1px solid black;
       padding-bottom: 10px;
+      a {
+        font-weight: 700;
+      }
     }
 
     &.active {

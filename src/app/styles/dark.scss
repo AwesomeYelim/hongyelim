@@ -59,11 +59,12 @@ html {
     /** 공통  */
     .content {
       h1,
-      label {
+      label,
+      b {
         color: var(--font) !important;
       }
       .list {
-        li a {
+        li {
           border-bottom: 1px solid var(--w) !important;
 
           * {
@@ -90,6 +91,9 @@ html {
           }
           &:first-child {
             border-bottom: 1px solid var(--w) !important;
+          }
+          a {
+            color: var(--font) !important;
           }
         }
       }

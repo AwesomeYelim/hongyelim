@@ -2,6 +2,7 @@
 
 import { Post } from "@/service/posts";
 import classNames from "classnames";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import "./Tag.scss";
@@ -31,6 +32,9 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
   useEffect(() => {
     // prettier-ignore
     switch (location) {
+      case "/": {
+        setList(["Tag", ...tag]);
+      } break;
       case "/posts": {
         setList(["All", ...tag]);
       } break;
@@ -59,7 +63,20 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
                 }
               }
             }}>
-            {keyword}
+            {list[0] === "Tag" ? (
+              <Link
+                href="/posts"
+                onClick={(e) => {
+                  if (e.currentTarget.innerText === "Tag") {
+                    localStorage.setItem("tag", "All");
+                  }
+                  localStorage.setItem("tag", e.currentTarget.innerText);
+                }}>
+                {keyword}
+              </Link>
+            ) : (
+              <>{keyword}</>
+            )}
           </p>
         );
       })}
