@@ -15,11 +15,11 @@
     cursor: pointer;
     margin: 5px 0 5px 0;
     font-size: 15px;
-    border: 1px solid transparent !important;
+    border: 1px solid transparent;
 
     &:first-child {
       color: orange;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid black !important;
       padding-bottom: 10px;
       a {
         font-weight: 700;
