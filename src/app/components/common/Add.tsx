@@ -33,11 +33,11 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
       });
   };
 
-  const click = async () => {
-    await axios.get("/api/dbconfig").then((res) => {
-      console.log(res.data);
-    });
-  };
+  // const click = async () => {
+  //   await axios.get("/api/dbconfig").then((res) => {
+  //     console.log(res.data);
+  //   });
+  // };
 
   return (
     <div className="memo_wrap">
@@ -65,7 +65,9 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
           <div className="write_area">
             <label>Content (add / generate)</label>
             <textarea
-              {...register("content", { required: { value: true, message: "is required" } })}
+              {...register("content", {
+                required: { value: true, message: "is required" },
+              })}
               onChange={(e) => {
                 setContent(e.currentTarget.value);
               }}
@@ -80,9 +82,7 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
           </div>
         </div>
         {errors.content && <p>{errors.content.message as string}</p>}
-        <button type="submit" onClick={click}>
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
