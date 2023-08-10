@@ -30,7 +30,7 @@ export default function ProfilePage() {
         </div>
       </div>
       <Link
-        href="https://drive.google.com/file/d/11a00y_lAUhjPDbrAXpQ4DF-Sk-bskIiK/view?usp=drive_link"
+        href="https://drive.google.com/file/d/1dNUSCOkJcFycJ5caNP2QxtwXrfRxw4AM/view?usp=drive_link"
         className="resume_wrap"
         target="_blank">
         <b className="resume">→ &nbsp; resume</b>
