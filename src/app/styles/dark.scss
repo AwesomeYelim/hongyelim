@@ -29,12 +29,19 @@ html {
         }
       }
 
+      /** profile  */
       .profile_wrap {
         h1 {
           border-bottom: 1px solid #ccc;
         }
         p {
           color: var(--font) !important;
+        }
+
+        .resume {
+          &:hover {
+            border-bottom: 1px solid #ccc;
+          }
         }
       }
 

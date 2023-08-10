@@ -33,6 +33,12 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
       });
   };
 
+  const click = async () => {
+    await axios.get("/api/dbconfig").then((res) => {
+      console.log(res.data);
+    });
+  };
+
   return (
     <div className="memo_wrap">
       <form onSubmit={handleSubmit(submitHandler)}>
@@ -74,7 +80,9 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
           </div>
         </div>
         {errors.content && <p>{errors.content.message as string}</p>}
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={click}>
+          Submit
+        </button>
       </form>
     </div>
   );

@@ -40,7 +40,5 @@ export async function POST(req: Request, res: Response) {
 export async function GET() {
   let posts = await getPosts();
 
-  // if (!data) return NextResponse.json({ message: "Missing Data" });
-
   return NextResponse.json(posts);
 }
