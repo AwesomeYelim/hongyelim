@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { atom, useRecoilState, useRecoilValue } from "recoil";
 import LocalStorage from "./common/functions/localstorage";
 import "./Tag.scss";
 
@@ -19,6 +20,11 @@ export interface Props {
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
 
+// const tex = atom({
+//   key: "yelim", // unique ID (with respect to other atoms/selectors)
+//   default: "asdasdasd", // default value (aka initial value)
+// });
+
 export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
@@ -29,6 +35,11 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
     /** title 별 list   */
     title: posts.map((item) => item.title),
   };
+
+  // // const [text, setText] = useRecoilState(textState);
+  // const text = useRecoilValue(tex);
+
+  // console.log(text);
 
   useEffect(() => {
     // prettier-ignore

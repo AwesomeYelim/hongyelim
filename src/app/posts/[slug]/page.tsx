@@ -20,11 +20,11 @@ export default async function page({ params: { slug } }: Props) {
   const { title, content, id } = post;
 
   let { image } = post;
-  fs.access(`public/images/${image}.png`, async (err) => {
-    if (err) {
-      image = "empty";
-    }
-  });
+  // fs.access(`public/images/${image}.png`, async (err) => {
+  //   if (err) {
+  //     image = "empty";
+  //   }
+  // });
 
   return (
     <>
