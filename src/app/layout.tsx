@@ -27,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" suppressHydrationWarning={true}>
       <head>
         <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
+        <meta name="naver-site-verification" content="02dbe79f29534a18b8d52a58d5ccfeeabfc07b3d" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
