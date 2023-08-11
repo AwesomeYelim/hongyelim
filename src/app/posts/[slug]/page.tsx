@@ -32,7 +32,6 @@ export default async function page({ params: { slug } }: Props) {
       <div className="detail_img">
         <Image src={`/images/${image}.png`} alt={image} width={1000} height={1000} priority />
       </div>
-      <p>{content}</p>
       <Heart {...post} />
       <MdfileViewer mdPost={mdPost} useToc={true} />
       <PrevNextButton id={id} />

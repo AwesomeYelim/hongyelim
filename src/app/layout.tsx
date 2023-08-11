@@ -8,6 +8,8 @@ import "./styles/layout.scss";
 import "./styles/dark.scss";
 import { Footer } from "./Footer";
 import StyledComponentsRegistry from "./registry";
+import Recoil from "./components/Recoil";
+import ReactQuery from "./components/ReactQuery";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
@@ -24,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <head>
+        <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -36,7 +39,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body className={inter.className}>
           <div className="wrapper">
             <NavBar />
-            <div className="content">{children}</div>
+            <Recoil>
+              <ReactQuery>
+                <div className="content">{children}</div>
+              </ReactQuery>
+            </Recoil>
             <Footer detail={true} />
           </div>
         </body>

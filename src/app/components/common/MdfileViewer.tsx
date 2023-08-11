@@ -9,6 +9,8 @@ import { styled } from "styled-components";
 import { ElementContent } from "react-markdown/lib/ast-to-react";
 import { useEffect, useRef, useState } from "react";
 import { titleCondition } from "./functions/ellipsis";
+import Image from "next/image";
+
 // import { useDark } from "../hooks";
 import "./MdfileViewer.scss";
 
@@ -168,6 +170,19 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
               );
             },
             ...headingTag,
+            img: ({ node }) => {
+              return (
+                <Image
+                  className="main_img"
+                  src={`/images/${node.properties?.src}`}
+                  alt="mdImag"
+                  width={500}
+                  height={150}
+                  style={{ width: "70%", height: "auto" }}
+                  priority
+                />
+              );
+            },
           }}>
           {mdPost}
         </ReactMarkdown>

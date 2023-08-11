@@ -17,13 +17,21 @@ model users {
   validated Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  todo      todo?
+  todo      todo[]
 }
 
 model todo {
   id        Int     @id @default(autoincrement())
   todoText  String
   completed Boolean
-  userIp    Int     @unique
-  user      users   @relation(fields: [userIp], references: [id])
+  userID    Int    
+  user      users   @relation(fields: [userID], references: [id])
+  tag tags[]
+}
+
+
+model tags {
+  id Int @id @default(autoincrement())
+  tagName String
+  todo todo[]
 }

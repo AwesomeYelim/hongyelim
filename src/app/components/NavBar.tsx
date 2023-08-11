@@ -73,6 +73,9 @@ export default function NavBar() {
         <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
           Memo
         </Link>
+        <Link href="/archives" className={classNames({ active: location?.includes("/archives") })}>
+          Archives
+        </Link>
       </nav>
     </Nav>
   );
