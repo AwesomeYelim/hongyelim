@@ -1,14 +1,21 @@
-'use client'
+"use client";
 
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactNode } from 'react'
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { ReactNode } from "react";
+import axios from "axios";
 
 type Props = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export default function ReactQuery({ children }: Props) {
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={true} />
+      {children}
+    </QueryClientProvider>
+  );
 }

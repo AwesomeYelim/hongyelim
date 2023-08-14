@@ -23,30 +23,38 @@ export const metadata = {
   },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const posts = await getPosts();
 
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <head>
-        <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
+        <meta
+          name="google-site-verification"
+          content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
             const modecookie = document.cookie.match('theme=([^;]*)(;|$)')
             document.documentElement.dataset.theme = modecookie[1]
           `,
-          }}></script>
+          }}
+        ></script>
       </head>
       <StyledComponentsRegistry>
         <body className={inter.className}>
           <div className="wrapper">
             <NavBar />
-            <Recoil posts={posts}>
-              <ReactQuery>
+            <ReactQuery>
+              <Recoil>
                 <div className="content">{children}</div>
-              </ReactQuery>
-            </Recoil>
+              </Recoil>
+            </ReactQuery>
             <Footer detail={true} />
           </div>
         </body>

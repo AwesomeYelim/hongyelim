@@ -7,37 +7,51 @@ import { Post } from "@/service/posts";
 import classNames from "classnames";
 import axios from "axios";
 import { Selected, Tag } from "./Tag";
+import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
+import { postsAtom } from "./Recoil";
+
+const fetchFn = () => {
+  return axios.get("/api");
+};
 
 export default function Techlog({ posts }: { posts: Post[] }) {
   const lo = LocalStorage.getItem("tag") as string;
+  const data = useRecoilValue(postsAtom);
+  // const { data } = useQuery({
+  //   queryKey: "postsData",
+  //   queryFn: () =>
+  //     axios.get("/api").then((res) => {
+  //       return res.data;
+  //     }),
+  //   enabled: false,
+  // });
 
   const [selected, setSelected] = useState<Selected>({
     keyword: "All",
-    posts: [],
+    posts: data,
   });
 
-  const callPost = async () => {
-    await axios.get("/api/heart").then((res) => {
-      setSelected({
-        keyword: "All",
-        posts: res.data,
-      });
-      if (lo) {
-        if (lo === "Tag") {
-          setSelected({
-            keyword: "All",
-            posts: res.data,
-          });
-        } else {
-          setSelected({
-            keyword: lo as string,
-            posts: res.data.filter((el: Post) => el.tag === lo),
-          });
-        }
-
-        LocalStorage.removeItem("tag");
-      }
+  const callPost = () => {
+    setSelected({
+      keyword: "All",
+      posts: data,
     });
+    if (lo) {
+      if (lo === "Tag") {
+        setSelected({
+          keyword: "All",
+          posts: data,
+        });
+      } else {
+        setSelected({
+          keyword: lo as string,
+          posts: data.filter((el: Post) => el.tag === lo),
+        });
+      }
+
+      LocalStorage.removeItem("tag");
+    }
   };
 
   useEffect(() => {
@@ -56,30 +70,35 @@ export default function Techlog({ posts }: { posts: Post[] }) {
       <div className="list_wrapper">
         <ul className="list">
           {selected &&
-            selected.posts?.map(({ id, title, image, like, like_count, content, created_at }) => {
-              const date = new Date(created_at * 1000).toLocaleDateString("ko-kr", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              });
+            selected.posts?.map(
+              ({ id, title, image, like, like_count, content, created_at }) => {
+                const date = new Date(created_at * 1000).toLocaleDateString(
+                  "ko-kr",
+                  {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  }
+                );
 
-              return (
-                <li key={id}>
-                  <div className="text_wrapper">
-                    <Link href={`/posts/${id}_${title}`}>
-                      <h2>{title}</h2>
-                    </Link>
-                    <span>{content}</span>
-                  </div>
-                  {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
-                  <div className="bottom_wrap">
-                    <span className="date">{date}</span>
-                    <i className={classNames("static_heart", { like })} />
-                    <span className="like">{like_count}</span>
-                  </div>
-                </li>
-              );
-            })}
+                return (
+                  <li key={id}>
+                    <div className="text_wrapper">
+                      <Link href={`/posts/${id}_${title}`}>
+                        <h2>{title}</h2>
+                      </Link>
+                      <span>{content}</span>
+                    </div>
+                    {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
+                    <div className="bottom_wrap">
+                      <span className="date">{date}</span>
+                      <i className={classNames("static_heart", { like })} />
+                      <span className="like">{like_count}</span>
+                    </div>
+                  </li>
+                );
+              }
+            )}
         </ul>
       </div>
     </div>
