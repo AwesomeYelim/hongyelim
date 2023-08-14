@@ -79,10 +79,9 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
               <Link
                 href="/posts"
                 onClick={(e) => {
-                  if (e.currentTarget.innerText === "Tag") {
-                    LocalStorage.setItem("tag", "All");
+                  if (e.currentTarget.innerText !== "Tag") {
+                    LocalStorage.setItem("tag", e.currentTarget.innerText);
                   }
-                  LocalStorage.setItem("tag", e.currentTarget.innerText);
                 }}
               >
                 {keyword}

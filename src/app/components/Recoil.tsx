@@ -23,21 +23,21 @@ export const postsAtom = atom<Post[]>({
 });
 
 export default function Recoil({ children }: Props) {
-  const { data } = useQuery({
-    queryKey: "postsData",
-    queryFn: () =>
-      axios.get("/api").then((res) => {
-        return res.data;
-      }),
-  });
+  // const { data } = useQuery({
+  //   queryKey: "postsData",
+  //   queryFn: () =>
+  //     axios.get("/api").then((res) => {
+  //       return res.data;
+  //     }),
+  // });
 
   const RecoilData = ({ children }: { children: ReactNode } | any) => {
     const setList = useSetRecoilState(postsAtom);
 
-    useEffect(() => {
-      setList(data);
-      console.log(data);
-    }, [data]);
+    // useEffect(() => {
+    //   setList(data);
+    //   console.log(data);
+    // }, []);
 
     return children;
   };

@@ -8,55 +8,37 @@ import classNames from "classnames";
 import axios from "axios";
 import { Selected, Tag } from "./Tag";
 import { useQuery } from "react-query";
-import { useRecoilValue } from "recoil";
-import { postsAtom } from "./Recoil";
-
-const fetchFn = () => {
-  return axios.get("/api");
-};
 
 export default function Techlog({ posts }: { posts: Post[] }) {
   const lo = LocalStorage.getItem("tag") as string;
-  const data = useRecoilValue(postsAtom);
-  // const { data } = useQuery({
-  //   queryKey: "postsData",
-  //   queryFn: () =>
-  //     axios.get("/api").then((res) => {
-  //       return res.data;
-  //     }),
-  //   enabled: false,
-  // });
+  // const data = useRecoilValue(postsAtom);
+  const { data } = useQuery({
+    queryKey: "postsData",
+    queryFn: async () => {
+      return axios.get("/api").then((res) => {
+        return res.data;
+      });
+    },
+  });
 
   const [selected, setSelected] = useState<Selected>({
     keyword: "All",
     posts: data,
   });
 
-  const callPost = () => {
+  useEffect(() => {
     setSelected({
       keyword: "All",
       posts: data,
     });
     if (lo) {
-      if (lo === "Tag") {
-        setSelected({
-          keyword: "All",
-          posts: data,
-        });
-      } else {
-        setSelected({
-          keyword: lo as string,
-          posts: data.filter((el: Post) => el.tag === lo),
-        });
-      }
-
+      setSelected({
+        keyword: lo as string,
+        posts: data.filter((el: Post) => el.tag === lo),
+      });
       LocalStorage.removeItem("tag");
     }
-  };
-
-  useEffect(() => {
-    callPost();
-  }, []);
+  }, [data]);
 
   const props = {
     posts,
