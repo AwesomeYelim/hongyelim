@@ -5,20 +5,16 @@ import LocalStorage from "./common/functions/localstorage";
 import Link from "next/link";
 import { Post } from "@/service/posts";
 import classNames from "classnames";
-import axios from "axios";
 import { Selected, Tag } from "./Tag";
 import { useQuery } from "react-query";
+import { getPostApi } from "./common/functions/myapi";
 
-export default function Techlog({ posts }: { posts: Post[] }) {
+export default function Techlog() {
   const lo = LocalStorage.getItem("tag") as string;
   // const data = useRecoilValue(postsAtom);
   const { data } = useQuery({
     queryKey: "postsData",
-    queryFn: async () => {
-      return axios.get("/api").then((res) => {
-        return res.data;
-      });
-    },
+    queryFn: getPostApi,
   });
 
   const [selected, setSelected] = useState<Selected>({
@@ -41,14 +37,14 @@ export default function Techlog({ posts }: { posts: Post[] }) {
   }, [data]);
 
   const props = {
-    posts,
+    posts: data,
     selected,
     setSelected,
   };
 
   return (
     <div className="posts_wrapper">
-      <Tag {...props} />
+      {data && <Tag {...props} />}
       <div className="list_wrapper">
         <ul className="list">
           {selected &&

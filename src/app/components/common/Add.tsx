@@ -5,8 +5,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Props } from "../Tag";
 import { MdfileViewer } from "./MdfileViewer";
+import { getPostApi } from "./functions/myapi";
 
-export const Add = ({ selected, setSelected }: Props): JSX.Element => {
+export const Add = ({
+  selected,
+  setSelected,
+}: Omit<Props, "posts">): JSX.Element => {
   const [content, setContent] = useState("");
   const {
     register,
@@ -30,14 +34,9 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
         setValue("content", "");
         setValue("title", "");
         setContent("");
+        // getPostApi();
       });
   };
-
-  // const click = async () => {
-  //   await axios.get("/api/dbconfig").then((res) => {
-  //     console.log(res.data);
-  //   });
-  // };
 
   return (
     <div className="memo_wrap">
@@ -71,9 +70,6 @@ export const Add = ({ selected, setSelected }: Props): JSX.Element => {
               onChange={(e) => {
                 setContent(e.currentTarget.value);
               }}
-              // onKeyDown={(e) => {
-              //   console.log((e.target as EventTarget & { value: string }).value);
-              // }}
             />
           </div>
           <div className="written_area">

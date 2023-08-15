@@ -1,15 +1,21 @@
 "use client";
 
-import { Post } from "@/service/posts";
 import { useState } from "react";
 import { Add } from "./common/Add";
 import { Selected, Tag } from "./Tag";
+import { useQuery } from "react-query";
+import { getPostApi } from "./common/functions/myapi";
 
-export const Memo = ({ posts }: { posts: Post[] }): JSX.Element => {
+export const Memo = (): JSX.Element => {
   const [selected, setSelected] = useState<Selected>({ keyword: "" });
 
+  const { data } = useQuery({
+    queryKey: "postsData",
+    queryFn: getPostApi,
+  });
+
   const props = {
-    posts,
+    posts: data,
     selected,
     setSelected,
   };
@@ -17,7 +23,7 @@ export const Memo = ({ posts }: { posts: Post[] }): JSX.Element => {
   return (
     <>
       <Add {...props} />
-      <Tag {...props} />
+      {data && <Tag {...props} />}
     </>
   );
 };

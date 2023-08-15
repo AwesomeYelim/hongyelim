@@ -5,11 +5,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { atom, useRecoilState, useRecoilValue } from "recoil";
 import LocalStorage from "./common/functions/localstorage";
-import { useQuery } from "react-query";
-import { postsAtom } from "./Recoil";
 import "./Tag.scss";
 
 export type Selected = {
@@ -30,10 +26,10 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
   const { tag, title } = {
     /** tag 별 list   */
     tag: posts
-      .map((item) => item.tag)
+      .map((item: Post) => item.tag)
       .filter((item, i, arr) => arr.indexOf(item) === i),
     /** title 별 list   */
-    title: posts.map((item) => item.title),
+    title: posts.map((item: Post) => item.title),
   };
 
   useEffect(() => {
@@ -60,7 +56,7 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = posts.filter((el) => el.tag === keyword);
+                const select = posts.filter((el: Post) => el.tag === keyword);
 
                 setSelected({
                   keyword: e.currentTarget.innerText,
