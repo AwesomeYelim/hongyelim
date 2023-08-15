@@ -1,12 +1,11 @@
 "use client";
 
-import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Props } from "../Tag";
 import { MdfileViewer } from "./MdfileViewer";
 import { useMutation, useQueryClient } from "react-query";
-import { postAddApi } from "./functions/myapi";
+import { postsAddApi } from "./functions/myapi";
 
 export const Add = ({
   selected,
@@ -25,7 +24,7 @@ export const Add = ({
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: postAddApi,
+    mutationFn: postsAddApi,
     onSuccess: () => {
       if (setSelected) setSelected({ keyword: "" });
       setValue("content", "");

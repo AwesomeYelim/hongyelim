@@ -7,14 +7,14 @@ import { Post } from "@/service/posts";
 import classNames from "classnames";
 import { Selected, Tag } from "./Tag";
 import { useQuery } from "react-query";
-import { getPostApi } from "./common/functions/myapi";
+import { getPostsApi } from "./common/functions/myapi";
 
 export default function Techlog() {
   const lo = LocalStorage.getItem("tag") as string;
   // const data = useRecoilValue(postsAtom);
   const { data } = useQuery({
     queryKey: "postsData",
-    queryFn: getPostApi,
+    queryFn: getPostsApi,
   });
 
   const [selected, setSelected] = useState<Selected>({

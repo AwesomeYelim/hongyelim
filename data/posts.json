@@ -15,8 +15,8 @@
       "content": "ts 열심히 해야지",
       "image": "tuttle",
       "tag": "typescript",
-      "like": false,
-      "like_count": 0,
+      "like": true,
+      "like_count": 1,
       "created_at": 1691116343
    },
    {

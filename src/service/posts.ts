@@ -19,27 +19,15 @@ export async function getPosts(): Promise<Post[]> {
   return dataObj;
 }
 
-export async function getPost(id_title: string): Promise<{ post?: Post; mdPost: string }> {
-  // const { v4 } = require("uuid");
-  // const uuid = v4();
-  // console.log(uuid);
-  // const nets = networkInterfaces();
-  // console.log(ip.address());
-
-  // const app = express();
-  // app.get("/main", (req, res) => {
-  //   res.send("main");
-  //   // console.log(getClientIp(req));
-  // });
-
-  // app.listen(3001, () => {
-  //   console.log("Express server started at port 3003");
-  // });
-
+export async function getPost(
+  id_title: string
+): Promise<{ post: Post; mdPost: string }> {
   const mdPath = path.join(process.cwd(), "data/md", `${id_title}.md`);
   const mdPost = await fs.readFile(mdPath, "utf-8");
   const posts = await getPosts();
-  const post = posts.find((item: Post) => `${item.id}_${item.title}` === id_title);
+  const post = posts.find(
+    (item: Post) => `${item.id}_${item.title}` === id_title
+  );
 
-  return { post, mdPost };
+  return { post: post as Post, mdPost };
 }

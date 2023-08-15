@@ -1,10 +1,11 @@
 "use client";
 
-import axios from "axios";
 import { Post } from "@/service/posts";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { getPostsApi } from "./common/functions/myapi";
+import { useQuery } from "react-query";
 
 const BtnWrap = styled.div`
   display: flex;
@@ -28,34 +29,54 @@ const BtnWrap = styled.div`
 `;
 
 export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
-  const [idTitle, setIdTitle] = useState<{ prev: string[]; next: string[] }>({ prev: [], next: [] });
+  const [idTitle, setIdTitle] = useState<{ prev: string[]; next: string[] }>({
+    prev: [],
+    next: [],
+  });
 
-  const callPost = async () => {
-    await axios.get("/api/heart").then((res) => {
-      const prev = res.data.find((el: Post) => el.id === id - 1);
-      const next = res.data.find((el: Post) => el.id === id + 1);
+  const { data } = useQuery({
+    queryKey: "postsData",
+    queryFn: getPostsApi,
+  });
 
-      if (prev && next) {
-        setIdTitle({
-          prev: [prev.id, prev.title, `${prev.id}_${prev.title}`],
-          next: [next.id, next.title, `${next.id}_${next.title}`],
-        });
-      } else if (!next && prev) {
-        setIdTitle({ prev: [prev.id, prev.title, `${prev.id}_${prev.title}`], next: ["", "", ""] });
-      } else if (!prev && next) {
-        setIdTitle({ prev: ["", "", ""], next: [next.id, next.title, `${next.id}_${next.title}`] });
-      }
-    });
+  const callPost = () => {
+    const prev = data.find((el: Post) => el.id === id - 1);
+    const next = data.find((el: Post) => el.id === id + 1);
+
+    if (prev && next) {
+      setIdTitle({
+        prev: [prev.id, prev.title, `${prev.id}_${prev.title}`],
+        next: [next.id, next.title, `${next.id}_${next.title}`],
+      });
+    } else if (!next && prev) {
+      setIdTitle({
+        prev: [prev.id, prev.title, `${prev.id}_${prev.title}`],
+        next: ["", "", ""],
+      });
+    } else if (!prev && next) {
+      setIdTitle({
+        prev: ["", "", ""],
+        next: [next.id, next.title, `${next.id}_${next.title}`],
+      });
+    }
   };
 
   useEffect(() => {
-    callPost();
-  }, []);
+    if (data) callPost();
+  }, [data]);
 
   return (
     <BtnWrap className="btn_wrap">
-      {idTitle.prev[2] && <Link href={`/posts/${idTitle.prev[2]}`}>◀ 이전글 {idTitle.prev[1]}</Link>}
-      {idTitle.next[2] && <Link href={`/posts/${idTitle.next[2]}`}>{idTitle.next[1]} 다음글 ▶</Link>}
+      {idTitle.prev[2] && (
+        <Link href={`/posts/${idTitle.prev[2]}`}>
+          ◀ 이전글 {idTitle.prev[1]}
+        </Link>
+      )}
+      {idTitle.next[2] && (
+        <Link href={`/posts/${idTitle.next[2]}`}>
+          {idTitle.next[1]} 다음글 ▶
+        </Link>
+      )}
     </BtnWrap>
   );
 };

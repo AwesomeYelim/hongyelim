@@ -4,19 +4,29 @@ import { MouseEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { Post } from "@/service/posts";
 import classNames from "classnames";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getTargetPostApi } from "./functions/myapi";
 import "./heart.scss";
 
 export default function Heart(props: Post) {
-  const { id, like, like_count, title } = props;
-  const [heartNum, setHeartNum] = useState({ like, like_count });
+  const { id, title, like, like_count } = props;
 
-  const submitHandler = async (e: MouseEvent) => {
+  const { data } = useQuery({
+    queryKey: `${id}_${title}`,
+    queryFn: (data) => getTargetPostApi(data.queryKey[0]),
+  });
+
+  const [heartNum, setHeartNum] = useState({ like, like_count });
+  const queryClient = useQueryClient();
+
+  const submitHeart = async (e: MouseEvent) => {
     e.preventDefault();
     await axios
       .post(
-        "/api/heart",
+        `/api/${id}_${title}/heart`,
         JSON.stringify({
           id,
+          title,
         }),
         {
           headers: {
@@ -25,31 +35,38 @@ export default function Heart(props: Post) {
         }
       )
       .then((res) => {
-        console.log(res.data.clientIp);
+        const { like, like_count } = res.data.res.find(
+          (el: Post) => el.title === title
+        );
 
-        const target = res.data.res.find((el: Post) => el.title === title);
         setHeartNum({
-          like: target.like,
-          like_count: target.like_count,
+          like,
+          like_count,
         });
+        return res;
       });
   };
 
-  const callPost = async () => {
-    await axios.get("/api/heart").then((res) => {
-      const target = res.data.find((el: Post) => el.title === title);
-      setHeartNum({ like: target.like, like_count: target.like_count });
-    });
-  };
+  const mutation = useMutation({
+    mutationFn: submitHeart,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: `${id}_${title}` });
+    },
+  });
 
   useEffect(() => {
-    callPost();
-  }, []);
+    if (data) {
+      const {
+        post: { like, like_count },
+      } = data;
+      setHeartNum({ like, like_count });
+    }
+  }, [data]);
 
   return (
     <div className="side_area">
       <div className="heart_wrap">
-        <button onClick={submitHandler}>
+        <button onClick={(data) => mutation.mutate(data)}>
           <i className={classNames("heart", { active: heartNum.like })} />
         </button>
         <span className="like">{heartNum.like_count}</span>
