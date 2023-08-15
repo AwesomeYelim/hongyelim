@@ -45,7 +45,7 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
         setList(["Recommand Title", ...title]);
       } break;
     }
-  }, []);
+  }, [posts]);
 
   return (
     <nav className="tag_wrap">

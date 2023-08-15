@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Props } from "../Tag";
 import { MdfileViewer } from "./MdfileViewer";
-import { getPostApi } from "./functions/myapi";
+import { useMutation, useQueryClient } from "react-query";
+import { postAddApi } from "./functions/myapi";
 
 export const Add = ({
   selected,
@@ -21,26 +22,22 @@ export const Add = ({
     // setError,
   } = useForm();
 
-  const submitHandler = async (data: { [key in string]: string }) => {
-    await axios
-      .post("/api/add", JSON.stringify(data), {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (setSelected) setSelected({ keyword: "" });
-        setValue("content", "");
-        setValue("title", "");
-        setContent("");
-        // getPostApi();
-      });
-  };
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: postAddApi,
+    onSuccess: () => {
+      if (setSelected) setSelected({ keyword: "" });
+      setValue("content", "");
+      setValue("title", "");
+      setContent("");
+      queryClient.invalidateQueries({ queryKey: "postsData" });
+    },
+  });
 
   return (
     <div className="memo_wrap">
-      <form onSubmit={handleSubmit(submitHandler)}>
+      <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
         <label>Title</label>
         <input
           {...register("title", {
