@@ -1,9 +1,4 @@
-import { Inter, Notable } from "next/font/google";
-import Link from "next/link";
-import Head from "next/head";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth/next";
-import { getPosts } from "@/service/posts";
+import { Inter } from "next/font/google";
 import { Footer } from "./Footer";
 import NavBar from "./components/NavBar";
 import Recoil from "./components/Recoil";
@@ -27,10 +22,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const posts = await getPosts();
-  const session = await getServerSession();
-  console.log(session);
-
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <head>
