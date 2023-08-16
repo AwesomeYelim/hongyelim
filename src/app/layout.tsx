@@ -4,12 +4,12 @@ import NavBar from "./components/NavBar";
 import Recoil from "./components/Recoil";
 import ReactQuery from "./components/ReactQuery";
 import AuthSession from "./components/AuthSession";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import StyledComponentsRegistry from "./registry";
 
 import "./styles/reset.scss";
 import "./styles/layout.scss";
 import "./styles/dark.scss";
-import { GoogleAnalytics } from "./components/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
