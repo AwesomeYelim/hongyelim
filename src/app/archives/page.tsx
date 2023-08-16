@@ -1,5 +1,3 @@
-import Login from "../components/common/Login";
-
 interface Props {
   data?: number;
 }
