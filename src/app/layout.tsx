@@ -9,6 +9,7 @@ import StyledComponentsRegistry from "./registry";
 import "./styles/reset.scss";
 import "./styles/layout.scss";
 import "./styles/dark.scss";
+import { GoogleAnalytics } from "./components/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
@@ -24,6 +25,7 @@ export const metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning={true}>
+      <GoogleAnalytics />
       <head>
         <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
         <script
