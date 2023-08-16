@@ -30,7 +30,7 @@ export default function Techlog() {
     if (lo) {
       setSelected({
         keyword: lo as string,
-        posts: data.filter((el: Post) => el.tag === lo),
+        posts: data?.filter((el: Post) => el.tag === lo),
       });
       LocalStorage.removeItem("tag");
     }
@@ -48,35 +48,30 @@ export default function Techlog() {
       <div className="list_wrapper">
         <ul className="list">
           {selected &&
-            selected.posts?.map(
-              ({ id, title, image, like, like_count, content, created_at }) => {
-                const date = new Date(created_at * 1000).toLocaleDateString(
-                  "ko-kr",
-                  {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  }
-                );
+            selected.posts?.map(({ id, title, image, like, like_count, content, created_at }) => {
+              const date = new Date(created_at * 1000).toLocaleDateString("ko-kr", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              });
 
-                return (
-                  <li key={id}>
-                    <div className="text_wrapper">
-                      <Link href={`/posts/${id}_${title}`}>
-                        <h2>{title}</h2>
-                      </Link>
-                      <span>{content}</span>
-                    </div>
-                    {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
-                    <div className="bottom_wrap">
-                      <span className="date">{date}</span>
-                      <i className={classNames("static_heart", { like })} />
-                      <span className="like">{like_count}</span>
-                    </div>
-                  </li>
-                );
-              }
-            )}
+              return (
+                <li key={id}>
+                  <div className="text_wrapper">
+                    <Link href={`/posts/${id}_${title}`}>
+                      <h2>{title}</h2>
+                    </Link>
+                    <span>{content}</span>
+                  </div>
+                  {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
+                  <div className="bottom_wrap">
+                    <span className="date">{date}</span>
+                    <i className={classNames("static_heart", { like })} />
+                    <span className="like">{like_count}</span>
+                  </div>
+                </li>
+              );
+            })}
         </ul>
       </div>
     </div>

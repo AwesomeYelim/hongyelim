@@ -27,6 +27,7 @@
     "lodash": "^4.17.21",
     "mysql": "^2.18.1",
     "next": "13.4.1",
+    "next-auth": "^4.23.0",
     "next-cookies": "^2.0.3",
     "nodemon": "^3.0.1",
     "postcss": "8.4.23",

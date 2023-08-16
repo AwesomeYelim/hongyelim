@@ -108,6 +108,17 @@ html {
         }
       }
       nav {
+        .login {
+          background: url($img) no-repeat -139px -6px;
+          width: 17px;
+          height: 20px;
+
+          &.logout {
+            background: url($img) no-repeat -177px -6px;
+            width: 17px;
+            height: 20px;
+          }
+        }
         .mode {
           background: url($img) no-repeat -95px -6px;
           width: 12px;

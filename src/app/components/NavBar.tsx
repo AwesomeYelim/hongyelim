@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn, signOut, useSession } from "next-auth/react";
 import classNames from "classnames";
 import Cookies from "js-cookie";
 import styled from "styled-components";
@@ -11,6 +12,7 @@ const Nav = styled.div<{ $hide: boolean }>`
   height: ${({ $hide }) => ($hide ? "111px" : "0px")};
 `;
 export default function NavBar() {
+  const { data: session } = useSession();
   const location = usePathname();
 
   const {
@@ -20,6 +22,8 @@ export default function NavBar() {
     navInfo: useState({ to: 0, hide: true }),
     dark: useState(Cookies.get("theme") === "dark"),
   };
+
+  const admin = session?.user?.email === "uiop01900@gmail.com";
 
   const scrollToHide = useCallback(() => {
     setNavInfo((prev) => ({ ...prev, to: window.pageYOffset }));
@@ -64,15 +68,32 @@ export default function NavBar() {
             }
           }}
         />
+        <i
+          title={(() => {
+            if (session?.user) {
+              return "logout";
+            }
+            return "login";
+          })()}
+          className={classNames("login", { logout: !!session?.user })}
+          onClick={() => {
+            if (session?.user) {
+              return signOut();
+            }
+            return signIn();
+          }}
+        />
         <Link href="/profile" className={classNames({ active: location?.includes("/profile") })}>
           Profile
         </Link>
         <Link href="/posts" className={classNames({ active: location?.includes("/posts") })}>
           Posts
         </Link>
-        <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
-          Memo
-        </Link>
+        {admin && (
+          <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
+            Memo
+          </Link>
+        )}
         <Link href="/archives" className={classNames({ active: location?.includes("/archives") })}>
           Archives
         </Link>
