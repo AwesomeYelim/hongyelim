@@ -34,9 +34,27 @@
   }
 
   .commented-wrap {
-    @include flex(center, initial);
-    align-self: flex-start;
-    gap: 10px;
-    flex-wrap: wrap;
+    @include flex(initial, initial);
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+
+    .commentedEl-wrap {
+      @include flex(initial, initial);
+      flex-direction: column;
+      //   gap: 10px;
+      flex-wrap: wrap;
+      .cm_img_wrap {
+        @include flex(center, initial);
+        gap: 10px;
+      }
+      span {
+        font-size: 13px;
+        padding-left: 37px;
+      }
+      p {
+        margin: 15px 0 25px 30px;
+      }
+    }
   }
 }

@@ -6,14 +6,24 @@ import { getPost } from "@/service/posts";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PrevNextButton } from "@/app/components/PrevNextButton";
+import { getSession, GetSessionParams } from "next-auth/react";
+import { Utterance } from "@/app/components/common/Utterance";
 
 type Props = {
-  params: {
-    slug: string;
-  };
+  params:
+    | {
+        slug: string;
+      }
+    | GetSessionParams;
 };
 
-export default async function page({ params: { slug } }: Props) {
+export default async function page({ params }: Props) {
+  const { slug } = params as {
+    slug: string;
+  };
+  const session = await getSession(params as GetSessionParams);
+
+  console.log(session, "asdasd");
   const { post, mdPost } = await getPost(slug);
   if (!post) {
     notFound();
@@ -37,7 +47,8 @@ export default async function page({ params: { slug } }: Props) {
       <Heart {...post} />
       <MdfileViewer mdPost={mdPost} useToc={true} />
       <PrevNextButton id={id} />
-      <Comment {...post} />
+      <Utterance />
+      {/* <Comment {...post} /> */}
     </>
   );
 }

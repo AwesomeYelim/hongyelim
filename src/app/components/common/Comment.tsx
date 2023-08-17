@@ -44,18 +44,26 @@ export const Comment = (props: Post): JSX.Element => {
         {errors.content && <p>{errors.content.message as string}</p>}
         <button type="submit">Submit</button>
       </form>
-      {data &&
-        data.post.comment.map((el: CommentEl) => {
-          return (
-            <div className="commented-wrap" key={el.com_created_at}>
-              <div>
-                <img src={el.img} style={{ width: 25, height: 25, borderRadius: "50%" }} alt="comment-img" />
-                {el.user_name}
+      <div className="commented-wrap">
+        {data &&
+          data.post.comment.map((el: CommentEl) => {
+            const date = new Date(el.com_created_at * 1000).toLocaleDateString("ko-kr", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+            return (
+              <div className="commentedEl-wrap" key={el.com_created_at}>
+                <div className="cm_img_wrap">
+                  <img src={el.img} style={{ width: 25, height: 25, borderRadius: "50%" }} alt="comment-img" />
+                  {el.user_name}
+                </div>
+                <span>{date}</span>
+                <p>{el.content}</p>
               </div>
-              {el.content}
-            </div>
-          );
-        })}
+            );
+          })}
+      </div>
     </div>
   );
 };
