@@ -75,9 +75,9 @@
       "content": "# mySql 🐬🐬🐬",
       "image": "",
       "tag": "mySql",
-      "like": true,
-      "like_count": 1,
-      "created_at": 1691722002
+      "like": false,
+      "like_count": 0,
+      "created_at": 1692255235
    },
    {
       "id": 9,
@@ -87,6 +87,6 @@
       "tag": "SEO",
       "like": false,
       "like_count": 0,
-      "created_at": 1691742840
+      "created_at": 1692255307
    }
 ]
