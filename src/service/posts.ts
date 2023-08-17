@@ -17,7 +17,7 @@ export type Post = {
   like: boolean;
   like_count: number;
   created_at: number;
-  comment: Comment[];
+  comment?: CommentEl[];
 };
 
 export async function getPosts(): Promise<Post[]> {
