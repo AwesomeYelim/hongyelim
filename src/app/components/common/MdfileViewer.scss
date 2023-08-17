@@ -1,5 +1,9 @@
 .md_wrapper {
-  white-space: pre-line;
+  // white-space: pre-line;
+  > * {
+    white-space: pre-line;
+  }
+
   h1,
   h2,
   h3,
@@ -8,19 +12,26 @@
   }
   li {
     padding-left: 30px;
+
+    &::marker {
+      // float: left;
+    }
   }
+
   ul li {
     list-style-position: inside;
     list-style-type: initial !important;
   }
   ol li {
     list-style-position: inside;
-
     list-style-type: decimal !important;
   }
 
+  li:has(p) {
+    list-style-type: none !important;
+  }
   p {
-    // display: inline;
+    display: inline;
   }
   table {
     margin: 30px 0;

@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Cookies from "js-cookie";
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -83,6 +84,14 @@ export default function NavBar() {
             return signIn();
           }}
         />
+        {session?.user && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={session?.user.image as string}
+            style={{ width: 25, height: 25, borderRadius: "50%" }}
+            alt="profile-img"
+          />
+        )}
         <Link href="/profile" className={classNames({ active: location?.includes("/profile") })}>
           Profile
         </Link>

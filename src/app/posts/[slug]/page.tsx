@@ -1,4 +1,5 @@
 import { MdfileViewer } from "@/app/components/common/MdfileViewer";
+import { Comment } from "@/app/components/common/Comment";
 import fs from "fs";
 import Heart from "@/app/components/common/heart";
 import { getPost } from "@/service/posts";
@@ -31,17 +32,12 @@ export default async function page({ params: { slug } }: Props) {
     <>
       <h1>{title}`s Detail Page</h1>
       <div className="detail_img">
-        <Image
-          src={`/images/${image}.png`}
-          alt={image}
-          width={1000}
-          height={1000}
-          priority
-        />
+        <Image src={`/images/${image}.png`} alt={image} width={1000} height={1000} priority />
       </div>
       <Heart {...post} />
       <MdfileViewer mdPost={mdPost} useToc={true} />
       <PrevNextButton id={id} />
+      <Comment {...post} />
     </>
   );
 }

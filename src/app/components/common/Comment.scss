@@ -1,0 +1,42 @@
+@import "src/app/components/common/scss/utils.scss";
+
+.comment_wrap {
+  @include flex(flex-end, flex-end);
+  flex-direction: column;
+
+  form {
+    @include flex(flex-end, flex-end);
+    width: 80%;
+    flex-direction: column;
+    padding: 30px;
+    label {
+      justify-items: flex-start;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    textarea {
+      border: none;
+      width: 100%;
+      min-width: 450px;
+      min-height: 100px;
+      resize: none;
+      padding: 20px;
+      background-color: aliceblue;
+    }
+    button {
+      background-color: black;
+      padding: 13px;
+      color: aliceblue;
+      border-radius: 5px;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  }
+
+  .commented-wrap {
+    @include flex(center, initial);
+    align-self: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
