@@ -21,7 +21,7 @@ export default async function page({ params }: Props) {
   const { slug } = params as {
     slug: string;
   };
-  const session = await getSession(params as GetSessionParams);
+  const session = await getSession();
 
   console.log(session, "asdasd");
   const { post, mdPost } = await getPost(slug);

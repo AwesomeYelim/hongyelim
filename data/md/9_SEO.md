@@ -1,8 +1,3 @@
-
-
-
-
-
 # SEO
 
 > Search engine optimization
@@ -13,17 +8,14 @@ next 알못인 내가 next13으로 블로그를 만들게된 이유는 ssr 을�
 
 **_next에서 seo 노출에 시도해보자..._**
 
-
 **네이버 웹마스터나 구글 서치 콘솔을 이용하여 웹사이트 최적화를 하다 보면**
 
 - https://search.google.com/search-console
 - https://searchadvisor.naver.com/console/board
 
-
 sitemap 과 RSS를 제출하는 항목이 있다
 
-
-> sitemap 
+> sitemap
 
 sitemap 은 사이트 내의 모든 링크 주소가 담긴 파일이며
 
@@ -40,8 +32,8 @@ sitemap.xml을 만들어 준다.
 **사실 나는 위에서 만든거말고 아래의 next 공식문서를 참고하여 만들었음**
 
 (next sitemap 관련 링크)
-- https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
 
+- https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
 
 ```ts
 import { MetadataRoute } from "next";
@@ -70,5 +62,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 }
-
 ```

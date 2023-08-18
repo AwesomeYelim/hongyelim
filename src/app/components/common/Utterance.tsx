@@ -19,7 +19,7 @@ export const Utterance = (): JSX.Element => {
         const scriptElem = document.createElement("script");
         scriptElem.src = "https://utteranc.es/client.js";
         scriptElem.async = true;
-        scriptElem.setAttribute("repo", "cpro95/utterances_mycodings_fly_dev");
+        scriptElem.setAttribute("repo", "AwesomeYelim/hongyelim");
         scriptElem.setAttribute("issue-term", "pathname");
         scriptElem.setAttribute("theme", theme);
         scriptElem.setAttribute("label", "blog-comment");
