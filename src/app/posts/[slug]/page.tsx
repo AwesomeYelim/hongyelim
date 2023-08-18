@@ -23,7 +23,6 @@ export default async function page({ params }: Props) {
   };
   const session = await getSession();
 
-  console.log(session, "asdasd");
   const { post, mdPost } = await getPost(slug);
   if (!post) {
     notFound();
@@ -39,7 +38,7 @@ export default async function page({ params }: Props) {
   // });
 
   return (
-    <>
+    <div className="detail_page_wrapper">
       <h1>{title}`s Detail Page</h1>
       <div className="detail_img">
         <Image src={`/images/${image}.png`} alt={image} width={1000} height={1000} priority />
@@ -47,8 +46,8 @@ export default async function page({ params }: Props) {
       <Heart {...post} />
       <MdfileViewer mdPost={mdPost} useToc={true} />
       <PrevNextButton id={id} />
-      <Utterance />
-      {/* <Comment {...post} /> */}
-    </>
+      {/* <Utterance /> */}
+      <Comment {...post} />
+    </div>
   );
 }

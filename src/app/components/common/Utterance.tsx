@@ -2,14 +2,11 @@
 
 import Cookies from "js-cookie";
 
-interface Props {
-  data?: number;
-}
-
 export const Utterance = (): JSX.Element => {
   //
 
-  const theme = Cookies.get("theme") === "dark" ? "github-dark" : "github-light";
+  const theme = document.documentElement.dataset.theme === "dark" ? "github-dark" : "github-light";
+
   return (
     <section
       ref={(elem) => {
