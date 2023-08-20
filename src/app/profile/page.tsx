@@ -10,7 +10,14 @@ export default function ProfilePage() {
       <h1>About me</h1>
       <div className="content_wrap">
         <div>
-          <Image className="main_img" src={main} alt="main yelim" width={150} height={150} priority />
+          <Image
+            className="main_img"
+            src={main}
+            alt="main yelim"
+            width={150}
+            height={150}
+            priority
+          />
           <Footer />
         </div>
         <div>
@@ -30,9 +37,10 @@ export default function ProfilePage() {
         </div>
       </div>
       <Link
-        href="https://drive.google.com/file/d/1dNUSCOkJcFycJ5caNP2QxtwXrfRxw4AM/view?usp=drive_link"
+        href="https://drive.google.com/file/d/1s4bhCJR6EddnHv9ydE7tqgjDrUhaVl2_/view?usp=sharing"
         className="resume_wrap"
-        target="_blank">
+        target="_blank"
+      >
         <b className="resume">→ &nbsp; resume</b>
       </Link>
     </div>
