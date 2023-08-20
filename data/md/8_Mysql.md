@@ -73,3 +73,9 @@ mysql.server start
 
 참고
 https://velog.io/@haleyjun/MySQL-Mac%EC%97%90-MySQL-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0-M1%EC%B9%A9
+
+## 연동
+
+```sh
+ yarn prisma db pull
+```

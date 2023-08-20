@@ -1,37 +1,35 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model users {
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
   id        Int      @id @default(autoincrement())
-  firstName String
-  lastName  String
-  validated Boolean
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+  posts     Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  todo      todo[]
+  published Boolean  @default(false)
+  title     String   @db.VarChar(255)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  tags      String
+  like      Boolean
+  likeCount Int
 }
 
-model todo {
-  id        Int     @id @default(autoincrement())
-  todoText  String
-  completed Boolean
-  userID    Int    
-  user      users   @relation(fields: [userID], references: [id])
-  tag tags[]
-}
-
-
-model tags {
-  id Int @id @default(autoincrement())
-  tagName String
-  todo todo[]
+enum Role {
+  USER
+  ADMIN
 }
