@@ -133,10 +133,10 @@
   },
   {
     "id": 8,
-    "title": "mysql",
-    "content": "# mysql 🐬🐬🐬",
+    "title": "mysqlInfo",
+    "content": "# mysqlInfo 🐬🐬🐬",
     "image": "",
-    "tag": "mysql",
+    "tag": "mysqlInfo",
     "like": false,
     "like_count": 0,
     "created_at": 1692255235,

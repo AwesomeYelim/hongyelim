@@ -1,4 +1,4 @@
-# mySql 🐬🐬🐬
+# mysqlInfo 🐬🐬🐬
 
 ### 사용 이유
 
