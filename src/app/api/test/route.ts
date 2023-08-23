@@ -9,17 +9,27 @@ export async function GET() {
     const comment = await prisma.comment.findMany();
     const post = await prisma.post.findMany();
     const user = await prisma.user.findMany();
-    return NextResponse.json(comment);
+    const category = await prisma.category.findMany();
+    return NextResponse.json(post);
   } catch (err) {
     console.log(err);
   }
 }
-export async function POST() {
+
+export async function POST(req: Request) {
   try {
-    const comment = await prisma.comment.findMany();
-    const post = await prisma.post.findMany();
-    const user = await prisma.user.findMany();
-    return NextResponse.json(comment);
+    const data = await req.json();
+    console.log(data);
+
+    const user = await prisma.user.create({
+      data: {
+        age: data.age,
+        email: data.email,
+      },
+    });
+    console.log(user);
+
+    return NextResponse.json(user);
   } catch (err) {
     console.log(err);
   }

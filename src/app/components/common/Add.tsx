@@ -7,10 +7,7 @@ import { MdfileViewer } from "./MdfileViewer";
 import { useMutation, useQueryClient } from "react-query";
 import { postsAddApi } from "./functions/myapi";
 
-export const Add = ({
-  selected,
-  setSelected,
-}: Omit<Props, "posts">): JSX.Element => {
+export const Add = ({ selected, setSelected }: Omit<Props, "posts">): JSX.Element => {
   const [content, setContent] = useState("");
   const {
     register,

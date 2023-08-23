@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client-js" // 기본값
 }
 
 datasource db {
@@ -7,44 +7,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model post {
-  id         Int       @id @default(autoincrement())
+model User {
+  id            String    @id @default(uuid())
+  age           Int
+  createdAt     DateTime  @default(now())
+  email         String    @unique
+  name          String?
+  role          user_role @default(USER)
+  comment       Comment[]
+  writtenPosts  Post[]    @relation("WrittenPosts")
+  favoritePosts Post[]    @relation("FavoritePosts")
+
+  @@unique([email, age]) // 고유성에 대한 블록 수준 속성(email과 age 에 대한 고유성 제약 조건이 있어야함)
+  @@index([createdAt]) // 생성시간에 따른 index를 보유함 정렬같은것을 할때 참조 가능하다
+}
+
+model Post {
+  id         String     @id @default(uuid())
   title      String
   content    String
   image      String?
-  tags       String
-  like       Boolean
-  like_count Int
-  created_at DateTime  @default(now())
-  authorId   Int?
-  comments   comment[]
-  user       user?     @relation(fields: [authorId], references: [id], map: "Post_authorId_fkey")
+  tags       String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  categories Category[]
+  commented  Comment[]
 
-  @@index([authorId], map: "Post_authorId_fkey")
+  authorId String
+  author   User   @relation("WrittenPosts", fields: [authorId], references: [id])
+
+  favoriteCount Int?
+  favoriteById  String?
+  favoriteBy    User?   @relation("FavoritePosts", fields: [favoriteById], references: [id])
 }
 
-model user {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  email     String    @unique(map: "User_email_key")
-  name      String?
-  role      user_role @default(USER)
-  comment   comment[]
-  post      post[]
+model Category {
+  id    String @id @default(uuid())
+  name  String @unique
+  posts Post[]
 }
 
-model comment {
-  id         Int      @id @default(autoincrement())
-  img        String
-  content    String
-  post_id    Int
-  user_id    Int
-  created_at DateTime @default(now())
-  post       post     @relation(fields: [post_id], references: [id])
-  user       user     @relation(fields: [user_id], references: [id])
+model Comment {
+  id        String   @id @default(uuid())
+  img       String
+  content   String
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  Post      Post?    @relation(fields: [postId], references: [id])
+  postId    String?
 
-  @@index([post_id], map: "comment_post_id_fkey")
-  @@index([user_id], map: "comment_user_id_fkey")
+  @@index([postId])
+  @@index([userId])
 }
 
 enum user_role {
