@@ -8,23 +8,19 @@ datasource db {
 }
 
 model post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  published Boolean  @default(false)
-  title     String   @db.VarChar(255)
-  authorId  Int?
-  tags      String
-  like      Boolean
-  likeCount Int
-  user      user?    @relation(fields: [authorId], references: [id], map: "Post_authorId_fkey")
+  id         Int       @id @default(autoincrement())
+  title      String
+  content    String
+  image      String?
+  tags       String
+  like       Boolean
+  like_count Int
+  created_at DateTime  @default(now())
+  authorId   Int?
+  comments   comment[]
+  user       user?     @relation(fields: [authorId], references: [id], map: "Post_authorId_fkey")
 
   @@index([authorId], map: "Post_authorId_fkey")
-}
-
-model tags {
-  category String @id
-  name     String
 }
 
 model user {
@@ -33,7 +29,22 @@ model user {
   email     String    @unique(map: "User_email_key")
   name      String?
   role      user_role @default(USER)
+  comment   comment[]
   post      post[]
+}
+
+model comment {
+  id         Int      @id @default(autoincrement())
+  img        String
+  content    String
+  post_id    Int
+  user_id    Int
+  created_at DateTime @default(now())
+  post       post     @relation(fields: [post_id], references: [id])
+  user       user     @relation(fields: [user_id], references: [id])
+
+  @@index([post_id], map: "comment_post_id_fkey")
+  @@index([user_id], map: "comment_user_id_fkey")
 }
 
 enum user_role {
