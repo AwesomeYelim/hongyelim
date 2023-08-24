@@ -8,6 +8,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { collection, addDoc, getDocs, doc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { DefaultSession } from "next-auth";
 
 const Nav = styled.div<{ $hide: boolean }>`
   height: ${({ $hide }) => ($hide ? "111px" : "0px")};
@@ -15,6 +18,26 @@ const Nav = styled.div<{ $hide: boolean }>`
 export default function NavBar() {
   const { data: session } = useSession();
   const location = usePathname();
+
+  const userAdd = async (user: DefaultSession["user"]) => {
+    // const db = getFirestore(app);
+    // const id = await addDoc(collection(db, "user"), user);
+    const id = await getDocs(collection(db, "user"));
+    id.forEach((doc) => {
+      console.log(doc.id, doc.data());
+    });
+
+    // const data = doc(db, "user", user?.email as string);
+    // await setDoc(data, user);
+
+    // await updateDoc(data, {
+    //   name: "yesGirl ~",
+    // });
+  };
+
+  useEffect(() => {
+    if (session?.user?.email) userAdd(session?.user);
+  }, [session?.user]);
 
   const {
     navInfo: [navInfo, setNavInfo],
@@ -98,11 +121,9 @@ export default function NavBar() {
         <Link href="/posts" className={classNames({ active: location?.includes("/posts") })}>
           Posts
         </Link>
-        {admin && (
-          <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
-            Memo
-          </Link>
-        )}
+        <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
+          Memo
+        </Link>
         <Link href="/archives" className={classNames({ active: location?.includes("/archives") })}>
           Archives
         </Link>

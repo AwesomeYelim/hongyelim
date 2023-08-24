@@ -2,15 +2,20 @@
 
 import { MouseEvent, useEffect, useState } from "react";
 import axios from "axios";
-import { collection, addDoc } from "firebase/firestore";
 import { Post } from "@/service/posts";
-import { db } from "../../../app/firebase";
 import classNames from "classnames";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getTargetPostApi } from "./functions/myapi";
+import { collection, addDoc, getDocs, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
+import { db } from "../../../app/firebase";
+
+import { DefaultSession } from "next-auth";
 import "./heart.scss";
+import { useSession } from "next-auth/react";
 
 export default function Heart(props: Post) {
+  const { data: session } = useSession();
+
   const { id, title, like, like_count } = props;
 
   const { data } = useQuery({
@@ -21,38 +26,59 @@ export default function Heart(props: Post) {
   const [heartNum, setHeartNum] = useState({ like, like_count });
   const queryClient = useQueryClient();
 
-  // const submitHeart = async (e: MouseEvent) => {
-  //   e.preventDefault();
-  //   await axios
-  //     .post(
-  //       `/api/${id}_${title}/heart`,
-  //       JSON.stringify({
-  //         id,
-  //         title,
-  //       }),
-  //       {
-  //         headers: {
-  //           "Content-Type": `application/json`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       const { like, like_count } = res.data.res.find((el: Post) => el.title === title);
-
-  //       setHeartNum({
-  //         like,
-  //         like_count,
-  //       });
-  //       return res;
-  //     });
-  // };
-
   const submitHeart = async (e: MouseEvent) => {
+    e.preventDefault();
+    await axios
+      .post(
+        `/api/${id}_${title}/heart`,
+        JSON.stringify({
+          id,
+          title,
+        }),
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }
+      )
+      .then((res) => {
+        const { like, like_count } = res.data.res.find((el: Post) => el.title === title);
+
+        setHeartNum({
+          like,
+          like_count,
+        });
+        return res;
+      });
+  };
+
+  const userHeart = async (user: DefaultSession["user"]) => {
     // const db = getFirestore(app);
-    await addDoc(collection(db, "posts"), {
-      name: "heart",
-      count: 1,
-    });
+    // const id = await addDoc(collection(db, "user"), user);
+    const id = await getDocs(collection(db, "user"));
+    const one = await getDoc(doc(db, "user", user?.email as string));
+    console.log(one.data());
+
+    // id.forEach((doc) => {
+    //   console.log(doc.id, doc.data());
+    // });
+    try {
+      if (user?.email) {
+        const data = doc(db, "user", user?.email as string);
+        console.log(data.firestore);
+        const obj: { [key in string]: boolean } = {};
+        obj[title] = true;
+        await updateDoc(data, {
+          heart: { ...one.data()?.heart, ...obj },
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    // await updateDoc(data, {
+    //   heart: 1,
+    // });
   };
 
   const mutation = useMutation({
@@ -63,13 +89,16 @@ export default function Heart(props: Post) {
   });
 
   useEffect(() => {
+    userHeart(session?.user);
+
     if (data) {
       const {
         post: { like, like_count },
       } = data;
       setHeartNum({ like, like_count });
     }
-  }, [data]);
+  }, [data, session?.user]);
+  console.log(session?.user);
 
   return (
     <div className="side_area">

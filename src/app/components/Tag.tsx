@@ -47,6 +47,11 @@ const TagWrap = styled.nav`
     &.active {
       font-weight: 600;
     }
+
+    span {
+      margin-left: 5px;
+      letter-spacing: 1.5px;
+    }
   }
 `;
 export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
