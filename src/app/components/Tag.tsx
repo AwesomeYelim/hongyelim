@@ -52,10 +52,23 @@ const TagWrap = styled.nav`
 export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
+  /**  tag 별 게시물 갯수  */
+  const tagCount: { [key in string]: number } = {};
 
   const { tag, title } = {
     /** tag 별 list   */
-    tag: posts.map((item: Post) => item.tag).filter((item, i, arr) => arr.indexOf(item) === i),
+    tag: posts
+      .map((item: Post) => item.tag)
+      .flat()
+      .filter((item, i, arr) => {
+        if (tagCount[item]) {
+          tagCount[item] += 1;
+        } else {
+          tagCount[item] = 1;
+        }
+        return arr.indexOf(item) === i;
+      }),
+
     /** title 별 list   */
     title: posts.map((item: Post) => item.title),
   };
@@ -84,7 +97,7 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = posts.filter((el: Post) => el.tag === keyword);
+                const select = posts.filter((el: Post) => el.tag.includes(keyword));
 
                 setSelected({
                   keyword: e.currentTarget.innerText,
@@ -107,8 +120,13 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
                 }}>
                 {keyword}
               </Link>
+            ) : keyword !== "All" && list[0] !== "Recommand Title" ? (
+              <>
+                {keyword}
+                <span>({tagCount[keyword]})</span>
+              </>
             ) : (
-              <>{keyword}</>
+              keyword
             )}
           </p>
         );

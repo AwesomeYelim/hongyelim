@@ -30,7 +30,7 @@ export default function Techlog() {
     if (lo) {
       setSelected({
         keyword: lo as string,
-        posts: data?.filter((el: Post) => el.tag === lo),
+        posts: data?.filter((el: Post) => el.tag.includes(lo)),
       });
       LocalStorage.removeItem("tag");
     }

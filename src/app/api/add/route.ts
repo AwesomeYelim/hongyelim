@@ -13,19 +13,9 @@ export async function POST(req: Request, res: Response) {
 
   const mdPath = (() => {
     if (target) {
-      return path.join(
-        process.cwd(),
-        "data",
-        "md",
-        `${target?.id}_${target?.title}.md`
-      );
+      return path.join(process.cwd(), "data", "md", `${target?.id}_${target?.title}.md`);
     } else {
-      return path.join(
-        process.cwd(),
-        "data",
-        "md",
-        `${posts.length + 1}_${decodeURI(data.title)}.md`
-      );
+      return path.join(process.cwd(), "data", "md", `${posts.length + 1}_${decodeURI(data.title)}.md`);
     }
   })();
 
@@ -43,12 +33,9 @@ export async function POST(req: Request, res: Response) {
       {
         id: posts.length + 1,
         title: data.title.replace(/\s/g, ""),
-        content:
-          (data.content.match(/#+\s(.+)/g) &&
-            data.content.match(/#+\s(.+)/g)[0]) ||
-          data.content,
+        content: (data.content.match(/#+\s(.+)/g) && data.content.match(/#+\s(.+)/g)[0]) || data.content,
         image: "",
-        tag: data.title,
+        tag: [data.title],
         like: false,
         like_count: 0,
         created_at: Math.floor(new Date().getTime() / 1000),

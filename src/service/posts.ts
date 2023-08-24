@@ -14,7 +14,7 @@ export type Post = {
   title: string;
   content: string;
   image: string;
-  tag: string;
+  tag: string[];
   like: boolean;
   like_count: number;
   created_at: number;
@@ -26,6 +26,7 @@ export async function getPosts(): Promise<Post[]> {
   const data = await fs.readFile(filePath, "utf-8");
   const dataObj = JSON.parse(data);
 
+  // seo 동적사이트 감지되도록
   const sitemaps: ISitemapField[] = dataObj.map((idx: Post) => {
     return {
       // 페이지 경로
