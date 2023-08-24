@@ -35,9 +35,7 @@ export default function Heart(props: Post) {
         }
       )
       .then((res) => {
-        const { like, like_count } = res.data.res.find(
-          (el: Post) => el.title === title
-        );
+        const { like, like_count } = res.data.res.find((el: Post) => el.title === title);
 
         setHeartNum({
           like,

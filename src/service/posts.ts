@@ -1,5 +1,6 @@
 import path from "path";
 import { promises as fs } from "fs";
+import { getServerSideSitemap, ISitemapField } from "next-sitemap";
 
 export type CommentEl = {
   user_name: string;
@@ -24,6 +25,20 @@ export async function getPosts(): Promise<Post[]> {
   const filePath = path.join(process.cwd(), "data", "posts.json");
   const data = await fs.readFile(filePath, "utf-8");
   const dataObj = JSON.parse(data);
+
+  const sitemaps: ISitemapField[] = dataObj.map((idx: Post) => {
+    return {
+      // 페이지 경로
+      loc: `${process.env.NEXTAUTH_URL || `http://localhost:3000`}/posts/${idx.id}_${idx.title}`,
+      // 변경일
+      lastmod: new Date().toISOString(),
+      changefreq: "daily",
+      priority: 1,
+    };
+  });
+
+  getServerSideSitemap(dataObj, sitemaps);
+
   return dataObj;
 }
 
