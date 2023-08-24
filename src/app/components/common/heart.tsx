@@ -2,7 +2,9 @@
 
 import { MouseEvent, useEffect, useState } from "react";
 import axios from "axios";
+import { collection, addDoc } from "firebase/firestore";
 import { Post } from "@/service/posts";
+import { db } from "../../../app/firebase";
 import classNames from "classnames";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getTargetPostApi } from "./functions/myapi";
@@ -19,30 +21,38 @@ export default function Heart(props: Post) {
   const [heartNum, setHeartNum] = useState({ like, like_count });
   const queryClient = useQueryClient();
 
-  const submitHeart = async (e: MouseEvent) => {
-    e.preventDefault();
-    await axios
-      .post(
-        `/api/${id}_${title}/heart`,
-        JSON.stringify({
-          id,
-          title,
-        }),
-        {
-          headers: {
-            "Content-Type": `application/json`,
-          },
-        }
-      )
-      .then((res) => {
-        const { like, like_count } = res.data.res.find((el: Post) => el.title === title);
+  // const submitHeart = async (e: MouseEvent) => {
+  //   e.preventDefault();
+  //   await axios
+  //     .post(
+  //       `/api/${id}_${title}/heart`,
+  //       JSON.stringify({
+  //         id,
+  //         title,
+  //       }),
+  //       {
+  //         headers: {
+  //           "Content-Type": `application/json`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       const { like, like_count } = res.data.res.find((el: Post) => el.title === title);
 
-        setHeartNum({
-          like,
-          like_count,
-        });
-        return res;
-      });
+  //       setHeartNum({
+  //         like,
+  //         like_count,
+  //       });
+  //       return res;
+  //     });
+  // };
+
+  const submitHeart = async (e: MouseEvent) => {
+    // const db = getFirestore(app);
+    await addDoc(collection(db, "posts"), {
+      name: "heart",
+      count: 1,
+    });
   };
 
   const mutation = useMutation({
