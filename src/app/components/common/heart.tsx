@@ -5,6 +5,7 @@ import axios from "axios";
 import { Post } from "@/service/posts";
 import classNames from "classnames";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import toast, { Toaster } from "react-hot-toast";
 import { getTargetPostApi } from "./functions/myapi";
 import { useSession } from "next-auth/react";
 import "./heart.scss";
@@ -26,7 +27,9 @@ export default function Heart(props: Post) {
 
   const submitHeart = async (e: MouseEvent) => {
     e.preventDefault();
-
+    if (!session?.user?.email) {
+      return toast("please login");
+    }
     await axios
       .post(
         `/api/${id}_${title}/heart`,
@@ -71,6 +74,7 @@ export default function Heart(props: Post) {
 
   return (
     <div className="side_area">
+      <Toaster />
       <div className="heart_wrap">
         <button onClick={(data) => mutation.mutate(data)}>
           <i className={classNames("heart", { active: heartNum.heart })} />

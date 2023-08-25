@@ -17,12 +17,22 @@ export async function POST(req: Request, res: Response) {
   const session = await getServerSession();
 
   if (!data) return NextResponse.json({ message: "Missing Data" });
-
+  // const commentData = doc(db, "comment", "1691116346");
   const userData = doc(db, "user", session?.user?.email as string);
   const postData = doc(db, "posts", title);
 
   const user = await getDoc(userData);
   const post = await getDoc(postData);
+  // const comment = await getDoc(commentData);
+
+  // const newComment = comment.data();
+  // newComment.id = comment.id;
+  // if (newComment.userInfo) {
+  //   newComment.userInfo.get().then((res) => {
+  //     newComment.userData = res.data;
+  //     console.log(newComment);
+  //   });
+  // }
 
   try {
     if (session?.user?.email && data) {
