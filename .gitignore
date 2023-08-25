@@ -36,3 +36,4 @@ next-env.d.ts
  
 # prisma connect api 
 /src/app/api/test/*
+/prisma

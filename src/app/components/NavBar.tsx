@@ -23,9 +23,9 @@ export default function NavBar() {
     // const db = getFirestore(app);
     // const id = await addDoc(collection(db, "user"), user);
     const id = await getDocs(collection(db, "user"));
-    id.forEach((doc) => {
-      console.log(doc.id, doc.data());
-    });
+    // id.forEach((doc) => {
+    //   console.log(doc.id, doc.data());
+    // });
 
     // const data = doc(db, "user", user?.email as string);
     // await setDoc(data, user);

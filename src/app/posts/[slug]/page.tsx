@@ -30,24 +30,11 @@ export default async function page({ params }: Props) {
 
   const { title, content, id } = post;
 
-  let { image } = post;
-  // fs.access(`public/images/${image}.png`, async (err) => {
-  //   if (err) {
-  //     image = "empty";
-  //   }
-  // });
-
   return (
     <div className="detail_page_wrapper">
       <h1>{title}`s Detail Page</h1>
       <div className="detail_img">
-        <Image
-          src={`/images/${image}.png`}
-          alt={image}
-          width={1000}
-          height={1000}
-          priority
-        />
+        <Image src={`/images/${title}.png`} alt={title} width={1000} height={1000} priority />
       </div>
       <Heart {...post} />
       <MdfileViewer mdPost={mdPost} useToc={true} />

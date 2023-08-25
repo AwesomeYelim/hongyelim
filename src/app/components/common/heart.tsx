@@ -6,28 +6,27 @@ import { Post } from "@/service/posts";
 import classNames from "classnames";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getTargetPostApi } from "./functions/myapi";
-import { collection, addDoc, getDocs, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
-import { db } from "../../../app/firebase";
-
-import { DefaultSession } from "next-auth";
-import "./heart.scss";
 import { useSession } from "next-auth/react";
+import "./heart.scss";
 
 export default function Heart(props: Post) {
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
 
-  const { id, title, like, like_count } = props;
+  const { id, title, heart_count, heart } = props;
+  const [heartNum, setHeartNum] = useState({
+    heart: heart[session?.user?.email as string],
+    heart_count,
+  });
 
   const { data } = useQuery({
     queryKey: `${id}_${title}`,
     queryFn: (data) => getTargetPostApi(data.queryKey[0]),
   });
 
-  const [heartNum, setHeartNum] = useState({ like, like_count });
-  const queryClient = useQueryClient();
-
   const submitHeart = async (e: MouseEvent) => {
     e.preventDefault();
+
     await axios
       .post(
         `/api/${id}_${title}/heart`,
@@ -42,43 +41,16 @@ export default function Heart(props: Post) {
         }
       )
       .then((res) => {
-        const { like, like_count } = res.data.res.find((el: Post) => el.title === title);
+        console.log(res);
+
+        const { heart, heart_count } = res.data.post;
 
         setHeartNum({
-          like,
-          like_count,
+          heart: heart[session?.user?.email as string],
+          heart_count,
         });
         return res;
       });
-  };
-
-  const userHeart = async (user: DefaultSession["user"]) => {
-    // const db = getFirestore(app);
-    // const id = await addDoc(collection(db, "user"), user);
-    const id = await getDocs(collection(db, "user"));
-    const one = await getDoc(doc(db, "user", user?.email as string));
-    console.log(one.data());
-
-    // id.forEach((doc) => {
-    //   console.log(doc.id, doc.data());
-    // });
-    try {
-      if (user?.email) {
-        const data = doc(db, "user", user?.email as string);
-        console.log(data.firestore);
-        const obj: { [key in string]: boolean } = {};
-        obj[title] = true;
-        await updateDoc(data, {
-          heart: { ...one.data()?.heart, ...obj },
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-
-    // await updateDoc(data, {
-    //   heart: 1,
-    // });
   };
 
   const mutation = useMutation({
@@ -89,24 +61,21 @@ export default function Heart(props: Post) {
   });
 
   useEffect(() => {
-    userHeart(session?.user);
-
     if (data) {
       const {
-        post: { like, like_count },
+        post: { heart, heart_count },
       } = data;
-      setHeartNum({ like, like_count });
+      setHeartNum({ heart: heart[session?.user?.email as string], heart_count });
     }
   }, [data, session?.user]);
-  console.log(session?.user);
 
   return (
     <div className="side_area">
       <div className="heart_wrap">
         <button onClick={(data) => mutation.mutate(data)}>
-          <i className={classNames("heart", { active: heartNum.like })} />
+          <i className={classNames("heart", { active: heartNum.heart })} />
         </button>
-        <span className="like">{heartNum.like_count}</span>
+        <span className="like">{heartNum.heart_count}</span>
       </div>
     </div>
   );

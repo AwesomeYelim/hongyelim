@@ -34,10 +34,9 @@ export async function POST(req: Request, res: Response) {
         id: posts.length + 1,
         title: data.title.replace(/\s/g, ""),
         content: (data.content.match(/#+\s(.+)/g) && data.content.match(/#+\s(.+)/g)[0]) || data.content,
-        image: "",
         tag: [data.title],
-        like: false,
-        like_count: 0,
+        heart: {},
+        heart_count: 0,
         created_at: Math.floor(new Date().getTime() / 1000),
       },
     ];
@@ -52,10 +51,6 @@ export async function POST(req: Request, res: Response) {
   fs.writeFile(mdPath, mdFile, (err) => {
     NextResponse.json({ message: err });
   });
-
-  // const target = posts.find((item) => {
-  //   return item.id === data.id;
-  // });
 
   return NextResponse.json({
     message: "성공쓰~",

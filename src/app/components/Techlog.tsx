@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { Selected, Tag } from "./Tag";
 import { useQuery } from "react-query";
 import { getPostsApi } from "./common/functions/myapi";
+import { useSession } from "next-auth/react";
 
 export default function Techlog() {
   const lo = LocalStorage.getItem("tag") as string;
@@ -16,6 +17,7 @@ export default function Techlog() {
     queryKey: "postsData",
     queryFn: getPostsApi,
   });
+  const { data: session } = useSession();
 
   const [selected, setSelected] = useState<Selected>({
     keyword: "All",
@@ -48,7 +50,7 @@ export default function Techlog() {
       <div className="list_wrapper">
         <ul className="list">
           {selected &&
-            selected.posts?.map(({ id, title, image, like, like_count, content, created_at }) => {
+            selected.posts?.map(({ id, title, heart_count, content, created_at, heart }) => {
               const date = new Date(created_at * 1000).toLocaleDateString("ko-kr", {
                 year: "numeric",
                 month: "short",
@@ -66,8 +68,8 @@ export default function Techlog() {
                   {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
                   <div className="bottom_wrap">
                     <span className="date">{date}</span>
-                    <i className={classNames("static_heart", { like })} />
-                    <span className="like">{like_count}</span>
+                    <i className={classNames("static_heart", { like: heart[session?.user?.email as string] })} />
+                    <span className="like">{heart_count}</span>
                   </div>
                 </li>
               );
