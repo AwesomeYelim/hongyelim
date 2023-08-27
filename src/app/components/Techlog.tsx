@@ -60,7 +60,6 @@ export default function Techlog() {
                     day: "numeric",
                   }
                 );
-                console.log(heart[session?.user?.email as string]);
 
                 return (
                   <li key={id}>

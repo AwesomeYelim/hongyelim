@@ -12,7 +12,6 @@ import "./Comment.scss";
 export const Comment = (props: Post): JSX.Element => {
   const { data: session } = useSession();
   const { id, title } = props;
-  // console.log(session);
 
   const [comments, setComments] = useState("");
   const {
