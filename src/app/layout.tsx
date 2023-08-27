@@ -10,11 +10,12 @@ import StyledComponentsRegistry from "./registry";
 import "./styles/reset.scss";
 import "./styles/layout.scss";
 import "./styles/dark.scss";
+import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "hongyelim",
   description: "this is yelim blog :)",
   icons: {
@@ -22,19 +23,33 @@ export const metadata = {
   },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <GoogleAnalytics />
       <head>
-        <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
+        <meta
+          name="google-site-verification"
+          content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI"
+        />
+        <meta
+          httpEquiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate"
+        />
+        <meta httpEquiv="Expires" content="0" />
+        <meta httpEquiv="Pragma" content="no-cache" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
             const modecookie = document.cookie.match('theme=([^;]*)(;|$)')
             document.documentElement.dataset.theme = modecookie[1]
           `,
-          }}></script>
+          }}
+        ></script>
       </head>
       <StyledComponentsRegistry>
         <AuthSession>
