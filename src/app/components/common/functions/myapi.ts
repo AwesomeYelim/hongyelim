@@ -1,3 +1,4 @@
+import { CommentEl } from "@/service/posts";
 import axios from "axios";
 
 export const getPostsApi = async () => {
@@ -15,6 +16,20 @@ export const postsAddApi = async (data: { [key in string]: string }) => {
     })
     .then((res) => {
       console.log(res.data);
+    });
+};
+
+export const postsCommentApi = async (
+  data: CommentEl & { queryKey: string }
+) => {
+  await axios
+    .post(`/api/${data.queryKey}/comment`, JSON.stringify(data), {
+      headers: {
+        "Content-Type": `application/json`,
+      },
+    })
+    .then((res) => {
+      getTargetPostApi(data.queryKey);
     });
 };
 
