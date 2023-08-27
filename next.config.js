@@ -17,6 +17,10 @@ const nextConfig = {
             key: "Cache-Control",
             value: "no-store",
           },
+          {
+            key: "Etag",
+            value: "false",
+          },
         ],
       },
     ];
