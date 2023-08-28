@@ -44,8 +44,6 @@ export default function Heart(props: Post) {
         }
       )
       .then((res) => {
-        console.log(res);
-
         const { heart, heart_count } = res.data.post;
 
         setHeartNum({

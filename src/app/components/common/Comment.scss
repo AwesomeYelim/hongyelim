@@ -12,7 +12,7 @@
     label {
       justify-items: flex-start;
       font-weight: 600;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     textarea {
       border: none;
@@ -47,6 +47,13 @@
       .cm_img_wrap {
         @include flex(center, initial);
         gap: 10px;
+        font-weight: 500;
+        .bin {
+          background: url($img) no-repeat -154px -50px;
+          width: 13px;
+          height: 15px;
+          cursor: pointer;
+        }
       }
       span {
         font-size: 13px;
