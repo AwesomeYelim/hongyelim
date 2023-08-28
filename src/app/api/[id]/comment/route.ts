@@ -13,7 +13,6 @@ import { db } from "../../../firebase";
 export async function POST(req: Request, res: Response) {
   const data = await req.json();
   const title = data.queryKey.split("_")[1];
-  console.log("asdadad", req, res);
 
   const postData = doc(db, "posts", title);
   const post = await getDoc(postData);
@@ -31,22 +30,29 @@ export async function POST(req: Request, res: Response) {
 }
 
 export async function DELETE(req: Request) {
-  console.log("asdasd", req.body);
+  const { searchParams } = new URL(req.url);
+  const targetKey = searchParams.get("data[com_created_at]");
+  const queryKey = searchParams.get("data[queryKey]");
+  const title = (queryKey as string).split("_")[1];
 
-  // const data = await req.json();
-  // const title = data.queryKey.split("_")[1];
+  const postData = doc(db, "posts", title);
+  const post = await getDoc(postData);
 
-  // const postData = doc(db, "posts", title);
-  // const post = await getDoc(postData);
+  await updateDoc(postData, {
+    comments: [
+      ...post
+        .data()
+        ?.comments.filter(
+          (el: CommentEl) => el.com_created_at !== +(targetKey as string)
+        ),
+    ],
+  });
 
-  // await updateDoc(postData, {
-  //   comments: [...post.data()?.comments.filter((el: CommentEl) => el.com_created_at !== data.data)],
-  // });
-
-  // const updatedPost = await getDoc(doc(db, "posts", title));
+  const updatedPost = await getDoc(doc(db, "posts", title));
 
   return NextResponse.json({
     message: "success!",
-    // post: updatedPost.data(),
+    post: updatedPost.data(),
   });
 }
+
