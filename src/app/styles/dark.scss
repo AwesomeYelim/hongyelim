@@ -161,13 +161,7 @@ html {
       }
     }
 
-    /** post_detail heart  */
-    .heart_wrap {
-      .like {
-        color: var(--font);
-      }
-    }
-    /** post_detail md 파일  */
+    /** post_detail md 파일, memo page 공통  */
     .md_wrapper {
       nav > a,
       ul li,
@@ -203,22 +197,51 @@ html {
         }
       }
     }
-
-    /** post_detail toc  */
-    .toc_content {
-      > span,
-      h1,
-      h2,
-      h3,
-      h4 {
-        color: var(--font);
+    /** post_detail  */
+    .detail_page_wrapper {
+      /** post_detail heart  */
+      .heart_wrap {
+        .like {
+          color: var(--font);
+        }
       }
-    }
 
-    /** post_detail 하단 button  */
-    .btn_wrap {
-      a {
-        color: #ccc;
+      /** post_detail toc  */
+      .toc_content {
+        > span,
+        h1,
+        h2,
+        h3,
+        h4 {
+          color: var(--font);
+        }
+      }
+
+      /** post_detail 하단 button  */
+      .btn_wrap {
+        a {
+          color: #ccc;
+        }
+      }
+
+      /** post_detail 하단 comment 영역  */
+      .comment_wrap {
+        form {
+          textarea {
+            color: var(--w) !important;
+            background-color: #3e3e3e;
+          }
+        }
+        .commented_wrap {
+          .commentedEl_wrap {
+            .cm_img_wrap {
+              color: var(--w) !important;
+            }
+            p {
+              color: var(--w) !important;
+            }
+          }
+        }
       }
     }
   }

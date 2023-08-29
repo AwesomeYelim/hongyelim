@@ -7,7 +7,7 @@ import { db } from "../app/firebase";
 export interface User {
   name: string;
   image: string;
-  email: string
+  email: string;
 }
 export interface CommentEl {
   com_created_at: number;
@@ -24,6 +24,7 @@ export type Post = {
   heart: { [key in string]: boolean };
   created_at: number;
   comments?: CommentEl[];
+  post_title: string;
 };
 
 // export type Post = { [x: string]: DocumentData };
@@ -40,9 +41,7 @@ export async function getPosts(): Promise<Post[]> {
   const sitemaps: ISitemapField[] = posts.map((idx: Post) => {
     return {
       // 페이지 경로
-      loc: `${process.env.NEXTAUTH_URL || `http://localhost:3000`}/posts/${
-        idx.id
-      }_${idx.title}`,
+      loc: `${process.env.NEXTAUTH_URL || `http://localhost:3000`}/posts/${idx.id}_${idx.title}`,
       // 변경일
       lastmod: new Date().toISOString(),
       changefreq: "daily",
@@ -55,9 +54,7 @@ export async function getPosts(): Promise<Post[]> {
   return posts;
 }
 
-export async function getPost(
-  id_title: string
-): Promise<{ post: Post; mdPost: string }> {
+export async function getPost(id_title: string): Promise<{ post: Post; mdPost: string }> {
   const mdPath = path.join(process.cwd(), "data/md", `${id_title}.md`);
 
   const mdPost = await fs.readFile(mdPath, "utf-8");

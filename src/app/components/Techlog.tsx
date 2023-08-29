@@ -50,39 +50,33 @@ export default function Techlog() {
       <div className="list_wrapper">
         <ul className="list">
           {selected &&
-            selected.posts?.map(
-              ({ id, title, heart_count, content, created_at, heart }) => {
-                const date = new Date(created_at * 1000).toLocaleDateString(
-                  "ko-kr",
-                  {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  }
-                );
+            selected.posts?.map(({ id, title, heart_count, content, created_at, heart, post_title }) => {
+              const date = new Date(created_at * 1000).toLocaleDateString("ko-kr", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              });
 
-                return (
-                  <li key={id}>
-                    <div className="text_wrapper">
-                      <Link href={`/posts/${id}_${title}`}>
-                        <h2>{title}</h2>
-                      </Link>
-                      <span>{content}</span>
-                    </div>
-                    {/* <Image src={`/images/${image}.png`} alt={image} width={700} height={700} /> */}
-                    <div className="bottom_wrap">
-                      <span className="date">{date}</span>
-                      <i
-                        className={classNames("static_heart", {
-                          like: heart[session?.user?.email as string],
-                        })}
-                      />
-                      <span className="like">{heart_count}</span>
-                    </div>
-                  </li>
-                );
-              }
-            )}
+              return (
+                <li key={id}>
+                  <div className="text_wrapper">
+                    <Link href={`/posts/${id}_${title}`}>
+                      <h2>{post_title}</h2>
+                    </Link>
+                    <span>{content}</span>
+                  </div>
+                  <div className="bottom_wrap">
+                    <span className="date">{date}</span>
+                    <i
+                      className={classNames("static_heart", {
+                        like: heart[session?.user?.email as string],
+                      })}
+                    />
+                    <span className="like">{heart_count}</span>
+                  </div>
+                </li>
+              );
+            })}
         </ul>
       </div>
     </div>

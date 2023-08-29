@@ -66,9 +66,10 @@
 
     .detail_img {
       @include flex(center, initial);
+      padding-top: 150px;
       width: 100% !important;
       height: 300px !important;
-      opacity: 0.7;
+      // opacity: 0.7;
       overflow: hidden;
     }
   }

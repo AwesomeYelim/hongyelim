@@ -43,11 +43,9 @@ export const Comment = (props: Post): JSX.Element => {
   };
 
   const deleteCommentApi = async (data: CommentEl & { queryKey: string }) => {
-    await axios
-      .delete(`/api/${data.queryKey}/comment`, { params: { data } })
-      .then((res) => {
-        setComments(res.data.post.comments);
-      });
+    await axios.delete(`/api/${data.queryKey}/comment`, { params: { data } }).then((res) => {
+      setComments(res.data.post.comments);
+    });
   };
 
   const mutation = useMutation({
@@ -73,18 +71,11 @@ export const Comment = (props: Post): JSX.Element => {
               userInfo: session?.user as User,
               com_created_at: Math.floor(+new Date() / 1000),
             });
-          })}
-        >
+          })}>
           <label>comment</label>
           <textarea
-            {...register("content", {
-              required: { value: true, message: "is required" },
-            })}
-            placeholder={
-              session?.user
-                ? "댓글을 작성하세요."
-                : "댓글 작성은 로그인이 필요합니다. 🐧"
-            }
+            {...register("content")}
+            placeholder={session?.user ? "댓글을 작성하세요." : "댓글 작성은 로그인이 필요합니다. 🐧"}
             disabled={!session?.user}
           />
           {errors.content && <p>{errors.content.message as string}</p>}
@@ -92,19 +83,17 @@ export const Comment = (props: Post): JSX.Element => {
             Submit
           </button>
         </form>
-        <div className="commented-wrap">
+        <div className="commented_wrap">
           {data &&
             comments?.map((el: CommentEl) => {
-              const date = new Date(
-                el.com_created_at * 1000
-              ).toLocaleDateString("ko-kr", {
+              const date = new Date(el.com_created_at * 1000).toLocaleDateString("ko-kr", {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
               });
 
               return (
-                <div className="commentedEl-wrap" key={el.com_created_at}>
+                <div className="commentedEl_wrap" key={el.com_created_at}>
                   <div className="cm_img_wrap">
                     <img
                       src={el.userInfo.image}

@@ -35,6 +35,7 @@ export async function POST(req: Request, res: Response) {
         title: data.title.replace(/\s/g, ""),
         content: (data.content.match(/#+\s(.+)/g) && data.content.match(/#+\s(.+)/g)[0]) || data.content,
         tag: [data.title],
+        post_title: "",
         heart: {},
         heart_count: 0,
         created_at: Math.floor(new Date().getTime() / 1000),
