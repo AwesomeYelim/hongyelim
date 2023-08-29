@@ -19,26 +19,6 @@ export default function NavBar() {
   const { data: session } = useSession();
   const location = usePathname();
 
-  const userAdd = async (user: DefaultSession["user"]) => {
-    // const db = getFirestore(app);
-    // const id = await addDoc(collection(db, "user"), user);
-    const id = await getDocs(collection(db, "user"));
-    // id.forEach((doc) => {
-    //   console.log(doc.id, doc.data());
-    // });
-
-    // const data = doc(db, "user", user?.email as string);
-    // await setDoc(data, user);
-
-    // await updateDoc(data, {
-    //   name: "yesGirl ~",
-    // });
-  };
-
-  useEffect(() => {
-    if (session?.user?.email) userAdd(session?.user);
-  }, [session?.user]);
-
   const {
     navInfo: [navInfo, setNavInfo],
     dark: [dark, setDark],
@@ -121,9 +101,11 @@ export default function NavBar() {
         <Link href="/posts" className={classNames({ active: location?.includes("/posts") })}>
           Posts
         </Link>
-        <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
-          Memo
-        </Link>
+        {admin && (
+          <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
+            Memo
+          </Link>
+        )}
         <Link href="/archives" className={classNames({ active: location?.includes("/archives") })}>
           Archives
         </Link>

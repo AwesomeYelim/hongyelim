@@ -63,15 +63,6 @@
     width: inherit;
     margin: 80px 0 50px 0;
     padding: 20px;
-
-    .detail_img {
-      @include flex(center, initial);
-      padding-top: 150px;
-      width: 100% !important;
-      height: 300px !important;
-      // opacity: 0.7;
-      overflow: hidden;
-    }
   }
   .footer_wrapper {
     footer {

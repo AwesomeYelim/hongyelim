@@ -1,13 +1,15 @@
+import fs from "fs";
+import path from "path";
+import Image from "next/image";
 import { MdfileViewer } from "@/app/components/common/MdfileViewer";
 import { Comment } from "@/app/components/common/Comment";
 import Heart from "@/app/components/common/heart";
 import { getPost } from "@/service/posts";
-import Image from "next/image";
-import fs from "fs";
-import path from "path";
 import { notFound } from "next/navigation";
 import { PrevNextButton } from "@/app/components/PrevNextButton";
 import { GetSessionParams } from "next-auth/react";
+import "./page.scss";
+import { DetailTag } from "@/app/components/DetailTag";
 
 type Props = {
   params:
@@ -34,7 +36,7 @@ export default async function page({ params }: Props) {
     })
     .includes(true);
 
-  const { title, id } = post;
+  const { title, id, tag } = post;
 
   return (
     <div className="detail_page_wrapper">
@@ -43,6 +45,7 @@ export default async function page({ params }: Props) {
       </div>
       <Heart {...post} />
       <MdfileViewer mdPost={mdPost} useToc={true} />
+      <DetailTag {...post} />
       <PrevNextButton id={id} />
       {/* <Utterance /> */}
       <Comment {...post} />

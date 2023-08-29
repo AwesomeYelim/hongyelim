@@ -30,7 +30,9 @@ export const Add = ({ selected, setSelected }: Omit<Props, "posts">): JSX.Elemen
       queryClient.invalidateQueries({ queryKey: "postsData" });
     },
   });
-
+  // const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  //   console.log(e.target.files);
+  // };
   return (
     <div className="memo_wrap">
       <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
@@ -64,6 +66,21 @@ export const Add = ({ selected, setSelected }: Omit<Props, "posts">): JSX.Elemen
                 setContent(e.currentTarget.value);
               }}
             />
+            {/* <input
+              // disabled={loading === true}
+              type="file"
+              // ref={inputRef}
+              onDragOver={(e) => {
+                console.log(e);
+              }}
+              onDragLeave={(e) => {
+                console.log(e);
+              }}
+              onChange={onChangeHandler}
+              // title={
+              //   file ? file?.name : '선택 파일 없음'
+              // }
+            /> */}
           </div>
           <div className="written_area">
             <label>Viwer</label>

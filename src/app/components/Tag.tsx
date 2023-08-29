@@ -103,13 +103,13 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
             onClick={(e) => {
               if (setSelected) {
                 const select = posts.filter((el: Post) => el.tag.includes(keyword));
-
                 setSelected({
-                  keyword: e.currentTarget.innerText,
+                  keyword: e.currentTarget.innerText.split("(")[0],
                   posts: select,
                 });
 
-                if (keyword === "All") setSelected({ keyword, posts: [...posts] });
+                if (e.currentTarget.innerText === "All") setSelected({ keyword: "All", posts: [...posts] });
+
                 if (e.currentTarget.innerText === "Recommand Title") {
                   setSelected({ keyword: "" });
                 }
