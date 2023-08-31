@@ -5,4 +5,4 @@
 - 주요 역할 : 웹 전체 기획, front, back 담당
 - 사용 기술 : Typescript, React, Nextjs 13, Styled-Components, ReactQuery, Recoil, ReactHookform, ReactMarkdown, Nodejs, FireBase, Prisma, MySql
 
-- [https://hongyelim.vercel.app/](https://hongyelim.vercel.app/)
+- <a href="https://hongyelim.vercel.app/" target="_blank"> https://hongyelim.vercel.app/ </a>

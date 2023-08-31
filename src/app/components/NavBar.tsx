@@ -3,15 +3,11 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import classNames from "classnames";
 import Cookies from "js-cookie";
-import styled from "styled-components";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-const Nav = styled.div<{ $hide: boolean }>`
-  height: ${({ $hide }) => ($hide ? "111px" : "0px")};
-`;
 export default function NavBar() {
   const { data: session } = useSession();
   const location = usePathname();
@@ -51,7 +47,7 @@ export default function NavBar() {
   }, []);
 
   return (
-    <Nav $hide={navInfo.hide} className="nav_wrapper">
+    <div className="nav_wrapper" style={{ height: navInfo.hide ? "111px" : "0px" }}>
       <Link href="/" className="logo">
         <i />
       </Link>
@@ -107,6 +103,6 @@ export default function NavBar() {
           Archives
         </Link>
       </nav>
-    </Nav>
+    </div>
   );
 }

@@ -5,6 +5,8 @@ export const getPostsApi = async () => {
     .get("/api", {
       headers: {
         "Cache-Control": "no-store",
+        Pragma: "no-store",
+        Expires: "0",
       },
     })
     .then((res) => {
