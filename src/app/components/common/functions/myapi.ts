@@ -1,9 +1,15 @@
 import axios from "axios";
 
 export const getPostsApi = async () => {
-  return axios.get("/api").then((res) => {
-    return res.data;
-  });
+  return axios
+    .get("/api", {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
 };
 
 export const postsAddApi = async (data: { [key in string]: string }) => {
