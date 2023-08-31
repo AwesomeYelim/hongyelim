@@ -8,9 +8,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { collection, addDoc, getDocs, doc, setDoc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import { DefaultSession } from "next-auth";
 
 const Nav = styled.div<{ $hide: boolean }>`
   height: ${({ $hide }) => ($hide ? "111px" : "0px")};
