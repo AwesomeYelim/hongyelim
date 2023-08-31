@@ -13,14 +13,14 @@ const nextConfig = {
       {
         source: "/api",
         headers: [
-          // {
-          //   key: "Cache-Control",
-          //   value: "no-store",
-          // },
           {
             key: "Cache-Control",
-            value: "public, max-age=3600",
+            value: "no-store",
           },
+          // {
+          //   key: "Cache-Control",
+          //   value: "public, max-age=3600",
+          // },
           {
             key: "Etag",
             value: "false",
