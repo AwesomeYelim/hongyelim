@@ -2,7 +2,7 @@
  * 1. 컴포넌트 : src\app\api\[id]\comment\route.ts
  * 2. 작성일 : 2023.08.25 / 17시 45분 22초
  * 3. 작성자 : 홍예림
- * 4. 설명 : 게시물 comment 추가
+ * 4. 설명 : 게시물 comment 추가 및 삭제
  */
 
 import { CommentEl } from "@/service/posts";
@@ -55,4 +55,3 @@ export async function DELETE(req: Request) {
     post: updatedPost.data(),
   });
 }
-
