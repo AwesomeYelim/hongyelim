@@ -11,7 +11,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/api",
+        source: "/*",
         headers: [
           {
             key: "Cache-Control",
