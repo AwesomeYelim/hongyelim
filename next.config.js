@@ -8,24 +8,24 @@ const nextConfig = {
   },
   reactStrictMode: true,
   swcMinify: true,
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "no-store",
-          },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: "/:path*",
+  //       headers: [
+  //         {
+  //           key: "Cache-Control",
+  //           value: "no-store",
+  //         },
 
-          {
-            key: "Etag",
-            value: "false",
-          },
-        ],
-      },
-    ];
-  },
+  //         {
+  //           key: "Etag",
+  //           value: "false",
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
