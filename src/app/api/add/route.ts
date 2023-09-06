@@ -2,7 +2,7 @@ import fs from "fs";
 import { getPosts } from "@/service/posts";
 import { NextResponse } from "next/server";
 import path from "path";
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 
 export async function POST(req: Request, res: Response) {
@@ -30,6 +30,7 @@ export async function POST(req: Request, res: Response) {
   const isMd = fs.existsSync(mdPath);
   let mdFile: Buffer | string;
 
+  /** 기존 md 유무에 따라 data 추가할지 수정할지 결정 */
   if (!isMd) {
     mdFile = `\n\n${data.content}`;
 
@@ -37,8 +38,8 @@ export async function POST(req: Request, res: Response) {
       id: posts.length + 1,
       title: data.title.replace(/\s/g, ""),
       content: (data.content.match(/#+\s(.+)/g) && data.content.match(/#+\s(.+)/g)[0]) || data.content,
-      tag: [data.title],
-      post_title: data.title.replace(/\s/g, ""),
+      tag: data.tag.split(","),
+      post_title: data.sub,
       heart: {},
       heart_count: 0,
       created_at: Math.floor(new Date().getTime() / 1000),

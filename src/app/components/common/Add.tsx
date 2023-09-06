@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Props } from "../Tag";
 import { MdfileViewer } from "./MdfileViewer";
@@ -8,14 +7,13 @@ import { useMutation, useQueryClient } from "react-query";
 import { postsAddApi } from "./functions/myapi";
 
 export const Add = ({ selected, setSelected }: Omit<Props, "posts">): JSX.Element => {
-  const [content, setContent] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-    getValues,
     // setError,
+    watch,
   } = useForm();
 
   const queryClient = useQueryClient();
@@ -26,16 +24,22 @@ export const Add = ({ selected, setSelected }: Omit<Props, "posts">): JSX.Elemen
       if (setSelected) setSelected({ keyword: "" });
       setValue("content", "");
       setValue("title", "");
-      setContent("");
+      setValue("tag", "");
+      setValue("sub", "");
       queryClient.invalidateQueries({ queryKey: "postsData" });
     },
   });
-  // const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-  //   console.log(e.target.files);
-  // };
+
   return (
     <div className="memo_wrap">
       <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
+        <label>Sub</label>
+        <input
+          {...register("sub", {
+            required: { value: true, message: "is required" },
+          })}
+        />
+        {errors.sub && <p>{errors.sub.message as string}</p>}
         <label>Title</label>
         <input
           {...register("title", {
@@ -55,6 +59,18 @@ export const Add = ({ selected, setSelected }: Omit<Props, "posts">): JSX.Elemen
         />
         {errors.title && <p>{errors.title.message as string}</p>}
 
+        <label>Tag</label>
+        <input
+          {...register("tag", {
+            required: { value: true, message: "is required" },
+            pattern: {
+              value: /[a-zA-Z0-9],[a-zA-Z0-9]/g,
+              message: "Please enter an English letter or a number containing commas",
+            },
+          })}
+        />
+        {errors.tag && <p>{errors.tag.message as string}</p>}
+
         <div className="content_wrap">
           <div className="write_area">
             <label>Content (add / generate)</label>
@@ -62,29 +78,11 @@ export const Add = ({ selected, setSelected }: Omit<Props, "posts">): JSX.Elemen
               {...register("content", {
                 required: { value: true, message: "is required" },
               })}
-              onChange={(e) => {
-                setContent(e.currentTarget.value);
-              }}
             />
-            {/* <input
-              // disabled={loading === true}
-              type="file"
-              // ref={inputRef}
-              onDragOver={(e) => {
-                console.log(e);
-              }}
-              onDragLeave={(e) => {
-                console.log(e);
-              }}
-              onChange={onChangeHandler}
-              // title={
-              //   file ? file?.name : '선택 파일 없음'
-              // }
-            /> */}
           </div>
           <div className="written_area">
             <label>Viwer</label>
-            <MdfileViewer mdPost={content} />
+            <MdfileViewer mdPost={watch("content")} />
           </div>
         </div>
         {errors.content && <p>{errors.content.message as string}</p>}

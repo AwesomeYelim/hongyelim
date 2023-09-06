@@ -5,7 +5,6 @@ import { Add } from "./common/Add";
 import { Selected, Tag } from "./Tag";
 import { useQuery } from "react-query";
 import { getPostsApi } from "./common/functions/myapi";
-import { Post } from "@/service/posts";
 
 export const Memo = (): JSX.Element => {
   const [selected, setSelected] = useState<Selected>({ keyword: "" });
@@ -16,7 +15,6 @@ export const Memo = (): JSX.Element => {
   });
 
   const props = {
-    posts: data as Post[],
     selected,
     setSelected,
   };

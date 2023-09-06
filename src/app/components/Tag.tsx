@@ -86,16 +86,18 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
 
   useEffect(() => {
     // prettier-ignore
-    switch (location) {
-      case "/": {
-        setList(["Tag", ...(tag as string[])]);
-      } break;
-      case "/posts": {
-        setList(["All", ...(tag as string[])]);
-      } break;
-      case "/memo": {
-        setList(["Recommand Title", ...(title as string[])]);
-      } break;
+    if(tag?.length || title?.length) {
+      switch (location) {
+        case "/": {
+          setList(["Tag", ...(tag as string[])]);
+        } break;
+        case "/posts": {
+          setList(["All", ...(tag as string[])]);
+        } break;
+        case "/memo": {
+          setList(["Recommand Title", ...(title as string[])]);
+        } break;
+      }
     }
   }, [data]);
 
