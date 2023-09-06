@@ -1,4 +1,10 @@
 {
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "https://hongyelim.vercel.app/api"
+    }
+  ],
   "headers": [
     {
       "source": "/:path*",
