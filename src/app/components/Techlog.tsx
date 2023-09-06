@@ -39,7 +39,7 @@ export default function Techlog() {
   }, [data]);
 
   const props = {
-    posts: data,
+    posts: data as Post[],
     selected,
     setSelected,
   };

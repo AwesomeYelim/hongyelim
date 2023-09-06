@@ -14,7 +14,7 @@ import "./Comment.scss";
 export const Comment = (props: Post): JSX.Element => {
   const { data: session } = useSession();
   const { id, title } = props;
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<CommentEl[]>([]);
 
   const { data } = useQuery({
     queryKey: `${id}_${title}`,
@@ -65,7 +65,7 @@ export const Comment = (props: Post): JSX.Element => {
   });
 
   useEffect(() => {
-    setComments(data?.post?.comments);
+    setComments(data?.post?.comments as CommentEl[]);
   }, [data?.post?.comments]);
 
   return (
