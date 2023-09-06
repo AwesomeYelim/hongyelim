@@ -1,4 +1,3 @@
-import { getPosts } from "@/service/posts";
 import React from "react";
 import { Memo } from "../components/Memo";
 import "./page.scss";

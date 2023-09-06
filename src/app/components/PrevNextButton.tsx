@@ -40,23 +40,23 @@ export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
   });
 
   const callPost = () => {
-    const prev = data.find((el: Post) => el.id === id - 1);
-    const next = data.find((el: Post) => el.id === id + 1);
+    const prev = data?.find((el: Post) => el.id === id - 1);
+    const next = data?.find((el: Post) => el.id === id + 1);
 
     if (prev && next) {
       setIdTitle({
-        prev: [prev.id, prev.title, `${prev.id}_${prev.title}`],
-        next: [next.id, next.title, `${next.id}_${next.title}`],
+        prev: [String(prev.id), prev.title, `${prev.id}_${prev.title}`],
+        next: [String(next.id), next.title, `${next.id}_${next.title}`],
       });
     } else if (!next && prev) {
       setIdTitle({
-        prev: [prev.id, prev.title, `${prev.id}_${prev.title}`],
+        prev: [String(prev.id), prev.title, `${prev.id}_${prev.title}`],
         next: ["", "", ""],
       });
     } else if (!prev && next) {
       setIdTitle({
         prev: ["", "", ""],
-        next: [next.id, next.title, `${next.id}_${next.title}`],
+        next: [String(next.id), next.title, `${next.id}_${next.title}`],
       });
     }
   };
@@ -67,16 +67,8 @@ export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
 
   return (
     <BtnWrap className="btn_wrap">
-      {idTitle.prev[2] && (
-        <Link href={`/posts/${idTitle.prev[2]}`}>
-          ◀ 이전글 {idTitle.prev[1]}
-        </Link>
-      )}
-      {idTitle.next[2] && (
-        <Link href={`/posts/${idTitle.next[2]}`}>
-          {idTitle.next[1]} 다음글 ▶
-        </Link>
-      )}
+      {idTitle.prev[2] && <Link href={`/posts/${idTitle.prev[2]}`}>◀ 이전글 {idTitle.prev[1]}</Link>}
+      {idTitle.next[2] && <Link href={`/posts/${idTitle.next[2]}`}>{idTitle.next[1]} 다음글 ▶</Link>}
     </BtnWrap>
   );
 };
