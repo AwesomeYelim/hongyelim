@@ -5,8 +5,10 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { styled } from "styled-components";
 import LocalStorage from "./common/functions/localstorage";
+import { getPostsApi } from "./common/functions/myapi";
 
 export type Selected = {
   keyword: string;
@@ -14,7 +16,6 @@ export type Selected = {
 };
 
 export interface Props {
-  posts: Post[];
   selected?: Selected;
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
@@ -54,16 +55,21 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
+export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   /**  tag 별 게시물 갯수  */
   const tagCount: { [key in string]: number } = {};
 
+  const { data } = useQuery({
+    queryKey: "postsData",
+    queryFn: getPostsApi,
+  });
+
   const { tag, title } = {
     /** tag 별 list   */
-    tag: posts
-      .map((item: Post) => item.tag)
+    tag: data
+      ?.map((item: Post) => item.tag)
       .flat()
       .filter((item, i, arr) => {
         if (tagCount[item]) {
@@ -75,23 +81,23 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
       }),
 
     /** title 별 list   */
-    title: posts.map((item: Post) => item.title),
+    title: data?.map((item: Post) => item.title),
   };
 
   useEffect(() => {
     // prettier-ignore
     switch (location) {
       case "/": {
-        setList(["Tag", ...tag]);
+        setList(["Tag", ...(tag as string[])]);
       } break;
       case "/posts": {
-        setList(["All", ...tag]);
+        setList(["All", ...(tag as string[])]);
       } break;
       case "/memo": {
-        setList(["Recommand Title", ...title]);
+        setList(["Recommand Title", ...(title as string[])]);
       } break;
     }
-  }, [posts]);
+  }, [data]);
 
   return (
     <TagWrap className="tag_wrap">
@@ -102,13 +108,13 @@ export const Tag = ({ posts, selected, setSelected }: Props): JSX.Element => {
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = posts.filter((el: Post) => el.tag.includes(keyword));
+                const select = data?.filter((el: Post) => el.tag.includes(keyword));
                 setSelected({
                   keyword: e.currentTarget.innerText.split("(")[0],
                   posts: select,
                 });
 
-                if (e.currentTarget.innerText === "All") setSelected({ keyword: "All", posts: [...posts] });
+                if (e.currentTarget.innerText === "All") setSelected({ keyword: "All", posts: [...(data as Post[])] });
 
                 if (e.currentTarget.innerText === "Recommand Title") {
                   setSelected({ keyword: "" });

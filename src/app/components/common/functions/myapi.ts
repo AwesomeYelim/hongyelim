@@ -4,10 +4,6 @@ import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../../firebase";
 
 export const getPostsApi = async () => {
-  // return axios.get("/api").then((res) => {
-  //   return res.data;
-  // });
-
   const fireposts = await getDocs(collection(db, "posts"));
 
   let posts: Post[] = [];
@@ -17,10 +13,6 @@ export const getPostsApi = async () => {
   });
 
   return posts ? posts : [];
-
-  // const res = await fetch("/api", { cache: "no-store" });
-  // const data = await res.json();
-  // return data;
 };
 
 export const postsAddApi = async (data: { [key in string]: string }) => {

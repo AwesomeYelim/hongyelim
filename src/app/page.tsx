@@ -1,10 +1,7 @@
-import { getPosts } from "@/service/posts";
 import { Tag } from "./components/Tag";
 import "./styles/page.scss";
 
 export default async function HomePage() {
-  const posts = await getPosts();
-
   return (
     <div className="main_wrapper">
       <svg width="400" viewBox="0 0 3794 2088" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +16,7 @@ export default async function HomePage() {
             className="start"></path>
         </g>
       </svg>
-      <Tag posts={posts} />
+      <Tag />
     </div>
   );
 }
