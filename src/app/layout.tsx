@@ -23,23 +23,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <GoogleAnalytics />
       <head>
-        <meta
-          name="google-site-verification"
-          content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI"
-        />
-        <meta
-          httpEquiv="Cache-Control"
-          content="no-cache, no-store, must-revalidate"
-        />
+        <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
+
         <meta httpEquiv="Expires" content="0" />
         <meta httpEquiv="Pragma" content="no-cache" />
         <script
@@ -48,8 +38,7 @@ export default async function RootLayout({
             const modecookie = document.cookie.match('theme=([^;]*)(;|$)')
             document.documentElement.dataset.theme = modecookie[1]
           `,
-          }}
-        ></script>
+          }}></script>
       </head>
       <StyledComponentsRegistry>
         <AuthSession>

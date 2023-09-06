@@ -34,6 +34,7 @@ export const Comment = (props: Post): JSX.Element => {
     await axios
       .post(`/api/${data.queryKey}/comment`, JSON.stringify(data), {
         headers: {
+          "Cache-Control": "no-store",
           "Content-Type": `application/json`,
         },
       })
@@ -43,9 +44,16 @@ export const Comment = (props: Post): JSX.Element => {
   };
 
   const deleteCommentApi = async (data: CommentEl & { queryKey: string }) => {
-    await axios.delete(`/api/${data.queryKey}/comment`, { params: { data } }).then((res) => {
-      setComments(res.data.post.comments);
-    });
+    await axios
+      .delete(`/api/${data.queryKey}/comment`, {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+        params: { data },
+      })
+      .then((res) => {
+        setComments(res.data.post.comments);
+      });
   };
 
   const mutation = useMutation({
