@@ -13,8 +13,13 @@
     // height: inherit;
     gap: 80px;
     margin: 50px 0;
-    .main_img {
-      border-radius: 100%;
+    .img_area {
+      @include flex(center, space-between);
+      flex-direction: column;
+      gap : 15px;
+      .main_img {
+        border-radius: 100%;
+      }
     }
   }
   .resume_wrap {
