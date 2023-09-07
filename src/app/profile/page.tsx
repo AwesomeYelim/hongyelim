@@ -1,5 +1,5 @@
 import Image from "next/image";
-import main from "../../../public/images/main.png";
+import main from "../../../public/images/main.jpg";
 import { Footer } from "../Footer";
 import Link from "next/link";
 import "./ProfilePage.scss";
@@ -9,7 +9,7 @@ export default function ProfilePage() {
     <div className="profile_wrap">
       <h1>About me</h1>
       <div className="content_wrap">
-        <div>
+        <div className="img_area">
           <Image
             className="main_img"
             src={main}
