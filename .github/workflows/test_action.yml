@@ -31,6 +31,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install TypeScript
+        run: yarn add typescript --dev
+
       - name: Install ts-node
         run: yarn global add ts-node
 
