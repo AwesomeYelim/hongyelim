@@ -31,5 +31,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install ts-node
+        run: yarn global add ts-node
+
       - name: Run Test Script
         run: yarn ts-node src/app/test.ts

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next-sitemap && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "action": "ts-node src/app/test.ts"
   },
   "homepage": "https://awesomeyelim.github.io/yelimBlog/",
   "dependencies": {
