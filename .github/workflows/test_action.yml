@@ -1,0 +1,16 @@
+name: Execute Test Script
+
+on:
+  repository_dispatch:
+    types: [run-test-script]
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Test Script
+        run: yarn ts-node src/app/test.ts
