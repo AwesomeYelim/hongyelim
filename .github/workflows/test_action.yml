@@ -35,4 +35,4 @@ jobs:
         run: yarn global add ts-node
 
       - name: Run Test Script
-        run: yarn ts-node src/app/test.ts
+        run: $(yarn global bin)/ts-node src/app/test.ts
