@@ -1,9 +1,7 @@
 import { db } from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
 
-async function test() {
-  console.log("실행됩니까>?");
-
+async function dataInterlock() {
   const postData = doc(db, "posts", "test");
 
   await setDoc(postData, {
@@ -16,7 +14,6 @@ async function test() {
     created_at: Math.floor(new Date().getTime() / 1000),
     comments: [],
   });
-  return "성공";
 }
 
-test();
+dataInterlock();

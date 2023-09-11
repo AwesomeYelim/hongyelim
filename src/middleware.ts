@@ -5,9 +5,7 @@ import { db } from "./app/firebase";
 
 export async function middleware(request: NextRequest) {
   // console.log("실행됩니까>?");
-
-  const postData = doc(db, "posts", "test");
-
+  // const postData = doc(db, "posts", "test");
   // await setDoc(postData, {
   //   id: 10,
   //   title: "test",
@@ -18,7 +16,6 @@ export async function middleware(request: NextRequest) {
   //   created_at: Math.floor(new Date().getTime() / 1000),
   //   comments: [],
   // });
-
   // return NextResponse.next();
 }
 
