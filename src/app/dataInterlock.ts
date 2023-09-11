@@ -20,6 +20,8 @@ async function dataInterlock() {
   /** md 폴더에 있는 md file list */
   const existingMd = fs.readdirSync(path.join(process.cwd(), "data", "md")).map((el) => el.split(".")[0]);
 
+  // const isMd = fs.existsSync(path.join(process.cwd(), "data", "md"));
+
   /** md file list 기준으로 firebase 에 없는 title 구분  */
   const differTargets = existingMd.filter((mdTitle) => !postTitles.includes(mdTitle));
 
