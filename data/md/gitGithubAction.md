@@ -358,7 +358,7 @@ jobs:
 
    - `[creates output]` build.sh 파일 실행 : output 파일 생성 -> 디렉토리 내의 `b_` 로 시작되는 파일들을 `_` 기준 split 한 마지막 요소 이름으로 복사
 
-   - `[Commit and Push]` `hongyelim` repository 에 접근 및 `main` branch 에 있는 `data/md` 디렉토리에 `output` 폴더 내부 파일들을 push
+   - `[Commit and Push]` `hongyelim` repository 에 접근 및 `main` branch 에 있는 `data/md` 디렉토리에 `output` 폴더 내부 파일들을 push (md file 동기화🌟)
 
    - `[Trigger "hongyelim" Workflow]` `hongyelim` repository 에 접근 및 내부 action 파일(data_interlock.yml)을 실행해줌
 
@@ -378,4 +378,4 @@ jobs:
 
 4. `dataInterlock.ts` 진행 process
 
-   - 생성된 md files 기준으로 부합되지 않는 data 가 없다면 비교하여 자동추가해준다(위의 script 참조)
+   - (생성된 md files 기준) `firebase`의 data 객체 키가 없다면 비교하여 자동 생성 해준다(위의 script 참조) (md file 기준 data 객체 동기화🌟)
