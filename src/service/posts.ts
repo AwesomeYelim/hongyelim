@@ -41,7 +41,7 @@ export async function getPosts(): Promise<Post[]> {
   // const sitemaps: ISitemapField[] = posts.map((idx: Post) => {
   //   return {
   //     // 페이지 경로
-  //     loc: `${process.env.NEXTAUTH_URL || `http://localhost:3000`}/posts/${idx.id}_${idx.title}`,
+  //     loc: `${process.env.NEXTAUTH_URL || `http://localhost:3000`}/posts/${idx.title}`,
   //     // 변경일
   //     lastmod: new Date().toISOString(),
   //     changefreq: "daily",
@@ -60,7 +60,7 @@ export async function getPost(id_title: string): Promise<{ post: Post; mdPost: s
   const mdPost = await fs.readFile(mdPath, "utf-8");
   const posts = await getPosts();
 
-  const post = posts.find((item) => `${item.id}_${item.title}` === id_title);
+  const post = posts.find((item) => item.title === id_title);
 
   return { post: post as Post, mdPost };
 }

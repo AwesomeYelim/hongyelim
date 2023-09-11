@@ -21,7 +21,7 @@ export default function Heart(props: Post) {
   });
 
   const { data } = useQuery({
-    queryKey: `${id}_${title}`,
+    queryKey: title,
     queryFn: (data) => getTargetPostApi(data.queryKey[0]),
   });
 
@@ -32,7 +32,7 @@ export default function Heart(props: Post) {
     }
     await axios
       .post(
-        `/api/${id}_${title}/heart`,
+        `/api/${title}/heart`,
         JSON.stringify({
           id,
           title,
@@ -57,7 +57,7 @@ export default function Heart(props: Post) {
   const mutation = useMutation({
     mutationFn: submitHeart,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: `${id}_${title}` });
+      queryClient.invalidateQueries({ queryKey: title });
     },
   });
 

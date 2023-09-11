@@ -59,7 +59,7 @@ export default function Techlog() {
               return (
                 <li key={id}>
                   <div className="text_wrapper">
-                    <Link href={`/posts/${id}_${title}`}>
+                    <Link href={`/posts/${title}`}>
                       <h2>{post_title}</h2>
                     </Link>
                     <span>{content}</span>

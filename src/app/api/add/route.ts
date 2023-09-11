@@ -15,9 +15,9 @@ export async function POST(req: Request, res: Response) {
 
   const mdPath = (() => {
     if (target) {
-      return path.join(process.cwd(), "data", "md", `${target?.id}_${target?.title}.md`);
+      return path.join(process.cwd(), "data", "md", `${target?.title}.md`);
     } else {
-      return path.join(process.cwd(), "data", "md", `${posts.length + 1}_${decodeURI(data.title)}.md`);
+      return path.join(process.cwd(), "data", "md", `${decodeURI(data.title)}.md`);
     }
   })();
 

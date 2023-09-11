@@ -12,6 +12,8 @@ export const getPostsApi = async () => {
     posts.push(doc.data() as Post);
   });
 
+  posts = posts.sort((a, b) => a.id - b.id);
+
   return posts ? posts : [];
 };
 
@@ -31,7 +33,7 @@ export const postsAddApi = async (data: { [key in string]: string }) => {
 export const getTargetPostApi = async (queryKey: string) => {
   const posts = getPostsApi();
 
-  const post = (await posts).find((item) => `${item.id}_${item.title}` === queryKey);
+  const post = (await posts).find((item) => item.title === queryKey);
   const mdPost = axios.get(`/api/${queryKey}`, {
     headers: {
       "Cache-Control": "no-store",

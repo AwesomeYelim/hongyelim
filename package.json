@@ -7,7 +7,7 @@
     "build": "next-sitemap && next build",
     "start": "next start",
     "lint": "next lint",
-    "action": "ts-node src/app/test.ts"
+    "action": "ts-node src/app/dataInterlock.ts"
   },
   "homepage": "https://awesomeyelim.github.io/yelimBlog/",
   "dependencies": {

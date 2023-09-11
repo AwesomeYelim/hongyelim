@@ -45,18 +45,18 @@ export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
 
     if (prev && next) {
       setIdTitle({
-        prev: [String(prev.id), prev.title, `${prev.id}_${prev.title}`],
-        next: [String(next.id), next.title, `${next.id}_${next.title}`],
+        prev: [String(prev.id), prev.title],
+        next: [String(next.id), next.title],
       });
     } else if (!next && prev) {
       setIdTitle({
-        prev: [String(prev.id), prev.title, `${prev.id}_${prev.title}`],
-        next: ["", "", ""],
+        prev: [String(prev.id), prev.title],
+        next: ["", ""],
       });
     } else if (!prev && next) {
       setIdTitle({
-        prev: ["", "", ""],
-        next: [String(next.id), next.title, `${next.id}_${next.title}`],
+        prev: ["", ""],
+        next: [String(next.id), next.title],
       });
     }
   };
@@ -67,8 +67,8 @@ export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
 
   return (
     <BtnWrap className="btn_wrap">
-      {idTitle.prev[2] && <Link href={`/posts/${idTitle.prev[2]}`}>◀ 이전글 {idTitle.prev[1]}</Link>}
-      {idTitle.next[2] && <Link href={`/posts/${idTitle.next[2]}`}>{idTitle.next[1]} 다음글 ▶</Link>}
+      {idTitle.prev[1] && <Link href={`/posts/${idTitle.prev[1]}`}>◀ 이전글 {idTitle.prev[1]}</Link>}
+      {idTitle.next[1] && <Link href={`/posts/${idTitle.next[1]}`}>{idTitle.next[1]} 다음글 ▶</Link>}
     </BtnWrap>
   );
 };

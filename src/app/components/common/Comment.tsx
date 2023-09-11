@@ -17,7 +17,7 @@ export const Comment = (props: Post): JSX.Element => {
   const [comments, setComments] = useState<CommentEl[]>([]);
 
   const { data } = useQuery({
-    queryKey: `${id}_${title}`,
+    queryKey: title,
     queryFn: (data) => getTargetPostApi(data.queryKey[0]),
   });
 
@@ -60,7 +60,7 @@ export const Comment = (props: Post): JSX.Element => {
     mutationFn: postsCommentApi,
     onSuccess: () => {
       setValue("content", "");
-      queryClient.invalidateQueries({ queryKey: `${id}_${title}` });
+      queryClient.invalidateQueries({ queryKey: title });
     },
   });
 
@@ -74,7 +74,7 @@ export const Comment = (props: Post): JSX.Element => {
         <form
           onSubmit={handleSubmit((data) => {
             return mutation.mutate({
-              queryKey: `${id}_${title}`,
+              queryKey: title,
               contents: data.content,
               userInfo: session?.user as User,
               com_created_at: Math.floor(+new Date() / 1000),
@@ -115,7 +115,7 @@ export const Comment = (props: Post): JSX.Element => {
                         onClick={() => {
                           deleteCommentApi({
                             ...el,
-                            queryKey: `${id}_${title}`,
+                            queryKey: title,
                           });
                         }}
                       />
