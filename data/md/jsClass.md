@@ -195,7 +195,7 @@ console.log(나); //닝겐 {이름: 'yelim'}
 
 - constructor은 메서드로 해석 x, 클래스로 평가되어 생성한 함수 객체 코드의 일부가 됨
 
-##### 클래스의 consrtructor 메서드와 프로토타입이 constructor 프로퍼티 -> 직접적인 관련 x, 프로토타입의 constructor 프로퍼티는 모든 프로토타입이 가지고 있는 프로퍼티며 생성자 함수를 가리킴
+> 클래스의 consrtructor 메서드와 프로토타입이 constructor 프로퍼티 -> 직접적인 관련 x, 프로토타입의 constructor 프로퍼티는 모든 프로토타입이 가지고 있는 프로퍼티며 생성자 함수를 가리킴
 
 - 클래스의 consrtructor 메서드의 차이
   - 클래스 내에 최대 한개만 존재
