@@ -68,7 +68,7 @@ export default function Techlog() {
                     <span className="date">{date}</span>
                     <i
                       className={classNames("static_heart", {
-                        like: heart[session?.user?.email as string],
+                        like: heart?.[session?.user?.email as string],
                       })}
                     />
                     <span className="like">{heart_count}</span>

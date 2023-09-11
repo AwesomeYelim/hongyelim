@@ -26,7 +26,8 @@ async function dataInterlock() {
   const differTargets = existingMd.filter((mdTitle) => !postTitles.includes(mdTitle));
 
   if (differTargets.length) {
-    differTargets.forEach(async (title) => {
+    let idCount = 0;
+    differTargets.forEach((title) => {
       const postData = doc(db, "posts", title);
       const mdPath = path.join(process.cwd(), "data", "md", `${title}.md`);
 
@@ -34,21 +35,23 @@ async function dataInterlock() {
       mdFile = fs.readFileSync(mdPath);
       mdFile = mdFile.toString();
 
-      const splitTitles = title.split(/(?<=[a-z])(?=[A-Z])/);
+      const splitTitles = title.split(/(?<=[a-z])(?=[A-Z])/); // camelcase 중간대문자 기준으로 tag 생성
 
       const restLetter = splitTitles.shift();
 
-      await setDoc(postData, {
-        id: posts.length + 1,
+      setDoc(postData, {
+        id: posts.length === 1 || !posts.length ? idCount : posts.length + 1,
         title,
         content: mdFile.match(/#+\s(.+)/g)?.[0] || "", // mdfile contents 의 시작글
-        post_title: `[${restLetter}]${[...splitTitles].join("")}` || "",
+        post_title: `[${restLetter}] ${[...splitTitles].join("")}` || "",
         heart: {},
         heart_count: 0,
-        created_at: Math.floor(new Date().getTime() / 1000),
-        tag: splitTitles || [], // camelcase 중간대문자 기준으로 tag 생성
+        created_at: Math.floor(new Date().getTime() / 1000) + idCount,
+        tag: [restLetter, ...splitTitles] || [],
         comments: [],
       });
+
+      idCount++;
     });
   }
   return;
