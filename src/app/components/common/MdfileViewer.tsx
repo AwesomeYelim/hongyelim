@@ -25,10 +25,21 @@ const TOCwrapper = styled.div`
   .toc_content {
     position: fixed;
     top: 30%;
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
+    max-width: 300px;
+    height: 500px;
+    overflow-y: auto;
+    padding-right: 20px;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 100%;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      height: 2px;
+      background: #004b77;
+      border-radius: 5px 5px 5px 5px;
+    }
     h1,
     h2,
     h3,
@@ -43,6 +54,9 @@ const TOCwrapper = styled.div`
       &:hover {
         color: #858585;
       }
+    }
+    h1 {
+      margin-top: 15px;
     }
     span {
       font-size: 15px;
