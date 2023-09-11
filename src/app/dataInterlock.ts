@@ -32,18 +32,24 @@ async function dataInterlock() {
       mdFile = fs.readFileSync(mdPath);
       mdFile = mdFile.toString();
 
+      const splitTitles = title.split(/(?<=[a-z])(?=[A-Z])/);
+
+      const restLetter = splitTitles.shift();
+
       await setDoc(postData, {
         id: posts.length + 1,
         title,
         content: mdFile.match(/#+\s(.+)/g)?.[0] || "", // mdfile contents 의 시작글
-        post_title: `${title} 에 대하여...`,
+        post_title: `[${restLetter}]${[...splitTitles].join("")}` || "",
         heart: {},
         heart_count: 0,
         created_at: Math.floor(new Date().getTime() / 1000),
+        tag: splitTitles || [], // camelcase 중간대문자 기준으로 tag 생성
         comments: [],
       });
     });
   }
+  return;
 }
 
 dataInterlock();
