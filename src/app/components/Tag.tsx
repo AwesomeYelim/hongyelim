@@ -24,6 +24,8 @@ const TagWrap = styled.nav`
   position: absolute;
   flex-direction: column;
   margin: 10px 0 10px 0;
+  max-height: 500px;
+  overflow: auto;
   padding-left: 20px;
   top: 125px;
   right: -130px;
@@ -110,19 +112,23 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) => el.tag.includes(keyword));
+                const select = data?.filter((el: Post) =>
+                  el.tag.includes(keyword)
+                );
                 setSelected({
                   keyword: e.currentTarget.innerText.split("(")[0],
                   posts: select,
                 });
 
-                if (e.currentTarget.innerText === "All") setSelected({ keyword: "All", posts: [...(data as Post[])] });
+                if (e.currentTarget.innerText === "All")
+                  setSelected({ keyword: "All", posts: [...(data as Post[])] });
 
                 if (e.currentTarget.innerText === "Recommand Title") {
                   setSelected({ keyword: "" });
                 }
               }
-            }}>
+            }}
+          >
             {list[0] === "Tag" ? (
               <Link
                 href="/posts"
@@ -130,7 +136,8 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
                   if (e.currentTarget.innerText !== "Tag") {
                     LocalStorage.setItem("tag", e.currentTarget.innerText);
                   }
-                }}>
+                }}
+              >
                 {keyword}
               </Link>
             ) : keyword !== "All" && list[0] !== "Recommand Title" ? (

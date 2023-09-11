@@ -13,21 +13,31 @@ async function dataInterlock() {
   fireposts.forEach((doc) => {
     posts.push(doc.data() as Post);
   });
+  // const dataArr = () =>
+  //   fireposts.forEach((doc) => {
+  //     posts.push(doc.data() as Post);
+  //   });
+
+  // dataArr();
 
   /** firebase 에 있는 data 배열의 titles */
   const postTitles = posts.map((el) => el.title);
 
   /** md 폴더에 있는 md file list */
-  const existingMd = fs.readdirSync(path.join(process.cwd(), "data", "md")).map((el) => el.split(".")[0]);
+  const existingMd = fs
+    .readdirSync(path.join(process.cwd(), "data", "md"))
+    .map((el) => el.split(".")[0]);
 
   // const isMd = fs.existsSync(path.join(process.cwd(), "data", "md"));
 
   /** md file list 기준으로 firebase 에 없는 title 구분  */
-  const differTargets = existingMd.filter((mdTitle) => !postTitles.includes(mdTitle));
+  const differTargets = existingMd.filter(
+    (mdTitle) => !postTitles.includes(mdTitle)
+  );
 
   if (differTargets.length) {
     let idCount = 0;
-    differTargets.forEach((title) => {
+    differTargets.forEach(async (title) => {
       const postData = doc(db, "posts", title);
       const mdPath = path.join(process.cwd(), "data", "md", `${title}.md`);
 
@@ -39,7 +49,7 @@ async function dataInterlock() {
 
       const restLetter = splitTitles.shift();
 
-      setDoc(postData, {
+      await setDoc(postData, {
         id: posts.length === 1 || !posts.length ? idCount : posts.length + 1,
         title,
         content: mdFile.match(/#+\s(.+)/g)?.[0] || "", // mdfile contents 의 시작글
@@ -53,6 +63,9 @@ async function dataInterlock() {
 
       idCount++;
     });
+    // dataArr();
+
+    // console.log(fireposts, posts);
   }
   return;
 }
