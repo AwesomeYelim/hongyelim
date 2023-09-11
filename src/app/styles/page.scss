@@ -2,7 +2,6 @@
 
 .main_wrapper {
   @include flex(center, center);
-  flex-direction: column;
   margin-top: 10%;
   gap: 50px;
 
@@ -17,12 +16,11 @@
     }
   }
   .tag_wrap {
+    position: initial;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 200px;
+    width: 500px;
     gap: 10px;
-    top: 230px;
-    right: 35%;
 
     p {
       &:first-child {
