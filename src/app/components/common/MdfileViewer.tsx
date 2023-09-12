@@ -185,7 +185,7 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
                   alt="mdImag"
                   width={500}
                   height={150}
-                  style={{ maxWidth: "70%", height: "auto" }}
+                  style={{ width: "100%", height: "auto" }}
                   priority
                 />
               );
