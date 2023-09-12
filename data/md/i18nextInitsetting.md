@@ -83,47 +83,46 @@ yarn add i18next && react-i18next &&  i18next-browser-languagedetector && i18nex
 
     - react-i18next에서 제공되는 기능은 hook이기 때문에 제공된 모듈을 이용한 custom hook을 만들어서 관리를 해야함
     - init 속성의 lng 은 default 속성으로 localStorage의 i18nextLng은 변경되지않음
-    -
 
 ## Trans components 모듈 타입 이해하기
 
-    ```ts
-        type TransChild = React.ReactNode | Record<string, unknown>;
-        export type TransProps<
-        K extends TFuncKey<N, TKPrefix> extends infer A ? A : never,
-        N extends Namespace = DefaultNamespace,
-        TKPrefix = undefined,
-        E = React.HTMLProps<HTMLDivElement>
-        > = E & {
-        children?: TransChild | TransChild[];
-        components?: readonly React.ReactElement[] | { readonly [tagName: string]: React.ReactElement };
-        count?: number; // 가변값 추가 가능
-        context?: string;
-        defaults?: string;
-        i18n?: i18n;
-        i18nKey?: K | K[];
-        ns?: N;
-        parent?: string | React.ComponentType<any> | null; // used in React.createElement if not null
-        tOptions?: {};
-        values?: {};
-        shouldUnescape?: boolean;
-        t?: TFunction<N, TKPrefix>;
-        };
+```ts
+    type TransChild = React.ReactNode | Record<string, unknown>;
+    export type TransProps<
+    K extends TFuncKey<N, TKPrefix> extends infer A ? A : never,
+    N extends Namespace = DefaultNamespace,
+    TKPrefix = undefined,
+    E = React.HTMLProps<HTMLDivElement>
+    > = E & {
+    children?: TransChild | TransChild[];
+    components?: readonly React.ReactElement[] | { readonly [tagName: string]: React.ReactElement };
+    count?: number; // 가변값 추가 가능
+    context?: string;
+    defaults?: string;
+    i18n?: i18n;
+    i18nKey?: K | K[];
+    ns?: N;
+    parent?: string | React.ComponentType<any> | null; // used in React.createElement if not null
+    tOptions?: {};
+    values?: {};
+    shouldUnescape?: boolean;
+    t?: TFunction<N, TKPrefix>;
+    };
 
-        export function Trans<
-        K extends TFuncKey<N, TKPrefix> extends infer A ? A : never,
-        N extends Namespace = DefaultNamespace,
-        TKPrefix extends KeyPrefix<N> = undefined,
-        E = React.HTMLProps<HTMLDivElement>
-        >(props: TransProps<K, N, TKPrefix, E>): React.ReactElement;
+    export function Trans<
+    K extends TFuncKey<N, TKPrefix> extends infer A ? A : never,
+    N extends Namespace = DefaultNamespace,
+    TKPrefix extends KeyPrefix<N> = undefined,
+    E = React.HTMLProps<HTMLDivElement>
+    >(props: TransProps<K, N, TKPrefix, E>): React.ReactElement;
 
-    ```
+```
 
-    ```tsx
-        <Trans
-            i18nKey="main.header.asset.me_5" // key 값
-            defaultsValue="삭제하시겠습니까 ㅋㅋㅋ?" // 동일 문자 명시하는것
-            defaults="are you sure to delete ㅋㅋㅋ?" // 번역 -> 일치키 없을시 대체되는 문자
-            components={{ 1: <p style={{ color: "red", fontWeight: 300 }} /> }}
-        />
-    ```
+```tsx
+  <Trans
+      i18nKey="main.header.asset.me_5" // key 값
+      defaultsValue="삭제하시겠습니까 ㅋㅋㅋ?" // 동일 문자 명시하는것
+      defaults="are you sure to delete ㅋㅋㅋ?" // 번역 -> 일치키 없을시 대체되는 문자
+      components={{ 1: <p style={{ color: "red", fontWeight: 300 }} /> }}
+  />
+```
