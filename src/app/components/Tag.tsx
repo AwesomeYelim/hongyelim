@@ -25,11 +25,13 @@ const TagWrap = styled.nav`
   flex-direction: column;
   margin: 10px 0 10px 0;
   max-height: 500px;
-  overflow: auto;
+  // max-width: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding-left: 20px;
   top: 125px;
-  right: -130px;
-  width: 150px;
+  right: -200px;
+  width: 220px;
 
   box-sizing: border-box;
   p {
@@ -41,6 +43,7 @@ const TagWrap = styled.nav`
     &:first-child {
       color: orange;
       border-bottom: 1px solid black !important;
+      margin-right: 15px;
       padding-bottom: 10px;
       a {
         font-weight: 700;
@@ -112,23 +115,19 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) =>
-                  el.tag.includes(keyword)
-                );
+                const select = data?.filter((el: Post) => el.tag.includes(keyword));
                 setSelected({
                   keyword: e.currentTarget.innerText.split("(")[0],
                   posts: select,
                 });
 
-                if (e.currentTarget.innerText === "All")
-                  setSelected({ keyword: "All", posts: [...(data as Post[])] });
+                if (e.currentTarget.innerText === "All") setSelected({ keyword: "All", posts: [...(data as Post[])] });
 
                 if (e.currentTarget.innerText === "Recommand Title") {
                   setSelected({ keyword: "" });
                 }
               }
-            }}
-          >
+            }}>
             {list[0] === "Tag" ? (
               <Link
                 href="/posts"
@@ -136,8 +135,7 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
                   if (e.currentTarget.innerText !== "Tag") {
                     LocalStorage.setItem("tag", e.currentTarget.innerText);
                   }
-                }}
-              >
+                }}>
                 {keyword}
               </Link>
             ) : keyword !== "All" && list[0] !== "Recommand Title" ? (

@@ -23,16 +23,6 @@
       resize: none;
       padding: 20px;
       background-color: aliceblue;
-      &::-webkit-scrollbar {
-        height: 100%;
-        width: 5px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        width: 2px;
-        background: #111b27;
-        border-radius: 5px 5px 5px 5px;
-      }
     }
     button {
       background-color: black;

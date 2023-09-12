@@ -61,17 +61,6 @@
             overflow-y: auto;
             // white-space: wrap;
             word-break: break-all;
-
-            &::-webkit-scrollbar {
-              width: 5px;
-              height: 100%;
-            }
-
-            &::-webkit-scrollbar-thumb {
-              height: 2px;
-              background: #004b77;
-              border-radius: 5px 5px 5px 5px;
-            }
           }
         }
       }

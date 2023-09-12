@@ -30,16 +30,6 @@ const TOCwrapper = styled.div`
     overflow-y: auto;
     padding-right: 20px;
 
-    &::-webkit-scrollbar {
-      width: 5px;
-      height: 100%;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      height: 2px;
-      background: #004b77;
-      border-radius: 5px 5px 5px 5px;
-    }
     h1,
     h2,
     h3,
