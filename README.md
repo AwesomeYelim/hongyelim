@@ -3,6 +3,6 @@
 - 참여 인원 : 1 명 🙋‍♀️
 - 수행 기간 : 2023.7.20 ~ 진행중
 - 주요 역할 : 웹 전체 기획, front, back 담당
-- 사용 기술 : Typescript, React, Nextjs 13, Styled-Components, ReactQuery, Recoil, ReactHookform, ReactMarkdown, Nodejs, FireBase, Prisma, MySql
+- 사용 기술 : Typescript, React, Nextjs 13, Styled-Components, ReactQuery, Recoil, ReactHookform, ReactMarkdown, Nodejs, FireBase, githubAction
 
 - <a href="https://hongyelim.vercel.app/" target="_blank"> https://hongyelim.vercel.app/ </a>
