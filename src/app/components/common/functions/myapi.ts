@@ -12,7 +12,7 @@ export const getPostsApi = async () => {
     posts.push(doc.data() as Post);
   });
 
-  posts = posts.sort((a, b) => a.id - b.id);
+  posts = posts.sort((a, b) => b.id - a.id);
 
   return posts ? posts : [];
 };
