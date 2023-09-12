@@ -47,8 +47,14 @@
   }
 
   code {
-    background-color: #fff2e3;
-    padding: 2px;
+    display: block;
+    background-color: #ffd28a60;
+    padding: 20px;
+    line-height: 200%;
+    border-radius: 10px;
+    font-weight: 500;
+    color: rgb(93, 93, 93);
+    width: fit-content;
   }
   a {
     display: inline;

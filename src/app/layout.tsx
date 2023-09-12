@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Notable } from "next/font/google";
 import { Footer } from "./Footer";
 import NavBar from "./components/NavBar";
 import Recoil from "./components/Recoil";

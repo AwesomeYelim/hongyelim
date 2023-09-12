@@ -13,6 +13,7 @@ import Image from "next/image";
 
 // import { useDark } from "../hooks";
 import "./MdfileViewer.scss";
+import { Inter } from "next/font/google";
 
 interface MarkdownViewProps {
   mdPost: string;
@@ -59,6 +60,8 @@ const TOCwrapper = styled.div`
     }
   }
 `;
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
   const innerText = mdPost?.match(/#+\s(.+)/g);
@@ -168,7 +171,7 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
-                <code className={className} {...props}>
+                <code className={`${inter.className} ${className}`} {...props}>
                   {children}
                 </code>
               );
@@ -182,7 +185,7 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
                   alt="mdImag"
                   width={500}
                   height={150}
-                  style={{ width: "70%", height: "auto" }}
+                  style={{ maxWidth: "70%", height: "auto" }}
                   priority
                 />
               );
