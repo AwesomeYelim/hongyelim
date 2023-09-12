@@ -178,7 +178,7 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
               return (
                 <Image
                   className="main_img"
-                  src={`/images/${node.properties?.src}`}
+                  src={`/images/md/${(node.properties?.src as string).split("b_")[1]}`}
                   alt="mdImag"
                   width={500}
                   height={150}

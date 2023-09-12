@@ -40,8 +40,8 @@ export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
   });
 
   const callPost = () => {
-    const prev = data?.find((el: Post) => el.id === id - 1 );
-    const next = data?.find((el: Post) => el.id === id + 1);
+    const prev = data?.find((el: Post) => el.id === id + 1);
+    const next = data?.find((el: Post) => el.id === id - 1);
 
     if (prev && next) {
       setIdTitle({
@@ -67,16 +67,8 @@ export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
 
   return (
     <BtnWrap className="btn_wrap">
-      {idTitle.prev[1] && (
-        <Link href={`/posts/${idTitle.prev[1]}`}>
-          ◀ 이전글 {idTitle.prev[1]}
-        </Link>
-      )}
-      {idTitle.next[1] && (
-        <Link href={`/posts/${idTitle.next[1]}`}>
-          {idTitle.next[1]} 다음글 ▶
-        </Link>
-      )}
+      {idTitle.prev[1] && <Link href={`/posts/${idTitle.prev[1]}`}>◀ 이전글 {idTitle.prev[1]}</Link>}
+      {idTitle.next[1] && <Link href={`/posts/${idTitle.next[1]}`}>{idTitle.next[1]} 다음글 ▶</Link>}
     </BtnWrap>
   );
 };
