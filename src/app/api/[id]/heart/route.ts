@@ -6,7 +6,7 @@
  */
 
 import { NextResponse } from "next/server";
-import { getDoc, doc, updateDoc } from "firebase/firestore";
+import { getDoc, doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { getServerSession } from "next-auth";
 
@@ -23,15 +23,18 @@ export async function POST(req: Request, res: Response) {
   const user = await getDoc(userData);
   const post = await getDoc(postData);
 
-
   try {
     if (session?.user?.email && data) {
       /** 사용자가 원하는 heart 상태  */
       const userHeart = !user.data()?.heart[title];
 
-      await updateDoc(userData, {
+      /** 사용자별 게시물 heart 상태 세팅 & 업데이트 */
+      await setDoc(userData, {
+        ...user.data(),
         heart: { ...user.data()?.heart, [title]: userHeart },
       });
+
+      /** 게시물별 heart 개수 상태 업데이트 */
       await updateDoc(postData, {
         heart: { ...post.data()?.heart, [session?.user?.email]: userHeart },
         heart_count: userHeart ? post.data()?.heart_count + 1 : post.data()?.heart_count - 1,

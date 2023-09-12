@@ -16,6 +16,7 @@ async function getData() {
 
 async function dataInterlock() {
   const posts = await getData();
+
   /** firebase 에 있는 data 배열의 titles */
   const postTitles = posts.map((el) => el.title);
 
@@ -55,15 +56,15 @@ async function dataInterlock() {
       idCount++;
     });
 
-    // 오래된순 => 최신순
-    posts
-      .sort((a, b) => a.created_at - b.created_at)
-      .forEach((el, i) => {
-        setDoc(doc(db, "posts", el.title), {
-          ...el,
-          id: i + 1,
-        });
-      });
+    // // 오래된순 => 최신순 => 왠만하면 db업데이트는 사용하지 않는걸로 resource 소모가 너무큼..
+    // posts
+    //   .sort((a, b) => a.created_at - b.created_at)
+    //   .forEach((el, i) => {
+    //     setDoc(doc(db, "posts", el.title), {
+    //       ...el,
+    //       id: i + 1,
+    //     });
+    //   });
   }
 
   return;
