@@ -66,7 +66,7 @@ npx prisma format
 
 - 그리고 생성된 **.env 파일에서**(아래이미지 참고)
 
-<img src='connectionUrl.png' />
+<img src='./img/b_connectionUrl.png' />
 
 ```
 DATABASE_URL="mysql://root:[password]@localhost:3306/test"

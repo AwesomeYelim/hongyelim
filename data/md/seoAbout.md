@@ -2,8 +2,6 @@
 
 > Search engine optimization
 
-<img src='cat.png' />
-
 next 알못인 내가 next13으로 블로그를 만들게된 이유는 ssr 을통한 Search engine 의 최적화를 시키기 위해서 였다.
 
 **_next에서 seo 노출에 시도해보자..._**

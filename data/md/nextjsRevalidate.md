@@ -7,7 +7,7 @@
 
 # v12 / v13 차이점
 
-<img src="../img/differ.png" />
+<img src="../img/b_differ.png" />
 
     - 12 - 페이지 단위로 렌더링 방식을 규정 하였다.(getStaticProps(), getServerSideProps())
     - 13- 컴포넌트 단위로 렌더링 방식을 규정

@@ -4,7 +4,7 @@
 
     - 기존 cce에서 사용된 다국어번역 라이브러리인 react-intl 보단 react-i18next 더 범용적으로 사용되며, 여러가지 상황에 대응이 잘되어있음 (ex) 번역파일에 key값 없을시, 나오는 텍스트, 키값 추가시 감지라이브러리(parser) 모듈 제공 등등 )
 
-  <img src='../image/pakagesetting.png' />
+  <img src='./img/b_pakagesetting.png' />
 
 ```
 yarn add i18next && react-i18next &&  i18next-browser-languagedetector && i18next-http-backend

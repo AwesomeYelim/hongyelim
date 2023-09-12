@@ -43,7 +43,7 @@ import React from "react";
 
 - 굳이 return 값에 대한 타입을 지정하지 않아도 다음과 같이 타입추론 가능(어짜피 JSX.Element or null)
 
-<img src='./img/fc_1.png' width='500px'/>
+<img src='./img/b_fc1.png' width='500px'/>
 
 - 다음과 같은 구조를 보며 props가 왜 객체로 받는지에 대한 이해도가 더 명확해진다.
 
@@ -150,7 +150,7 @@ type Destructor = () => void | { [UNDEFINED_VOID_ONLY]: never }; // 이게 clean
 
 - 그렇기 때문에 cleans up 함수에 return 값 쓰면 에러나쥬?
 
-<img src='./img/hook.png' width='500px'>
+<img src='./img/b_hook.png' width='500px'>
 
 #### 번외)) Destructor 위에 쓰인 unique symbol 이라는건 뭘까
 
@@ -225,7 +225,7 @@ console.log(`USD : ${euroToUsd(eur)} `); // 📍 근데 만약 여기에 euroToU
 
 - 다음과 같은 useCallback error가 있다
 
-<img src='./img/usecallback.png' width='500px'>
+<img src='./img/b_usecallback.png' width='500px'>
 
 - parameter 타입에 error가 발생한다.. 타입을 까보자
 

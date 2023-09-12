@@ -80,7 +80,7 @@ declare class Strategy extends PassportStrategy {
 
   > https://github.com/axios/axios
 
-  <img src='./img/axios.png' width='300px'/>
+  <img src='./img/b_axios.png' width='300px'/>
 
 - javascript 로 만든후 index.d.ts로 타입을 따로 지정해준것을 볼수 있다.(javascript로 만든후 따로 타입을 지정)
 
@@ -122,7 +122,7 @@ yarn add typescript
 ```
 
 ✔ 만들것들
-<img src='./img/axioslist.png' width='300px'/>
+<img src='./img/b_axioslist.png' width='300px'/>
 
 🚩 fetch 와 axios 중에 무엇이 좋은가
 

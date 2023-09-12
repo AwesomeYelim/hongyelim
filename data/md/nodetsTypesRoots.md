@@ -5,10 +5,10 @@
 📍 타입 추론이 불가한 경우 ex ) toJSON
 
 - user.ts file에서 이러한 에러를 발견하게 되는데..
-  <img src='./img/toJSONerror.png' width='300px'/>
+  <img src='./img/b_toJSONerror.png' width='300px'/>
 
 - user 정의를 따라가 보면 global User가 다음과 같은 빈 객체가 나오므로 (기존 만들어 놓은 User를 따라가지 않고) => typeerror 가 발생되는 것이다..
-  <img src='./img/userType.png' width='300px'/>
+  <img src='./img/b_userType.png' width='300px'/>
   💨 declaration merging : namespace와 interface의 확장
 
 🟢 해결방법
@@ -61,7 +61,7 @@ declare global {
   }
 ```
 
-  <img src='./img/typeRoots.png' width='300px'/>
+  <img src='./img/b_typeRoots.png' width='300px'/>
 
 - 그렇다면 기존 ./types/index.ts 파일을 index.d.ts 로 변경해주고 namespace module을 확장 하기보다는 ambient module로 만들어 주자
 

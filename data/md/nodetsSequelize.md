@@ -40,7 +40,7 @@ npx sequelize db:create
 ### `key[value]` error type assertion 사용하지 않고 잡는법
 
 - sequelize.ts에 다음과 같은 에러가 발생
-  <img src='./img/key[value] error.png' width='300px'/>
+  <img src='./img/b_keyvalueError.png' width='300px'/>
 
 - 각기 다른 key에 value 가 할당 되다보니 ts 모듈에서 인식을 못한거임
   => config.ts 파일에서 타입 지정 및 을 해주면 됨

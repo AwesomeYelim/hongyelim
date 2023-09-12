@@ -45,10 +45,10 @@ new C(func(variable), NS.v);
 
 - declare 병합표
 
-  <img src="img/declare.png" style="height:200px;">
+  <img src="img/b_declare.png" style="height:200px;">
 
 - typescript 공식문서에 있는표 ( compile시 타입은 사라지지만 값으로는 존재하는 개체 정리)
-  <img src="img/declare2.png" style="height:200px;">
+  <img src="img/b_declare2.png" style="height:200px;">
 
 - 예시
 
