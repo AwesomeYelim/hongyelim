@@ -1,10 +1,36 @@
 import { Post } from "@/service/posts";
 import axios from "axios";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 
-export const getPostsApi = async () => {
-  const fireposts = await getDocs(collection(db, "posts"));
+type PostParam = {
+  type: "All" | "Bit" | "One";
+  condition?: { offset: number; start: number };
+  target?: string;
+};
+
+export const getPostsApi = async ({ type, condition, target }: PostParam) => {
+  const callData = (() => {
+    let data;
+
+    switch (type) {
+      case "All": {
+        data = collection(db, "posts");
+        break;
+      }
+      case "Bit": {
+        data = query(collection(db, "posts"), where("id", "<", 10));
+        break;
+      }
+      case "One": {
+        data = query(collection(db, "posts"), where("title", "==", target));
+        break;
+      }
+    }
+
+    return data;
+  })();
+  const fireposts = await getDocs(callData);
 
   let posts: Post[] = [];
 
@@ -31,9 +57,11 @@ export const postsAddApi = async (data: { [key in string]: string }) => {
 };
 
 export const getTargetPostApi = async (queryKey: string) => {
-  const posts = getPostsApi();
-
-  const post = (await posts).find((item) => item.title === queryKey);
+  const [post] = await getPostsApi({ type: "One", target: queryKey }).then(
+    (res) => {
+      return res;
+    }
+  );  
   const mdPost = axios.get(`/api/${queryKey}`, {
     headers: {
       "Cache-Control": "no-store",

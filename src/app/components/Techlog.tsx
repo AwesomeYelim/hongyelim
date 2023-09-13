@@ -14,9 +14,12 @@ export default function Techlog() {
   const lo = LocalStorage.getItem("tag") as string;
   // const data = useRecoilValue(postsAtom);
   const { data } = useQuery({
-    queryKey: "postsData",
-    queryFn: getPostsApi,
+    queryKey:'Bit',
+    queryFn: (data) => getPostsApi({type : data.queryKey[0]}),
   });
+
+  console.log(data);
+  
   const { data: session } = useSession();
 
   const [selected, setSelected] = useState<Selected>({

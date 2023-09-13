@@ -67,10 +67,10 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
   const tagCount: { [key in string]: number } = {};
 
   const { data } = useQuery({
-    queryKey: "postsData",
-    queryFn: getPostsApi,
+    queryKey: 'All',
+    queryFn: (data) => getPostsApi({type : data.queryKey[0]}),
   });
-
+  
   const { tag, title } = {
     /** tag 별 list   */
     tag: data

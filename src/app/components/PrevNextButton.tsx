@@ -35,8 +35,8 @@ export const PrevNextButton = ({ id }: { id: number }): JSX.Element => {
   });
 
   const { data } = useQuery({
-    queryKey: "postsData",
-    queryFn: getPostsApi,
+    queryKey: 'All',
+    queryFn: (data) => getPostsApi({type : data.queryKey[0]}),
   });
 
   const callPost = () => {

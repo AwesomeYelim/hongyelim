@@ -10,8 +10,8 @@ export const Memo = (): JSX.Element => {
   const [selected, setSelected] = useState<Selected>({ keyword: "" });
 
   const { data } = useQuery({
-    queryKey: "postsData",
-    queryFn: getPostsApi,
+    queryKey: 'All',
+    queryFn: (data) => getPostsApi({type : data.queryKey[0]}),
   });
 
   const props = {
