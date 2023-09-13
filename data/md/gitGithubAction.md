@@ -46,7 +46,10 @@ jobs:
 
 > https://github.com/settings/tokens
 
-2. 접근할 repo에 가서 Workflow permissions 을 read and write 로 바꿔준다
+2. 접근할 repo에 가서 Workflow permissions 을 다음과 같이 read and write 로 바꿔준다.!
+
+<img src='./img/b_gitactionPermit1.png' />
+<img src='./img/b_gitactionPermit2.png' />
 
 ```yml
 name: Create MD File
