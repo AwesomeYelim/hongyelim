@@ -9,18 +9,28 @@ import { Selected, Tag } from "./Tag";
 import { useQuery } from "react-query";
 import { getPostsApi } from "./common/functions/myapi";
 import { useSession } from "next-auth/react";
+import { PageNation } from "./common/PageNation";
+
+export type PageNum = { offset: number; startNum: number };
 
 export default function Techlog() {
   const lo = LocalStorage.getItem("tag") as string;
-  // const data = useRecoilValue(postsAtom);
-  const { data } = useQuery({
-    queryKey:'Bit',
-    queryFn: (data) => getPostsApi({type : data.queryKey[0]}),
-  });
+  const currentNum = useState(1);
+  const offset = 5;
 
-  console.log(data);
-  
   const { data: session } = useSession();
+
+  const { data } = useQuery({
+    queryKey: ["Bit", currentNum[0]],
+    queryFn: (data) =>
+      getPostsApi({
+        type: data.queryKey[0] as "Bit",
+        condition: {
+          offset,
+          startNum: data.queryKey[1] as number,
+        },
+      }),
+  });
 
   const [selected, setSelected] = useState<Selected>({
     keyword: "All",
@@ -32,6 +42,7 @@ export default function Techlog() {
       keyword: "All",
       posts: data,
     });
+
     if (lo) {
       setSelected({
         keyword: lo as string,
@@ -42,6 +53,8 @@ export default function Techlog() {
   }, [data]);
 
   const props = {
+    offset,
+    currentNum,
     selected,
     setSelected,
   };
@@ -81,6 +94,7 @@ export default function Techlog() {
             })}
         </ul>
       </div>
+      <PageNation {...props} />
     </div>
   );
 }

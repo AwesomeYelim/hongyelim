@@ -6,9 +6,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import LocalStorage from "./common/functions/localstorage";
 import { getPostsApi } from "./common/functions/myapi";
+import { postsAtom } from "./Recoil";
 
 export type Selected = {
   keyword: string;
@@ -63,14 +65,18 @@ const TagWrap = styled.nav`
 export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
+  const setPost = useSetRecoilState(postsAtom);
+
   /**  tag 별 게시물 갯수  */
   const tagCount: { [key in string]: number } = {};
 
   const { data } = useQuery({
-    queryKey: 'All',
-    queryFn: (data) => getPostsApi({type : data.queryKey[0]}),
+    queryKey: "All",
+    queryFn: (data) => {
+      return getPostsApi({ type: data.queryKey[0] });
+    },
   });
-  
+
   const { tag, title } = {
     /** tag 별 list   */
     tag: data
@@ -90,6 +96,7 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
   };
 
   useEffect(() => {
+    setPost(data as Post[]);
     // prettier-ignore
     if(tag?.length || title?.length) {
       switch (location) {

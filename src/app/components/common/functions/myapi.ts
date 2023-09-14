@@ -5,13 +5,20 @@ import { db } from "../../../firebase";
 
 type PostParam = {
   type: "All" | "Bit" | "One";
-  condition?: { offset: number; start: number };
+  condition?: { offset: number; startNum: number };
   target?: string;
 };
+let dataId;
 
 export const getPostsApi = async ({ type, condition, target }: PostParam) => {
   const callData = (() => {
     let data;
+
+    const idList =
+      condition &&
+      Array(condition.offset)
+        .fill(condition.offset * condition.startNum)
+        .map((el, i) => el - i);
 
     switch (type) {
       case "All": {
@@ -19,7 +26,7 @@ export const getPostsApi = async ({ type, condition, target }: PostParam) => {
         break;
       }
       case "Bit": {
-        data = query(collection(db, "posts"), where("id", "<", 10));
+        data = query(collection(db, "posts"), where("id", "in", idList));
         break;
       }
       case "One": {
@@ -30,6 +37,7 @@ export const getPostsApi = async ({ type, condition, target }: PostParam) => {
 
     return data;
   })();
+
   const fireposts = await getDocs(callData);
 
   let posts: Post[] = [];
@@ -57,11 +65,9 @@ export const postsAddApi = async (data: { [key in string]: string }) => {
 };
 
 export const getTargetPostApi = async (queryKey: string) => {
-  const [post] = await getPostsApi({ type: "One", target: queryKey }).then(
-    (res) => {
-      return res;
-    }
-  );  
+  const [post] = await getPostsApi({ type: "One", target: queryKey }).then((res) => {
+    return res;
+  });
   const mdPost = axios.get(`/api/${queryKey}`, {
     headers: {
       "Cache-Control": "no-store",
