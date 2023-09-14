@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { useRecoilValue } from "recoil";
 import { postsAtom } from "../Recoil";
 import "./PageNation.scss";
+import { useState } from "react";
 
 interface Props {
   offset: number;
@@ -16,18 +17,20 @@ export const PageNation = (props: Props): JSX.Element => {
     offset,
     currentNum: [current, setCurrentNum],
   } = props;
+  const [selectedNum, setSelectedNum] = useState(1) 
 
   const idArr = postsId && Array(Math.ceil(postsId.length / offset)).fill(0);
 
   return (
     <div className="pageNum_wrapper">
-      {idArr?.map((_, i) => {
+      {idArr?.map((_, i, arr) => {
         return (
           <span
-            className={classNames("pageNum_el", { active: current === i + 1 })}
+            className={classNames("pageNum_el", { active: selectedNum === i + 1 })}
             key={i}
             onClick={() => {
-              setCurrentNum(i + 1);
+              setCurrentNum(arr.length - i);
+              setSelectedNum(i + 1)
             }}>
             {i + 1}
           </span>

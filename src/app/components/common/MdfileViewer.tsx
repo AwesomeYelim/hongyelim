@@ -65,6 +65,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
   const innerText = mdPost?.match(/#+\s(.+)/g);
+  // const innerText = mdPost?.match(/^(?!```\s*(#+\s+)*```)(#+\s(.+))/g);
+  // const innerText = mdPost?.match(/(\`\`\`)?#+\s(.+)(?(1)(.+)\`\`\`)#+\s(.+)/gm);
   const [target, setTarget] = useState("");
   const { mdRef } = { mdRef: useRef<HTMLDivElement>(null) };
 
