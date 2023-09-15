@@ -1,12 +1,14 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { Props } from "../Tag";
+import { Selected } from "../Tag";
 import { MdfileViewer } from "./MdfileViewer";
 import { useMutation, useQueryClient } from "react-query";
 import { postsAddApi } from "./functions/myapi";
 
-export const Add = ({ selected, setSelected }: Omit<Props, "posts">): JSX.Element => {
+export const Add = ({ selected, setSelected }:{ selected: Selected;
+  setSelected: React.Dispatch<React.SetStateAction<Selected>>;
+}): JSX.Element => {
   const {
     register,
     handleSubmit,
