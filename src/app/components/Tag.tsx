@@ -18,6 +18,8 @@ export type Selected = {
 };
 
 export interface Props {
+  offset: number;
+  currentNum: [number, React.Dispatch<React.SetStateAction<number>>];
   selected?: Selected;
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
@@ -62,7 +64,7 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
+export const Tag = ({ offset, currentNum, selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPost = useSetRecoilState(postsAtom);
@@ -75,6 +77,18 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
     queryFn: (data) => {
       return getPostsApi({ type: data.queryKey[0] });
     },
+  });
+
+  const { data: bitData } = useQuery({
+    queryKey: ["Bit", currentNum?.[0]],
+    queryFn: (data) =>
+      getPostsApi({
+        type: data.queryKey[0] as "Bit",
+        condition: {
+          offset,
+          startNum: data.queryKey[1] as number,
+        },
+      }),
   });
 
   const { tag, title } = {
@@ -128,7 +142,8 @@ export const Tag = ({ selected, setSelected }: Props): JSX.Element => {
                   posts: select,
                 });
 
-                if (e.currentTarget.innerText === "All") setSelected({ keyword: "All", posts: [...(data as Post[])] });
+                if (e.currentTarget.innerText === "All")
+                  setSelected({ keyword: "All", posts: [...(bitData as Post[])] });
 
                 if (e.currentTarget.innerText === "Recommand Title") {
                   setSelected({ keyword: "" });

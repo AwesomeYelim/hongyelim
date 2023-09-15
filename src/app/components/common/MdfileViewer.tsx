@@ -64,6 +64,8 @@ const TOCwrapper = styled.div`
 const inter = Inter({ subsets: ["latin"] });
 
 export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
+  // const innerText = mdPost?.match(/^(```(.+)```)/g);
+  // const innerText = mdPost?.match(/^(```([^\d])```)?#+\s(.+)/g);
   const innerText = mdPost?.match(/#+\s(.+)/g);
   // const innerText = mdPost?.match(/^(?!```\s*(#+\s+)*```)(#+\s(.+))/g);
   // const innerText = mdPost?.match(/(\`\`\`)?#+\s(.+)(?(1)(.+)\`\`\`)#+\s(.+)/gm);
