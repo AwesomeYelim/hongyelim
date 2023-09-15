@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 interface Props {
   offset: number;
-  currentNum: [number, React.Dispatch<React.SetStateAction<number>>];
+  currentNum: [{ current: number; total: number; }, React.Dispatch<React.SetStateAction<{ current: number; total: number; }>>];
 }
 
 export const PageNation = (props: Props): JSX.Element => {
@@ -22,7 +22,7 @@ export const PageNation = (props: Props): JSX.Element => {
   const idArr = postsId && Array(Math.ceil(postsId.length / offset)).fill(0);
 
   useEffect(() => {
-    setCurrentNum(9);
+    setCurrentNum((pre) => ({...pre, current : postsId.length }));
   }, []);
 
   return (
@@ -33,7 +33,7 @@ export const PageNation = (props: Props): JSX.Element => {
             className={classNames("pageNum_el", { active: selectedNum === i + 1 })}
             key={i}
             onClick={() => {
-              setCurrentNum(arr.length - i);
+              setCurrentNum({current : arr.length - i, total : postsId.length});
               setSelectedNum(i + 1);
             }}>
             {i + 1}

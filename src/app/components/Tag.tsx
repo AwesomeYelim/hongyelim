@@ -18,8 +18,8 @@ export type Selected = {
 };
 
 export interface Props {
-  offset: number;
-  currentNum: [number, React.Dispatch<React.SetStateAction<number>>];
+  offset?: number;
+  currentNum?: [{ current: number; total: number; }, React.Dispatch<React.SetStateAction<{ current: number; total: number; }>>];
   selected?: Selected;
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
@@ -86,8 +86,8 @@ export const Tag = ({ offset, currentNum, selected, setSelected }: Props): JSX.E
       getPostsApi({
         type: data.queryKey[0] as "Bit",
         condition: {
-          offset,
-          startNum: data.queryKey[1] as number,
+          offset : offset as number,
+          startNum: data.queryKey[1] as { current: number; total: number; },
         },
       }),
   });

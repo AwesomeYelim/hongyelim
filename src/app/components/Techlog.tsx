@@ -15,7 +15,7 @@ export type PageNum = { offset: number; startNum: number };
 
 export default function Techlog() {
   const lo = LocalStorage.getItem("tag") as string;
-  const currentNum = useState(1);
+  const currentNum = useState({current : 1, total : 0});
   const offset = 5;
 
   const { data: session } = useSession();
@@ -27,7 +27,7 @@ export default function Techlog() {
         type: data.queryKey[0] as "Bit",
         condition: {
           offset,
-          startNum: data.queryKey[1] as number,
+          startNum: data.queryKey[1] as { current: number; total: number; },
         },
       }),
   });

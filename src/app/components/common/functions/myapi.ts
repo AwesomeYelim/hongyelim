@@ -5,7 +5,7 @@ import { db } from "../../../firebase";
 
 type PostParam = {
   type: "All" | "Bit" | "One";
-  condition?: { offset: number; startNum: number };
+  condition?: { offset: number; startNum: { current: number; total: number } };
   target?: string;
 };
 let dataId;
@@ -17,8 +17,16 @@ export const getPostsApi = async ({ type, condition, target }: PostParam) => {
     const idList =
       condition &&
       Array(condition.offset)
-        .fill(condition.offset * condition.startNum)
-        .map((el, i) => el - i);
+        .fill(condition.offset * condition.startNum.current)
+        .map((el, i) => {
+          // console.log(condition.startNum.total);
+          
+          // if (el > condition.startNum.total) {
+          //   return false;
+          // }
+          return el - i;
+        });
+    // console.log(idList);
 
     switch (type) {
       case "All": {
@@ -65,9 +73,11 @@ export const postsAddApi = async (data: { [key in string]: string }) => {
 };
 
 export const getTargetPostApi = async (queryKey: string) => {
-  const [post] = await getPostsApi({ type: "One", target: queryKey }).then((res) => {
-    return res;
-  });
+  const [post] = await getPostsApi({ type: "One", target: queryKey }).then(
+    (res) => {
+      return res;
+    }
+  );
   const mdPost = axios.get(`/api/${queryKey}`, {
     headers: {
       "Cache-Control": "no-store",
