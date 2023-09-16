@@ -19,8 +19,8 @@ export type Selected = {
 };
 
 export interface Props {
-  offset: number;
-  pageNum: [PageNum, React.Dispatch<React.SetStateAction<PageNum>>];
+  offset?: number;
+  pageNum?: [PageNum, React.Dispatch<React.SetStateAction<PageNum>>];
   selected?: Selected;
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
@@ -135,7 +135,7 @@ export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Elem
   
 
   useMemo(() => {
-    pageNum?.[1]({current : Math.ceil((data?.length as number) / offset), total : data?.length as number, selectedNum : 1 })
+    pageNum?.[1]({current : Math.ceil((data?.length as number) / (offset as number)), total : data?.length as number, selectedNum : 1 })
   }, []);
 
   return (
