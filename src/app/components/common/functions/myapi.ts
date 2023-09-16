@@ -17,16 +17,8 @@ export const getPostsApi = async ({ type, condition, target }: PostParam) => {
     const idList =
       condition &&
       Array(condition.offset)
-        .fill(condition.offset * condition.startNum.current)
-        .map((el, i) => {
-          // console.log(condition.startNum.total);
-          
-          // if (el > condition.startNum.total) {
-          //   return false;
-          // }
-          return el - i;
-        });
-    // console.log(idList);
+        .fill(condition.offset * (condition.startNum.current - 1))
+        .map((el, i) => el - i + (condition.startNum.total % condition.offset));
 
     switch (type) {
       case "All": {

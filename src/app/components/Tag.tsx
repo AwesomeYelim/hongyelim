@@ -4,13 +4,14 @@ import { Post } from "@/service/posts";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import LocalStorage from "./common/functions/localstorage";
 import { getPostsApi } from "./common/functions/myapi";
 import { postsAtom } from "./Recoil";
+import { PageNum } from "./Techlog";
 
 export type Selected = {
   keyword: string;
@@ -18,8 +19,8 @@ export type Selected = {
 };
 
 export interface Props {
-  offset?: number;
-  currentNum?: [{ current: number; total: number; }, React.Dispatch<React.SetStateAction<{ current: number; total: number; }>>];
+  offset: number;
+  pageNum: [PageNum, React.Dispatch<React.SetStateAction<PageNum>>];
   selected?: Selected;
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
@@ -65,7 +66,7 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({ offset, currentNum, selected, setSelected }: Props): JSX.Element => {
+export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPost = useSetRecoilState(postsAtom);
@@ -81,7 +82,7 @@ export const Tag = ({ offset, currentNum, selected, setSelected }: Props): JSX.E
   });
 
   const { data: bitData } = useQuery({
-    queryKey: ["Bit", currentNum?.[0]],
+    queryKey: ["Bit", pageNum?.[0]],
     queryFn: (data) =>
       getPostsApi({
         type: data.queryKey[0] as "Bit",
@@ -92,6 +93,9 @@ export const Tag = ({ offset, currentNum, selected, setSelected }: Props): JSX.E
       }),
   });
 
+
+
+  
   const { tag, title } = {
     /** tag 별 list   */
     tag: data
@@ -127,6 +131,12 @@ export const Tag = ({ offset, currentNum, selected, setSelected }: Props): JSX.E
       }
     }
   }, [data]);
+
+  
+
+  useMemo(() => {
+    pageNum?.[1]({current : Math.ceil((data?.length as number) / offset), total : data?.length as number, selectedNum : 1 })
+  }, []);
 
   return (
     <TagWrap className="tag_wrap">
