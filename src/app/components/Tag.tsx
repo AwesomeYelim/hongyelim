@@ -4,7 +4,7 @@ import { Post } from "@/service/posts";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect,  useState } from "react";
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
@@ -66,7 +66,12 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Element => {
+export const Tag = ({
+  offset,
+  pageNum,
+  selected,
+  setSelected,
+}: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPost = useSetRecoilState(postsAtom);
@@ -87,15 +92,12 @@ export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Elem
       getPostsApi({
         type: data.queryKey[0] as "Bit",
         condition: {
-          offset : offset as number,
-          startNum: data.queryKey[1] as { current: number; total: number; },
+          offset: offset as number,
+          startNum: data.queryKey[1] as PageNum,
         },
       }),
   });
 
-
-
-  
   const { tag, title } = {
     /** tag 별 list   */
     tag: data
@@ -132,10 +134,20 @@ export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Elem
     }
   }, [data]);
 
-  
-
-  useMemo(() => {
-    pageNum?.[1]({current : Math.ceil((data?.length as number) / (offset as number)), total : data?.length as number, selectedNum : 1 })
+  useEffect(() => { 
+    /* 초깃값 일때만 state 설정 */
+    if (
+      pageNum &&
+      pageNum[0].current === 1 &&
+      pageNum[0].total === 0 &&
+      pageNum[0].selectedNum === 0
+    ) {
+      pageNum[1](() => ({
+        current: Math.ceil((data?.length as number) / (offset as number)),
+        total: data?.length as number,
+        selectedNum: 1,
+      }));
+    }
   }, []);
 
   return (
@@ -147,20 +159,26 @@ export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Elem
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) => el.tag.includes(keyword));
+                const select = data?.filter((el: Post) =>
+                  el.tag.includes(keyword)
+                );
                 setSelected({
                   keyword: e.currentTarget.innerText.split("(")[0],
                   posts: select,
                 });
 
                 if (e.currentTarget.innerText === "All")
-                  setSelected({ keyword: "All", posts: [...(bitData as Post[])] });
+                  setSelected({
+                    keyword: "All",
+                    posts: [...(bitData as Post[])],
+                  });
 
                 if (e.currentTarget.innerText === "Recommand Title") {
                   setSelected({ keyword: "" });
                 }
               }
-            }}>
+            }}
+          >
             {list[0] === "Tag" ? (
               <Link
                 href="/posts"
@@ -168,7 +186,8 @@ export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Elem
                   if (e.currentTarget.innerText !== "Tag") {
                     LocalStorage.setItem("tag", e.currentTarget.innerText);
                   }
-                }}>
+                }}
+              >
                 {keyword}
               </Link>
             ) : keyword !== "All" && list[0] !== "Recommand Title" ? (

@@ -63,12 +63,17 @@ const TOCwrapper = styled.div`
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
-  // const innerText = mdPost?.match(/^(```(.+)```)/g);
-  // const innerText = mdPost?.match(/^(```([^\d])```)?#+\s(.+)/g);
-  const innerText = mdPost?.match(/#+\s(.+)/g);
-  // const innerText = mdPost?.match(/^(?!```\s*(#+\s+)*```)(#+\s(.+))/g);
-  // const innerText = mdPost?.match(/(\`\`\`)?#+\s(.+)(?(1)(.+)\`\`\`)#+\s(.+)/gm);
+export const MdfileViewer = ({
+  mdPost,
+  useToc = false,
+}: MarkdownViewProps): JSX.Element => {
+  
+  let innerText: RegExpMatchArray | string | null;
+
+  innerText = mdPost
+    ?.replace(/(\`\`\`([\s\S\d]*?)\`\`\`)/g, "")
+    .match(/#+\s(.+)/gm);
+
   const [target, setTarget] = useState("");
   const { mdRef } = { mdRef: useRef<HTMLDivElement>(null) };
 
@@ -103,7 +108,13 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
   };
 
   // 오른쪽 toc
-  const heading = ({ level, children }: { level: number; children: string }) => {
+  const heading = ({
+    level,
+    children,
+  }: {
+    level: number;
+    children: string;
+  }) => {
     const style = {
       style: {
         marginLeft: level * 20,
@@ -120,11 +131,16 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
         {...titleCondition}
         onClick={(e) => {
           e.preventDefault();
-          window.scroll({ left: 0, top: post![e.currentTarget.innerHTML] + 100, behavior: "smooth" });
+          window.scroll({
+            left: 0,
+            top: post![e.currentTarget.innerHTML] + 200,
+            behavior: "smooth",
+          });
           // if (target !== e.currentTarget.innerHTML) {
           //   setTarget(e.currentTarget.innerHTML);
           // }
-        }}>
+        }}
+      >
         {children}
       </HeadingTag>
     );
@@ -148,8 +164,14 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
 
   /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
   useEffect(() => {
-    if (mdRef.current && mdRef.current.clientHeight < mdRef.current?.scrollHeight) {
-      mdRef.current.scroll({ top: mdRef.current?.scrollHeight, behavior: "smooth" });
+    if (
+      mdRef.current &&
+      mdRef.current.clientHeight < mdRef.current?.scrollHeight
+    ) {
+      mdRef.current.scroll({
+        top: mdRef.current?.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [mdPost]);
 
@@ -171,7 +193,12 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
             code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
-                <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkDark}>
+                <SyntaxHighlighter
+                  language={match[1]}
+                  PreTag="div"
+                  {...props}
+                  style={coldarkDark}
+                >
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
@@ -185,7 +212,9 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
               return (
                 <Image
                   className="main_img"
-                  src={`/images/md/${(node.properties?.src as string).split("b_")[1]}`}
+                  src={`/images/md/${
+                    (node.properties?.src as string).split("b_")[1]
+                  }`}
                   alt="mdImag"
                   width={500}
                   height={150}
@@ -194,7 +223,8 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
                 />
               );
             },
-          }}>
+          }}
+        >
           {mdPost}
         </ReactMarkdown>
       </div>
@@ -206,7 +236,8 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
               onClick={() => {
                 window.scroll({ left: 0, top: 0, behavior: "smooth" });
                 setTarget("");
-              }}>
+              }}
+            >
               목차
             </span>
             {innerText?.map((el) => {
