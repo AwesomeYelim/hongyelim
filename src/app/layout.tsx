@@ -21,7 +21,10 @@ export const metadata: Metadata = {
   icons: {
     shortcut: "/images/favicon.png",
   },
-  
+  openGraph : {
+    title: 'YelimBlog',
+    images : 'https://hongyelim.vercel.app/images/main.jpg'
+  }
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
