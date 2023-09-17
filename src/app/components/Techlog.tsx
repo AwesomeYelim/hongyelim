@@ -16,7 +16,7 @@ export type PageNum = { current: number; total: number; selectedNum: number };
 
 export default function Techlog() {
   const posts = useRecoilValue(postsAtom);
-  const [tag, setTag] = useRecoilState(selectedTag);
+  const tag = useRecoilValue(selectedTag);
 
   const pageNum = useState<PageNum>({ current: 1, total: 0, selectedNum: 0 });
   const offset = 5;
@@ -51,7 +51,6 @@ export default function Techlog() {
         keyword: tag as string,
         posts: posts?.filter((el: Post) => el.tag.includes(tag)),
       });
-      setTag("");
     }
   }, [data]);
 

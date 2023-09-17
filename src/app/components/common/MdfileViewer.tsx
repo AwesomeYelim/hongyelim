@@ -92,7 +92,7 @@ export const MdfileViewer = ({
     },
   }: {
     level: number;
-    children: React.ReactNode[];
+    children: React.ReactNode[] | string;
     node: {
       children: ElementContent[];
     };
@@ -104,7 +104,7 @@ export const MdfileViewer = ({
     post[value] = position?.end.offset as number;
     const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
 
-    return <HeadingTag>{children as any}</HeadingTag>;
+    return <HeadingTag>{children as string}</HeadingTag>;
   };
 
   // 오른쪽 toc
