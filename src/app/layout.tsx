@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   openGraph : {
     title: 'YelimBlog',
-    images : '/images/main.jpg'
+    images : 'https://hongyelim.vercel.app/images/main.jpg'
   }
 };
 
@@ -33,7 +33,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <GoogleAnalytics />
       <head>
         <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
-
         <meta httpEquiv="Expires" content="0" />
         <meta httpEquiv="Pragma" content="no-cache" />
         <script
