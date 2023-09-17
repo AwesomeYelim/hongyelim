@@ -71,7 +71,7 @@ export const MdfileViewer = ({
   let innerText: RegExpMatchArray | string | null;
 
   innerText = mdPost
-    ?.replace(/(\`\`\`([\s\S\d]*?)\`\`\`)/g, "")
+    ?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "")
     .match(/#+\s(.+)/gm);
 
   const [target, setTarget] = useState("");

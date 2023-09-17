@@ -4,13 +4,12 @@ import { Post } from "@/service/posts";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
-import LocalStorage from "./common/functions/localstorage";
 import { getPostsApi } from "./common/functions/myapi";
-import { postsAtom } from "./Recoil";
+import { postsAtom, selectedTag } from "./Recoil";
 import { PageNum } from "./Techlog";
 
 export type Selected = {
@@ -75,6 +74,7 @@ export const Tag = ({
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPost = useSetRecoilState(postsAtom);
+  const setTag = useSetRecoilState(selectedTag);
 
   /**  tag 별 게시물 갯수  */
   const tagCount: { [key in string]: number } = {};
@@ -134,7 +134,7 @@ export const Tag = ({
     }
   }, [data]);
 
-  useEffect(() => { 
+  useEffect(() => {
     /* 초깃값 일때만 state 설정 */
     if (
       pageNum &&
@@ -184,7 +184,7 @@ export const Tag = ({
                 href="/posts"
                 onClick={(e) => {
                   if (e.currentTarget.innerText !== "Tag") {
-                    LocalStorage.setItem("tag", e.currentTarget.innerText);
+                    setTag(e.currentTarget.innerText)
                   }
                 }}
               >

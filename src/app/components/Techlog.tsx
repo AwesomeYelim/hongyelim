@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import LocalStorage from "./common/functions/localstorage";
 import Link from "next/link";
 import { Post } from "@/service/posts";
 import classNames from "classnames";
@@ -10,12 +9,16 @@ import { useQuery } from "react-query";
 import { getPostsApi } from "./common/functions/myapi";
 import { useSession } from "next-auth/react";
 import { PageNation } from "./common/PageNation";
+import { RecoilState, useRecoilValue, useRecoilState } from "recoil";
+import { postsAtom, selectedTag } from "./Recoil";
 
-export type PageNum = { current: number, total: number, selectedNum : number};
+export type PageNum = { current: number; total: number; selectedNum: number };
 
 export default function Techlog() {
-  const lo = LocalStorage.getItem("tag") as string;
-  const pageNum = useState<PageNum>({ current: 1, total: 0, selectedNum : 0 });
+  const posts = useRecoilValue(postsAtom);
+  const [tag, setTag] = useRecoilState(selectedTag);
+
+  const pageNum = useState<PageNum>({ current: 1, total: 0, selectedNum: 0 });
   const offset = 5;
 
   const { data: session } = useSession();
@@ -43,12 +46,12 @@ export default function Techlog() {
       posts: data,
     });
 
-    if (lo) {
+    if (tag) {
       setSelected({
-        keyword: lo as string,
-        posts: data?.filter((el: Post) => el.tag.includes(lo)),
+        keyword: tag as string,
+        posts: posts?.filter((el: Post) => el.tag.includes(tag)),
       });
-      LocalStorage.removeItem("tag");
+      setTag("");
     }
   }, [data]);
 

@@ -2,14 +2,14 @@
 
 import { Post } from "@/service/posts";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
-import LocalStorage from "./common/functions/localstorage";
+import { useSetRecoilState } from "recoil";
+import { selectedTag } from "./Recoil";
 
 export const DetailTag = (props: Post): JSX.Element => {
   const { tag } = props;
-  const router = useRouter();
-  //
+  const setTag = useSetRecoilState(selectedTag);
+  
   return (
     <div className="tag_area">
       {tag.map((el) => {
@@ -18,7 +18,8 @@ export const DetailTag = (props: Post): JSX.Element => {
             key={el}
             href="/posts"
             onClick={(e) => {
-              LocalStorage.setItem("tag", e.currentTarget.innerText.split(" ")[1]);
+              setTag(e.currentTarget.innerText.split(" ")[1])
+
             }}>
             # {el}
           </Link>
