@@ -57,14 +57,15 @@ export async function DELETE(req: Request) {
   const userData = doc(db, "user", session?.user?.email as string);
   const user = await getDoc(userData);
 
+  
+
   /** 사용자별 게시물 comments 상태 세팅 & 업데이트 */
-  await setDoc(userData, {
-    ...user.data(),
+  await updateDoc(userData, {
     comments: {
       ...user.data()?.comments,
-      [title]: [
+      [title]: user.data()?.comments[title] ? [
         ...user.data()?.comments[title]?.filter((el: CommentEl) => el.com_created_at !== +(targetKey as string)),
-      ],
+      ] : [],
     },
   });
 

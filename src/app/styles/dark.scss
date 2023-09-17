@@ -188,14 +188,15 @@ html {
       summary,
       em,
       strong,
-      del {
+      del,
+      code {
         color: var(--font);
 
         &.active {
           color: var(--active) !important;
         }
       }
-      li > ul li {
+      li > ul * {
         color: #252527 !important;
       }
       /** post_detail md 파일 - code 블럭 */
