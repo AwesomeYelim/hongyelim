@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   icons: {
     shortcut: "/images/favicon.png",
   },
+  openGraph : {
+    images : ['/images/main.jpg']
+  }
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

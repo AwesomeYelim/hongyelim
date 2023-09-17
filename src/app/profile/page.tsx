@@ -37,7 +37,7 @@ export default function ProfilePage() {
         </div>
       </div>
       <Link
-        href="https://drive.google.com/file/d/1s4bhCJR6EddnHv9ydE7tqgjDrUhaVl2_/view?usp=sharing"
+        href="https://tangy-slip-4d8.notion.site/About-Yelim-d8527c81adae431f8f75a9eb723f3b3c"
         className="resume_wrap"
         target="_blank"
       >
