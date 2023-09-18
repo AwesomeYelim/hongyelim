@@ -67,7 +67,13 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Props): JSX.Element => {
+export const Tag = ({
+  offset,
+  pageNum,
+  pageNumInit,
+  selected,
+  setSelected,
+}: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPosts = useSetRecoilState(postsAtom);
@@ -107,7 +113,8 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
           tagCount[item] = 1;
         }
         return arr.indexOf(item) === i;
-      }),
+      })
+      .sort((a, b) => tagCount[b] - tagCount[a]), // tag 별 게시물 많은수
 
     /** title 별 list   */
     title: data?.map((item: Post) => item.title),
@@ -133,7 +140,11 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
 
   useEffect(() => {
     /* 초깃값 일때 && 페이지 새로고침 시에만 state 설정 */
-    if (pageNum && (isEqual(pageNum[0], pageNumInit) || (!pageNum[0].current && !pageNum[0].total))) {
+    if (
+      pageNum &&
+      (isEqual(pageNum[0], pageNumInit) ||
+        (!pageNum[0].current && !pageNum[0].total))
+    ) {
       pageNum[1](() => {
         return {
           current: Math.ceil((data?.length as number) / (offset as number)),
@@ -160,7 +171,9 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) => el.tag.includes(keyword));
+                const select = data?.filter((el: Post) =>
+                  el.tag.includes(keyword)
+                );
                 setSelected({
                   keyword: e.currentTarget.innerText.split("(")[0],
                   posts: select,
@@ -176,7 +189,8 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
                   setSelected({ keyword: "" });
                 }
               }
-            }}>
+            }}
+          >
             {list[0] === "Tag" ? (
               <Link
                 href="/posts"
@@ -184,7 +198,8 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
                   if (e.currentTarget.innerText !== "Tag") {
                     setTag(e.currentTarget.innerText);
                   }
-                }}>
+                }}
+              >
                 {keyword}
               </Link>
             ) : keyword !== "All" && list[0] !== "Recommand Title" ? (
