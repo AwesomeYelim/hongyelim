@@ -8,6 +8,7 @@
   }
   .posts_wrapper {
     .list_wrapper {
+      height: calc(100vh - 100px);
       .list {
         @include flex(center, initial);
         flex-wrap: wrap;

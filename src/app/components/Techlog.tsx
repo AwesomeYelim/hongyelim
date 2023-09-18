@@ -16,7 +16,7 @@ export type PageNum = { current: number; total: number; selectedNum: number };
 
 export default function Techlog() {
   const posts = useRecoilValue(postsAtom);
-  const tag = useRecoilValue(selectedTag);
+  const [tag, setTag] = useRecoilState(selectedTag);
 
   const pageNum = useState<PageNum>({ current: 1, total: 0, selectedNum: 0 });
   const offset = 5;
@@ -25,14 +25,15 @@ export default function Techlog() {
 
   const { data } = useQuery({
     queryKey: ["Bit", pageNum[0]],
-    queryFn: (data) =>
-      getPostsApi({
+    queryFn: (data) => {
+      return getPostsApi({
         type: data.queryKey[0] as "Bit",
         condition: {
           offset,
           startNum: data.queryKey[1] as { current: number; total: number },
         },
-      }),
+      });
+    },
   });
 
   const [selected, setSelected] = useState<Selected>({
@@ -51,6 +52,7 @@ export default function Techlog() {
         keyword: tag as string,
         posts: posts?.filter((el: Post) => el.tag.includes(tag)),
       });
+      setTag("");
     }
   }, [data]);
 
@@ -67,46 +69,33 @@ export default function Techlog() {
       <div className="list_wrapper">
         <ul className="list">
           {selected &&
-            selected.posts?.map(
-              ({
-                id,
-                title,
-                heart_count,
-                content,
-                created_at,
-                heart,
-                post_title,
-              }) => {
-                const date = new Date(created_at * 1000).toLocaleDateString(
-                  "ko-kr",
-                  {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  }
-                );
+            selected.posts?.map(({ id, title, heart_count, content, created_at, heart, post_title }) => {
+              const date = new Date(created_at * 1000).toLocaleDateString("ko-kr", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              });
 
-                return (
-                  <li key={id}>
-                    <div className="text_wrapper">
-                      <Link href={`/posts/${title}`}>
-                        <h2>{post_title}</h2>
-                      </Link>
-                      <span>{content}</span>
-                    </div>
-                    <div className="bottom_wrap">
-                      <span className="date">{date}</span>
-                      <i
-                        className={classNames("static_heart", {
-                          like: heart?.[session?.user?.email as string],
-                        })}
-                      />
-                      <span className="like">{heart_count}</span>
-                    </div>
-                  </li>
-                );
-              }
-            )}
+              return (
+                <li key={id}>
+                  <div className="text_wrapper">
+                    <Link href={`/posts/${title}`}>
+                      <h2>{post_title}</h2>
+                    </Link>
+                    <span>{content}</span>
+                  </div>
+                  <div className="bottom_wrap">
+                    <span className="date">{date}</span>
+                    <i
+                      className={classNames("static_heart", {
+                        like: heart?.[session?.user?.email as string],
+                      })}
+                    />
+                    <span className="like">{heart_count}</span>
+                  </div>
+                </li>
+              );
+            })}
         </ul>
       </div>
       <PageNation {...props} />
