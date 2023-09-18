@@ -2,6 +2,7 @@
 
 import { Post } from "@/service/posts";
 import classNames from "classnames";
+import { isEqual } from "lodash";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ export type Selected = {
 export interface Props {
   offset?: number;
   pageNum?: [PageNum, React.Dispatch<React.SetStateAction<PageNum>>];
+  pageNumInit?: PageNum;
   selected?: Selected;
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
@@ -65,10 +67,10 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Element => {
+export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
-  const [posts, setPosts] = useRecoilState(postsAtom);
+  const setPosts = useSetRecoilState(postsAtom);
   const setTag = useSetRecoilState(selectedTag);
 
   /**  tag 별 게시물 갯수  */
@@ -130,16 +132,23 @@ export const Tag = ({ offset, pageNum, selected, setSelected }: Props): JSX.Elem
   }, [data]);
 
   useEffect(() => {
-    /* 초깃값 일때만 state 설정 */
-    if (pageNum && pageNum[0].current === 1 && pageNum[0].total === 0 && pageNum[0].selectedNum === 0) {
+    /* 초깃값 일때 && 페이지 새로고침 시에만 state 설정 */
+    if (pageNum && (isEqual(pageNum[0], pageNumInit) || (!pageNum[0].current && !pageNum[0].total))) {
       pageNum[1](() => {
         return {
-          current: Math.ceil((posts?.length as number) / (offset as number)),
-          total: posts?.length as number,
+          current: Math.ceil((data?.length as number) / (offset as number)),
+          total: data?.length as number,
           selectedNum: 1,
         };
       });
     }
+    // pageNum?.[1](() => {
+    //   return {
+    //     current: Math.ceil((data?.length as number) / (offset as number)),
+    //     total: data?.length as number,
+    //     selectedNum: 1,
+    //   };
+    // });
   }, []);
 
   return (
