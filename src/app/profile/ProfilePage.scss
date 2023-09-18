@@ -12,12 +12,12 @@
     @include flex(center, center);
     // height: inherit;
     gap: 80px;
-    margin: 50px 0;
     .img_area {
       @include flex(center, space-between);
       flex-direction: column;
-      gap : 15px;
+      gap: 12px;
       .main_img {
+        margin-top: 20px;
         border-radius: 100%;
       }
     }

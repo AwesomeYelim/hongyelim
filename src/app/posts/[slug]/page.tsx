@@ -47,7 +47,6 @@ export default async function page({ params }: Props) {
       <MdfileViewer mdPost={mdPost} useToc={true} />
       <DetailTag {...post} />
       <PrevNextButton id={id} />
-      {/* <Utterance /> */}
       <Comment {...post} />
     </div>
   );

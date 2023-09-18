@@ -26,12 +26,12 @@ export async function POST(req: Request, res: Response) {
   try {
     if (session?.user?.email && data) {
       /** 사용자가 원하는 heart 상태  */
-      const userHeart = !user.data()?.heart[title];
+      const userHeart = user.data()?.heart ? !user.data()?.heart[title] : true;
 
       /** 사용자별 게시물 heart 상태 세팅 & 업데이트 */
       await setDoc(userData, {
         ...user.data(),
-        heart: { ...user.data()?.heart, [title]: userHeart },
+        heart: user.data()?.heart ? { ...user.data()?.heart, [title]: userHeart } : { [title]: userHeart },
       });
 
       /** 게시물별 heart 개수 상태 업데이트 */

@@ -4,7 +4,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import classNames from "classnames";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 

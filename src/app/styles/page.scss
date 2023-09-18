@@ -2,22 +2,32 @@
 
 .main_wrapper {
   @include flex(center, center);
-  margin-top: 10%;
   gap: 50px;
+  height: calc(100vh - 180px);
 
-  .start {
-    stroke-dasharray: 13337 13339;
-    stroke-dashoffset: 13338;
-    animation: draw 3000ms linear 0ms forwards;
-  }
-  @keyframes draw {
-    100% {
-      stroke-dashoffset: 0;
+  .svg_wrapper {
+    @include flex(center, center);
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    .welcome_img {
+      transform: rotate(20deg);
+    }
+    .main_ctimg {
+      border-radius: 50%;
+    }
+    .text_area {
+      text-align: center;
+      font-family: fantasy;
+      p {
+        margin-bottom: 3px;
+      }
     }
   }
   .tag_wrap {
     position: initial;
     flex-wrap: wrap;
+    justify-content: center;
     max-height: fit-content;
     flex-direction: row;
     width: 500px;
