@@ -179,7 +179,7 @@ export const Tag = ({
                   posts: select,
                 });
 
-                if (e.currentTarget.innerText === "All")
+                if (e.currentTarget.innerText.includes("All"))
                   setSelected({
                     keyword: "All",
                     posts: [...(bitData as Post[])],
@@ -208,7 +208,10 @@ export const Tag = ({
                 <span>({tagCount[keyword]})</span>
               </>
             ) : (
-              keyword
+              keyword === "All" ? <>
+              {keyword}
+              <span>({data?.length})</span>
+            </> : keyword
             )}
           </p>
         );
