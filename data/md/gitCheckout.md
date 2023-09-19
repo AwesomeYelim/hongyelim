@@ -18,8 +18,8 @@
 
 > 🏏 리눅스 문법과 관련된 글은 아래를 참고하자 !
 
-    https://hongyelim.vercel.app/posts/linuxSpecificChracter
-    https://hongyelim.vercel.app/posts/linuxContentcopyPaste
+- https://hongyelim.vercel.app/posts/linuxSpecificChracter
+- https://hongyelim.vercel.app/posts/linuxContentcopyPaste
 
 ```sh
 #!/bin/sh
