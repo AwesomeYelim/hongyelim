@@ -11,16 +11,32 @@
     gap: 20px;
     height: 100%;
     .welcome_img {
-      transform: rotate(20deg);
+      display: none;
+      height: 100px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      background-color: rgb(172 216 255 / 71%);
+      svg {
+        transform: rotate(20deg);
+      }
     }
     .main_ctimg {
       border-radius: 50%;
     }
     .text_area {
       text-align: center;
-      font-family: fantasy;
+      // font-family: fantasy;
       p {
         margin-bottom: 3px;
+        &.upper {
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+        span {
+          font-size: initial;
+          text-transform: uppercase;
+          font-weight: 700;
+          color: orange;
+        }
       }
     }
   }

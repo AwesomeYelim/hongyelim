@@ -72,6 +72,14 @@ html {
     }
     /** main  */
     .main_wrapper {
+      .svg_wrapper{
+        .dance {
+          display: none;
+        }
+        .welcome_img{
+          display: block;
+        }
+      }
       svg {
         g {
           path {
@@ -79,6 +87,8 @@ html {
           }
         }
       }
+
+      
       p {
         color: var(--w);
       }
