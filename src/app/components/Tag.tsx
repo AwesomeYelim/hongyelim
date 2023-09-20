@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { getPostsApi } from "./common/functions/myapi";
 import { postsAtom, selectedTag } from "./Recoil";
@@ -67,13 +67,7 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({
-  offset,
-  pageNum,
-  pageNumInit,
-  selected,
-  setSelected,
-}: Props): JSX.Element => {
+export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPosts = useSetRecoilState(postsAtom);
@@ -140,11 +134,7 @@ export const Tag = ({
 
   useEffect(() => {
     /* 초깃값 일때 && 페이지 새로고침 시에만 state 설정 */
-    if (
-      pageNum &&
-      (isEqual(pageNum[0], pageNumInit) ||
-        (!pageNum[0].current && !pageNum[0].total))
-    ) {
+    if (pageNum && (isEqual(pageNum[0], pageNumInit) || (!pageNum[0].current && !pageNum[0].total))) {
       pageNum[1](() => {
         return {
           current: Math.ceil((data?.length as number) / (offset as number)),
@@ -153,13 +143,6 @@ export const Tag = ({
         };
       });
     }
-    // pageNum?.[1](() => {
-    //   return {
-    //     current: Math.ceil((data?.length as number) / (offset as number)),
-    //     total: data?.length as number,
-    //     selectedNum: 1,
-    //   };
-    // });
   }, []);
 
   return (
@@ -171,9 +154,7 @@ export const Tag = ({
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) =>
-                  el.tag.includes(keyword)
-                );
+                const select = data?.filter((el: Post) => el.tag.includes(keyword));
                 setSelected({
                   keyword: e.currentTarget.innerText.split("(")[0],
                   posts: select,
@@ -189,8 +170,7 @@ export const Tag = ({
                   setSelected({ keyword: "" });
                 }
               }
-            }}
-          >
+            }}>
             {list[0] === "Tag" ? (
               <Link
                 href="/posts"
@@ -198,8 +178,7 @@ export const Tag = ({
                   if (e.currentTarget.innerText !== "Tag") {
                     setTag(e.currentTarget.innerText);
                   }
-                }}
-              >
+                }}>
                 {keyword}
               </Link>
             ) : keyword !== "All" && list[0] !== "Recommand Title" ? (
@@ -207,11 +186,13 @@ export const Tag = ({
                 {keyword}
                 <span>({tagCount[keyword]})</span>
               </>
+            ) : keyword === "All" ? (
+              <>
+                {keyword}
+                <span>({data?.length})</span>
+              </>
             ) : (
-              keyword === "All" ? <>
-              {keyword}
-              <span>({data?.length})</span>
-            </> : keyword
+              keyword
             )}
           </p>
         );
