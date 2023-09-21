@@ -6,7 +6,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  reactStrictMode: true,
+  // reactStrictMode: true,
   swcMinify: true,
   async headers() {
     return [

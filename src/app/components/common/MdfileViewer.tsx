@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
 import { ElementContent } from "react-markdown/lib/ast-to-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { titleCondition } from "./functions/ellipsis";
 import Image from "next/image";
 
@@ -67,7 +67,6 @@ export const MdfileViewer = ({
   mdPost,
   useToc = false,
 }: MarkdownViewProps): JSX.Element => {
-  
   let innerText: RegExpMatchArray | string | null;
 
   innerText = mdPost
@@ -102,6 +101,7 @@ export const MdfileViewer = ({
     };
 
     post[value] = position?.end.offset as number;
+
     const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
 
     return <HeadingTag>{children as string}</HeadingTag>;
@@ -131,6 +131,7 @@ export const MdfileViewer = ({
         {...titleCondition}
         onClick={(e) => {
           e.preventDefault();
+          
           window.scroll({
             left: 0,
             top: post![e.currentTarget.innerHTML] + 200,
@@ -146,7 +147,7 @@ export const MdfileViewer = ({
     );
   };
 
-  const scrollEffect = () => {
+  const scrollEffect = useCallback(() => {
     Object.entries(post).forEach(([key, scrollY], i, arr) => {
       if (!i || arr[arr.length - 1]) {
         if (window.scrollY === scrollY || window.scrollY > scrollY) {
@@ -156,7 +157,7 @@ export const MdfileViewer = ({
         setTarget(key);
       }
     });
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("scroll", scrollEffect);
