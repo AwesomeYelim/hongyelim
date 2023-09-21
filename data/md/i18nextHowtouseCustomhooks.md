@@ -1,15 +1,8 @@
 # i18next customhook 사용설명서
 
-## 번역 작업시 참고사항 - 예림
-
-- googleSpreadSheet 자동화 진행 : googleSpreadSheet에 생성되는 추가 및 수정사항 => Json에 반영
-- 오름 차순으로 정렬후 추후 수정작업 진행
-- global alert 문구 통일하며 진행
-- 언어 추가시 :ADD 부분에 추가
-
 ## textTrans 와 UseTrans 라는 custom hook 을 사용한다.
 
-개요) 사용시 명시적인 부분과 가독성을 중시, 여러 케이스들을 생각하여 내장 모듈 t()와 `<Trans/>`를 customizing 함
+개요) 사용시 명시적인 부분과 가독성을 중시, 여러 케이스들을 생각하여 내장 모듈 `t()`와 `<Trans/>`를 customizing 함
 
 - test case
 

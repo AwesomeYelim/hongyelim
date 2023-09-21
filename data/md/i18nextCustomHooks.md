@@ -93,4 +93,4 @@ export function UseTrans<T extends keyof TransType.Ko>({ key, defaultMsg, TagCom
 
 - 사용방법은 다음을 참조하자..!
 
-- https://hongyelim.vercel.app/posts/i18nextHowtouseCustomhook
+- https://hongyelim.vercel.app/posts/i18nextHowtouseCustomhooks
