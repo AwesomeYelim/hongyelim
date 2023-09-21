@@ -118,9 +118,10 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
     setPosts(data as Post[]);
     // prettier-ignore
     if(tag?.length || title?.length) {
+      
       switch (location) {
         case "/": {
-          setList(["Tag", ...(tag as string[])]);
+          setList(["Tag", ...((tag as string[]).filter(item => /^[a-z]/.test(item)))]);
         } break;
         case "/posts": {
           setList(["All", ...(tag as string[])]);
