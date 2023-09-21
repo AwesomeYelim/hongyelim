@@ -184,7 +184,7 @@ find ./* -type f -name "b_*.md" ! -path "*/node_modules/*" -exec sh -c 'cp "$1" 
 
 ```
 
-## hongyelim repo에 있는 md 파일과 <=> firebase 에 있는 data 객체 동기화 과정
+## hongyelim repo에 있는 md 파일과 firebase 에 있는 data 객체 동기화 과정
 
 - 우선 test script를 만들어서 hongyelim 내부에서 실행 시켜보자
 - 그 다음 study를 push 할때마다 트리거 가능한 파일을 hongyelim 내부에 생성한다.
