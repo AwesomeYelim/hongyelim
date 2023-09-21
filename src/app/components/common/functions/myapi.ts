@@ -8,7 +8,6 @@ type PostParam = {
   condition?: { offset: number; startNum: { current: number; total: number } };
   target?: string;
 };
-let dataId;
 
 export const getPostsApi = async ({ type, condition, target }: PostParam) => {
   const callData = (() => {
@@ -18,7 +17,12 @@ export const getPostsApi = async ({ type, condition, target }: PostParam) => {
       condition &&
       Array(condition.offset)
         .fill(condition.offset * (condition.startNum.current - 1))
-        .map((el, i) => el - i + (condition.startNum.total % condition.offset));
+        .map(
+          (el, i) =>
+            el -
+            i +
+            (condition.startNum.total % condition.offset ? condition.startNum.total % condition.offset : 2 * i + 1)
+        );
 
     switch (type) {
       case "All": {
@@ -65,11 +69,9 @@ export const postsAddApi = async (data: { [key in string]: string }) => {
 };
 
 export const getTargetPostApi = async (queryKey: string) => {
-  const [post] = await getPostsApi({ type: "One", target: queryKey }).then(
-    (res) => {
-      return res;
-    }
-  );
+  const [post] = await getPostsApi({ type: "One", target: queryKey }).then((res) => {
+    return res;
+  });
   const mdPost = axios.get(`/api/${queryKey}`, {
     headers: {
       "Cache-Control": "no-store",
