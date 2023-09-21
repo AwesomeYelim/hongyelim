@@ -27,9 +27,8 @@ async function dataInterlock() {
   const differTargets = existingMd.filter((mdTitle) => !postTitles.includes(mdTitle));
 
   if (differTargets.length) {
-    let idCount = 0;
 
-    differTargets.forEach(async (title) => {
+    differTargets.forEach(async (title, i) => {
       const postData = doc(db, "posts", title);
       const mdPath = path.join(process.cwd(), "data", "md", `${title}.md`);
 
@@ -42,18 +41,17 @@ async function dataInterlock() {
       const restLetter = splitTitles.shift();
 
       await setDoc(postData, {
-        id: posts.length === 1 || !posts.length ? idCount : posts.length + 1,
+        id: posts.length + 1 + i,
         title,
         content: mdFile.match(/#+\s(.+)/g)?.[0] || "", // mdfile contents 의 시작글
         post_title: `[${restLetter}] ${[...splitTitles].join("")}` || "",
         heart: {},
         heart_count: 0,
-        created_at: Math.floor(new Date().getTime() / 1000) + idCount,
+        created_at: Math.floor(new Date().getTime() / 1000) + i,
         tag: [restLetter, ...splitTitles] || [],
         comments: [],
       });
 
-      idCount++;
     });
 
     // // 오래된순 => 최신순 => 왠만하면 db업데이트는 사용하지 않는걸로 resource 소모가 너무큼..
