@@ -22,7 +22,7 @@ export interface Props {
   offset?: number;
   pageNum?: [PageNum, React.Dispatch<React.SetStateAction<PageNum>>];
   pageNumInit?: PageNum;
-  currentTag: string;
+  currentTag?: string;
   selected?: Selected;
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
@@ -173,7 +173,7 @@ export const Tag = ({
             onClick={(e) => {
               if (setSelected) {
                 const select = data?.filter((el: Post) =>
-                  el.tag.includes(currentTag)
+                  el.tag.includes(currentTag as string)
                 );
                 setSelected({
                   keyword : e.currentTarget.innerText,
