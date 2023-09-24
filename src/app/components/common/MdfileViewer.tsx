@@ -80,7 +80,6 @@ export const MdfileViewer = ({
     [key in string]: number;
   } = {};
 
-  // const [dark] = useDark();
 
   // 초기 md h tag 위치값 표기 및 h hag 랜더링
   const tocHandler = ({

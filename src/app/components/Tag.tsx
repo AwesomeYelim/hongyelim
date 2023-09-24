@@ -10,7 +10,7 @@ import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { getPostsApi } from "./common/functions/myapi";
-import { postsAtom, selectedTag } from "./Recoil";
+import { postsAtom } from "./Recoil";
 import { PageNum } from "./Techlog";
 
 export type Selected = {
@@ -22,6 +22,7 @@ export interface Props {
   offset?: number;
   pageNum?: [PageNum, React.Dispatch<React.SetStateAction<PageNum>>];
   pageNumInit?: PageNum;
+  currentTag: string;
   selected?: Selected;
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
@@ -41,7 +42,8 @@ const TagWrap = styled.nav`
   width: 220px;
 
   box-sizing: border-box;
-  p {
+  a {
+    display: block;
     cursor: pointer;
     margin: 5px 0 5px 0;
     font-size: 15px;
@@ -67,11 +69,18 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Props): JSX.Element => {
+export const Tag = ({
+  offset,
+  pageNum,
+  pageNumInit,
+  currentTag,
+  selected,
+  setSelected,
+}: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPosts = useSetRecoilState(postsAtom);
-  const setTag = useSetRecoilState(selectedTag);
+  // const [tag, setTag] = useRecoilState(selectedTag);
 
   /**  tag 별 게시물 갯수  */
   const tagCount: { [key in string]: number } = {};
@@ -95,9 +104,9 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
       }),
   });
 
-  const { tag, title } = {
+  const { tagList, title } = {
     /** tag 별 list   */
-    tag: data
+    tagList: data
       ?.map((item: Post) => item.tag)
       .flat()
       .filter((item, i, arr) => {
@@ -117,14 +126,14 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
   useEffect(() => {
     setPosts(data as Post[]);
     // prettier-ignore
-    if(tag?.length || title?.length) {
+    if(tagList?.length || title?.length) {
       
       switch (location) {
         case "/": {
-          setList(["Tag", ...((tag as string[]).filter(item => /^[a-z]/.test(item)))]);
+          setList(["Tag", ...((tagList as string[]).filter(item => /^[a-z]/.test(item)))]);
         } break;
         case "/posts": {
-          setList(["All", ...(tag as string[])]);
+          setList(["All", ...(tagList as string[])]);
         } break;
         case "/memo": {
           setList(["Recommand Title", ...(title as string[])]);
@@ -135,7 +144,11 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
 
   useEffect(() => {
     /* 초깃값 일때 && 페이지 새로고침 시에만 state 설정 */
-    if (pageNum && (isEqual(pageNum[0], pageNumInit) || (!pageNum[0].current && !pageNum[0].total))) {
+    if (
+      pageNum &&
+      (isEqual(pageNum[0], pageNumInit) ||
+        (!pageNum[0].current && !pageNum[0].total))
+    ) {
       pageNum[1](() => {
         return {
           current: Math.ceil((data?.length as number) / (offset as number)),
@@ -150,14 +163,20 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
     <TagWrap className="tag_wrap">
       {list?.map((keyword) => {
         return (
-          <p
+          <Link
             key={keyword}
+            href={{
+              pathname: "/posts",
+              query: { tag: keyword },
+            }}
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) => el.tag.includes(keyword));
+                const select = data?.filter((el: Post) =>
+                  el.tag.includes(currentTag)
+                );
                 setSelected({
-                  keyword: e.currentTarget.innerText.split("(")[0],
+                  keyword : e.currentTarget.innerText,
                   posts: select,
                 });
 
@@ -166,36 +185,37 @@ export const Tag = ({ offset, pageNum, pageNumInit, selected, setSelected }: Pro
                     keyword: "All",
                     posts: [...(bitData as Post[])],
                   });
-
+                // /* main tag 영역 */
+                // if (list[0] === "Tag") {
+                //   setTag(e.currentTarget.innerText);
+                // }
+                /** memo tag  */
                 if (e.currentTarget.innerText === "Recommand Title") {
                   setSelected({ keyword: "" });
                 }
               }
-            }}>
-            {list[0] === "Tag" ? (
-              <Link
-                href="/posts"
-                onClick={(e) => {
-                  if (e.currentTarget.innerText !== "Tag") {
-                    setTag(e.currentTarget.innerText);
-                  }
-                }}>
-                {keyword}
-              </Link>
-            ) : keyword !== "All" && list[0] !== "Recommand Title" ? (
-              <>
-                {keyword}
-                <span>({tagCount[keyword]})</span>
-              </>
-            ) : keyword === "All" ? (
-              <>
-                {keyword}
-                <span>({data?.length})</span>
-              </>
-            ) : (
-              keyword
-            )}
-          </p>
+            }}
+          >
+            {/* main tag 영역 */}
+            {
+              // post 하위 tag 영역
+              keyword !== "All" && list[0] !== "Recommand Title" ? (
+                <>
+                  {keyword}
+                  <span>({tagCount[keyword]})</span>
+                </>
+              ) : // post All tag 영역
+              keyword === "All" ? (
+                <>
+                  {keyword}
+                  <span>({data?.length})</span>
+                </>
+              ) : (
+                // memo tag 영역
+                keyword
+              )
+            }
+          </Link>
         );
       })}
     </TagWrap>

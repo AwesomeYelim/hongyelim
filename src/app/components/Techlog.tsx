@@ -9,14 +9,15 @@ import { useQuery } from "react-query";
 import { getPostsApi } from "./common/functions/myapi";
 import { useSession } from "next-auth/react";
 import { PageNation } from "./common/PageNation";
-import { RecoilState, useRecoilValue, useRecoilState } from "recoil";
-import { postsAtom, selectedTag } from "./Recoil";
+import {  useRecoilValue } from "recoil";
+import { postsAtom } from "./Recoil";
+import { useSearchParams } from "next/navigation";
 
 export type PageNum = { current: number; total: number; selectedNum: number };
 
 export default function Techlog() {
   const posts = useRecoilValue(postsAtom);
-  const [tag, setTag] = useRecoilState(selectedTag);
+  const currentTag = useSearchParams().get('tag');
   const pageNumInit = { current: 1, total: 0, selectedNum: 0 };
   const pageNum = useState<PageNum>(pageNumInit);
   const offset = 5;
@@ -47,18 +48,27 @@ export default function Techlog() {
       posts: data,
     });
 
-    if (tag) {
+    if (currentTag) {
       setSelected({
-        keyword: tag as string,
-        posts: posts?.filter((el: Post) => el.tag.includes(tag)),
+        keyword: currentTag as string,
+        posts: posts?.filter((el: Post) => el.tag.includes(currentTag)),
       });
+
+      if(currentTag === 'All') {
+        setSelected({
+          keyword: "All",
+          posts: data,
+        });
+      }
     }
-  }, [data]);
+    
+  }, [data, currentTag]);
 
   const props = {
     offset,
     pageNum,
     selected,
+    currentTag : currentTag as string,
     setSelected,
     pageNumInit,
   };
@@ -69,33 +79,50 @@ export default function Techlog() {
       <div className="list_wrapper">
         <ul className="list">
           {selected &&
-            selected.posts?.map(({ id, title, heart_count, content, created_at, heart, post_title }) => {
-              const date = new Date(created_at * 1000).toLocaleDateString("ko-kr", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              });
+            selected.posts?.map(
+              ({
+                id,
+                title,
+                heart_count,
+                content,
+                created_at,
+                heart,
+                post_title,
+              }) => {
+                const date = new Date(created_at * 1000).toLocaleDateString(
+                  "ko-kr",
+                  {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  }
+                );
 
-              return (
-                <li key={id}>
-                  <div className="text_wrapper">
-                    <Link href={`/posts/${title}`}>
-                      <h2>{post_title}</h2>
-                    </Link>
-                    <span>{content}</span>
-                  </div>
-                  <div className="bottom_wrap">
-                    <span className="date">{date}</span>
-                    <i
-                      className={classNames("static_heart", {
-                        like: heart?.[session?.user?.email as string],
-                      })}
-                    />
-                    <span className="like">{heart_count}</span>
-                  </div>
-                </li>
-              );
-            })}
+                return (
+                  <li key={id}>
+                    <div className="text_wrapper">
+                      <Link
+                        href={{
+                          pathname: `/posts/${title}`,
+                        }}
+                      >
+                        <h2>{post_title}</h2>
+                      </Link>
+                      <span>{content}</span>
+                    </div>
+                    <div className="bottom_wrap">
+                      <span className="date">{date}</span>
+                      <i
+                        className={classNames("static_heart", {
+                          like: heart?.[session?.user?.email as string],
+                        })}
+                      />
+                      <span className="like">{heart_count}</span>
+                    </div>
+                  </li>
+                );
+              }
+            )}
         </ul>
       </div>
       <PageNation {...props} />

@@ -49,7 +49,8 @@
     width: 500px;
     gap: 10px;
 
-    p {
+    a {
+      display: block;
       &:first-child {
         background-color: rgb(201, 206, 255);
         border: 1px solid transparent !important;
