@@ -59,10 +59,16 @@
       span {
         font-size: 13px;
         padding-left: 37px;
+
+        &.cm_cancel {
+          cursor: pointer;
+          display: block;
+          background-color: antiquewhite;
+        }
       }
       p {
         margin: 10px 0 35px 40px;
-        &.reply {
+        &.cm_reply {
           @include flex(center, initial);
           cursor: pointer;
           span {

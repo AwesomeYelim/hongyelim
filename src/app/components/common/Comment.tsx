@@ -2,46 +2,26 @@
 "use client";
 
 import { CommentEl, Post, User } from "@/service/posts";
-import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { getTargetPostApi } from "./functions/myapi";
-import { ReactNode, useEffect, useState } from "react";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useQuery } from "react-query";
+import { getTargetPostApi } from "./functions/myapi";
+import { Dispatch, useEffect, useState } from "react";
+import { AddComment, AddProps } from "./AddComment";
+import { Session } from "next-auth";
 
 import "./Comment.scss";
 
-export const Comment = (props: Post): JSX.Element => {
+export const Comment = ({ title }: { title: string }): JSX.Element => {
   const { data: session } = useSession();
-  const { id, title } = props;
+
   const [comments, setComments] = useState<CommentEl[]>([]);
+  const [openReply, setOpenReply] = useState<{ [key in number]: boolean }>();
 
   const { data } = useQuery({
     queryKey: title,
     queryFn: (data) => getTargetPostApi(data.queryKey[0]),
   });
-
-  const queryClient = useQueryClient();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
-
-  const postsCommentApi = async (data: CommentEl & { queryKey: string }) => {
-    await axios
-      .post(`/api/${data.queryKey}/comment`, JSON.stringify(data), {
-        headers: {
-          "Cache-Control": "no-store",
-          "Content-Type": `application/json`,
-        },
-      })
-      .then((res) => {
-        setComments(res.data.post.comments);
-      });
-  };
 
   const deleteCommentApi = async (data: CommentEl & { queryKey: string }) => {
     await axios
@@ -56,66 +36,36 @@ export const Comment = (props: Post): JSX.Element => {
       });
   };
 
-  const mutation = useMutation({
-    mutationFn: postsCommentApi,
-    onSuccess: () => {
-      setValue("content", "");
-      queryClient.invalidateQueries({ queryKey: title });
-    },
-  });
-
   useEffect(() => {
     setComments(data?.post?.comments as CommentEl[]);
   }, [data?.post?.comments]);
 
-  const newComment = (): ReactNode => {
-    return (
-      <form
-        onSubmit={handleSubmit((data) => {
-          return mutation.mutate({
-            queryKey: title,
-            contents: data.content,
-            userInfo: session?.user as User,
-            com_created_at: Math.floor(+new Date() / 1000),
-          });
-        })}
-      >
-        <label>comment</label>
-        <textarea
-          {...register("content")}
-          placeholder={
-            session?.user
-              ? "댓글을 작성하세요."
-              : "댓글 작성은 로그인이 필요합니다. 🐧"
-          }
-          disabled={!session?.user}
-        />
-        {errors.content && <p>{errors.content.message as string}</p>}
-        <button type="submit" disabled={!session?.user}>
-          Submit
-        </button>
-      </form>
-    );
+  const addProps: AddProps = {
+    comments,
+    setComments,
+    title,
+    session: session as Session,
   };
-  
 
   return (
     <>
       <div className="comment_wrap">
-        {newComment()}
+        <AddComment {...addProps} />
         <div className="commented_wrap">
           {data &&
             comments?.map((el: CommentEl) => {
-              const date = new Date(
-                el.com_created_at * 1000
-              ).toLocaleDateString("ko-kr", {
+              const createdAt = el.com_created_at;
+              const lastAt = createdAt[createdAt.length - 1];
+              const date = new Date(lastAt * 1000).toLocaleDateString("ko-kr", {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
               });
 
+              addProps["com_created_at"] = el.com_created_at;
+
               return (
-                <div className="commentedEl_wrap" key={el.com_created_at}>
+                <div className="commentedEl_wrap" key={JSON.stringify(el.com_created_at)}>
                   <div className="cm_img_wrap">
                     <img
                       src={el.userInfo.image}
@@ -137,23 +87,37 @@ export const Comment = (props: Post): JSX.Element => {
                   </div>
                   <span>{date}</span>
                   <p>{el.contents}</p>
-                  <p
-                    className="reply"
-                    onClick={() => {
-                      // const newReply = {
-                      //   com_created_at: Math.floor(new Date().getTime() / 1000),
-                      //   contents: "",
-                      //   userInfo: session?.user as User,
-                      //   children: [],
-                      // };
-                      // el.children = el.children
-                      //   ? [...el.children, newReply]
-                      //   : [newReply];
-                    }}
-                  >
-                    <span>⏎</span>답글 달기
-                  </p>
-                  
+                  {openReply?.[lastAt] ? (
+                    <>
+                      <AddComment {...addProps} />
+                      <span
+                        className="cm_cancel"
+                        onClick={() => {
+                          setOpenReply({ [lastAt]: false });
+                        }}>
+                        취소하기
+                      </span>
+                    </>
+                  ) : (
+                    <p
+                      className="cm_reply"
+                      onClick={() => {
+                        setOpenReply({ [lastAt]: true });
+
+                        // const newReply = {
+                        //   com_created_at: Math.floor(new Date().getTime() / 1000),
+                        //   contents: "",
+                        //   userInfo: session?.user as User,
+                        //   children: [],
+                        // };
+                        // el.children = el.children
+                        //   ? [...el.children, newReply]
+                        //   : [newReply];
+                      }}>
+                      <span>⏎</span>답글 달기
+                    </p>
+                  )}
+                  {/* <Comment /> */}
                 </div>
               );
             })}

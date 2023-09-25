@@ -15,6 +15,7 @@ export async function POST(req: Request, res: Response) {
   const data = await req.json();
   const title = data.queryKey;
   const session = await getServerSession();
+  console.log(data);
 
   const userData = doc(db, "user", session?.user?.email as string);
   const user = await getDoc(userData);
@@ -46,7 +47,7 @@ export async function POST(req: Request, res: Response) {
 
 export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url);
-  const targetKey = searchParams.get("data[com_created_at]");
+  const targetKey = searchParams.get("data[com_created_at][0]");
   const queryKey = searchParams.get("data[queryKey]");
   const title = queryKey as string;
   const session = await getServerSession();
@@ -57,20 +58,28 @@ export async function DELETE(req: Request) {
   const userData = doc(db, "user", session?.user?.email as string);
   const user = await getDoc(userData);
 
-  
-
   /** 사용자별 게시물 comments 상태 세팅 & 업데이트 */
   await updateDoc(userData, {
     comments: {
       ...user.data()?.comments,
-      [title]: user.data()?.comments[title] ? [
-        ...user.data()?.comments[title]?.filter((el: CommentEl) => el.com_created_at !== +(targetKey as string)),
-      ] : [],
+      [title]: user.data()?.comments[title]
+        ? [
+            ...user.data()?.comments[title]?.filter((el: CommentEl) => {
+              const [target] = el.com_created_at;
+              return target !== +(targetKey as string);
+            }),
+          ]
+        : [],
     },
   });
 
   await updateDoc(postData, {
-    comments: [...post.data()?.comments.filter((el: CommentEl) => el.com_created_at !== +(targetKey as string))],
+    comments: [
+      ...post.data()?.comments.filter((el: CommentEl) => {
+        const [target] = el.com_created_at;
+        return target !== +(targetKey as string);
+      }),
+    ],
   });
 
   const updatedPost = await getDoc(doc(db, "posts", title));
