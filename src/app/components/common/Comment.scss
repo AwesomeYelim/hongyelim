@@ -62,6 +62,15 @@
       }
       p {
         margin: 10px 0 35px 40px;
+        &.reply {
+          @include flex(center, initial);
+          cursor: pointer;
+          span {
+            display: block;
+            padding-left: 10px;
+            transform: rotateY(180deg);
+          }
+        }
       }
     }
   }

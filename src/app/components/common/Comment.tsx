@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getTargetPostApi } from "./functions/myapi";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import axios from "axios";
 
 import "./Comment.scss";
@@ -68,33 +68,47 @@ export const Comment = (props: Post): JSX.Element => {
     setComments(data?.post?.comments as CommentEl[]);
   }, [data?.post?.comments]);
 
+  const newComment = (): ReactNode => {
+    return (
+      <form
+        onSubmit={handleSubmit((data) => {
+          return mutation.mutate({
+            queryKey: title,
+            contents: data.content,
+            userInfo: session?.user as User,
+            com_created_at: Math.floor(+new Date() / 1000),
+          });
+        })}
+      >
+        <label>comment</label>
+        <textarea
+          {...register("content")}
+          placeholder={
+            session?.user
+              ? "댓글을 작성하세요."
+              : "댓글 작성은 로그인이 필요합니다. 🐧"
+          }
+          disabled={!session?.user}
+        />
+        {errors.content && <p>{errors.content.message as string}</p>}
+        <button type="submit" disabled={!session?.user}>
+          Submit
+        </button>
+      </form>
+    );
+  };
+  
+
   return (
     <>
       <div className="comment_wrap">
-        <form
-          onSubmit={handleSubmit((data) => {
-            return mutation.mutate({
-              queryKey: title,
-              contents: data.content,
-              userInfo: session?.user as User,
-              com_created_at: Math.floor(+new Date() / 1000),
-            });
-          })}>
-          <label>comment</label>
-          <textarea
-            {...register("content")}
-            placeholder={session?.user ? "댓글을 작성하세요." : "댓글 작성은 로그인이 필요합니다. 🐧"}
-            disabled={!session?.user}
-          />
-          {errors.content && <p>{errors.content.message as string}</p>}
-          <button type="submit" disabled={!session?.user}>
-            Submit
-          </button>
-        </form>
+        {newComment()}
         <div className="commented_wrap">
           {data &&
             comments?.map((el: CommentEl) => {
-              const date = new Date(el.com_created_at * 1000).toLocaleDateString("ko-kr", {
+              const date = new Date(
+                el.com_created_at * 1000
+              ).toLocaleDateString("ko-kr", {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
@@ -123,6 +137,23 @@ export const Comment = (props: Post): JSX.Element => {
                   </div>
                   <span>{date}</span>
                   <p>{el.contents}</p>
+                  <p
+                    className="reply"
+                    onClick={() => {
+                      // const newReply = {
+                      //   com_created_at: Math.floor(new Date().getTime() / 1000),
+                      //   contents: "",
+                      //   userInfo: session?.user as User,
+                      //   children: [],
+                      // };
+                      // el.children = el.children
+                      //   ? [...el.children, newReply]
+                      //   : [newReply];
+                    }}
+                  >
+                    <span>⏎</span>답글 달기
+                  </p>
+                  
                 </div>
               );
             })}

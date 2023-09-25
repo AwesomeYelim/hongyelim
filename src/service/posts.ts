@@ -13,6 +13,7 @@ export interface CommentEl {
   com_created_at: number;
   contents: string;
   userInfo: User;
+  children?: CommentEl[];
 }
 
 export type Post = {
@@ -26,8 +27,6 @@ export type Post = {
   comments?: CommentEl[];
   post_title: string;
 };
-
-// export type Post = { [x: string]: DocumentData };
 
 export async function getPosts(): Promise<Post[]> {
   const fireposts = await getDocs(collection(db, "posts"));
@@ -54,7 +53,9 @@ export async function getPosts(): Promise<Post[]> {
   return posts;
 }
 
-export async function getPost(id_title: string): Promise<{ post: Post; mdPost: string }> {
+export async function getPost(
+  id_title: string
+): Promise<{ post: Post; mdPost: string }> {
   const mdPath = path.join(process.cwd(), "data/md", `${id_title}.md`);
 
   const mdPost = await fs.readFile(mdPath, "utf-8");
