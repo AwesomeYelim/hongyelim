@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { CommentEl, Post, User } from "@/service/posts";
+import { CommentEl } from "@/service/posts";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useQuery } from "react-query";
 import { getTargetPostApi } from "./functions/myapi";
-import { Dispatch, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AddComment, AddProps } from "./AddComment";
 import { Session } from "next-auth";
 
@@ -57,18 +57,13 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
     });
 
     addProps["com_created_at"] = el.com_created_at;
+    addProps["lastAt"] = lastAt;
+    addProps["setOpenReply"] = setOpenReply;
 
     return (
-      <div
-        className="commentedEl_wrap"
-        style={{ marginLeft: 15 * createdAt.length }}
-      >
+      <div className="commentedEl_wrap" style={{ marginLeft: 15 * createdAt.length }}>
         <div className="cm_img_wrap">
-          <img
-            src={el.userInfo.image}
-            style={{ width: 25, height: 25, borderRadius: "50%" }}
-            alt="comment-img"
-          />
+          <img src={el.userInfo.image} style={{ width: 25, height: 25, borderRadius: "50%" }} alt="comment-img" />
           {el.userInfo.name}
           {el.userInfo.email === session?.user?.email && (
             <i
@@ -92,8 +87,7 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
               className="cm_cancel"
               onClick={() => {
                 setOpenReply({ [lastAt]: false });
-              }}
-            >
+              }}>
               취소하기
             </span>
           </>
@@ -102,18 +96,7 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
             className="cm_reply"
             onClick={() => {
               setOpenReply({ [lastAt]: true });
-
-              // const newReply = {
-              //   com_created_at: Math.floor(new Date().getTime() / 1000),
-              //   contents: "",
-              //   userInfo: session?.user as User,
-              //   children: [],
-              // };
-              // el.children = el.children
-              //   ? [...el.children, newReply]
-              //   : [newReply];
-            }}
-          >
+            }}>
             <span>⏎</span>답글 달기
           </p>
         )}

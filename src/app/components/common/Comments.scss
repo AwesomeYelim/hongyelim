@@ -6,6 +6,7 @@
 
   form {
     @include flex(flex-end, flex-end);
+    position: relative;
     width: 80%;
     flex-direction: column;
     margin-bottom: 30px;
@@ -43,8 +44,9 @@
     .commentedEl_wrap {
       @include flex(initial, initial);
       flex-direction: column;
-      //   gap: 10px;
       flex-wrap: wrap;
+      margin-top: 30px;
+
       .cm_img_wrap {
         @include flex(center, initial);
         gap: 10px;
@@ -61,16 +63,21 @@
         padding-left: 37px;
 
         &.cm_cancel {
+          position: relative;
+          bottom: 50px;
+          left: 10px;
           cursor: pointer;
+          width: 100px;
           display: block;
-          background-color: antiquewhite;
+          color: #ccc;
         }
       }
       p {
-        margin: 10px 0 35px 40px;
+        margin: 10px 0 20px 40px;
         &.cm_reply {
           @include flex(center, initial);
           cursor: pointer;
+          width: fit-content;
           span {
             display: block;
             padding-left: 10px;

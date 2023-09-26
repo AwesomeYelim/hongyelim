@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
@@ -11,10 +11,12 @@ export interface AddProps {
   setComments: Dispatch<CommentEl[]>;
   title: string;
   session: Session;
+  lastAt?: number;
+  setOpenReply?: Dispatch<{ [key in number]: boolean }>;
 }
 
 export const AddComment = (props: AddProps) => {
-  const { comments, setComments, title, session, com_created_at } = props;
+  const { comments, setComments, title, session, com_created_at, setOpenReply, lastAt } = props;
 
   const queryClient = useQueryClient();
 
@@ -26,6 +28,8 @@ export const AddComment = (props: AddProps) => {
   } = useForm();
 
   const postsCommentApi = async (data: CommentEl & { queryKey: string }) => {
+    if (data["children"]) delete data["children"];
+
     await axios
       .post(`/api/${data.queryKey}/comment`, JSON.stringify(data), {
         headers: {
@@ -42,12 +46,14 @@ export const AddComment = (props: AddProps) => {
     mutationFn: postsCommentApi,
     onSuccess: () => {
       setValue("content", "");
+      (setOpenReply as Dispatch<{ [key in number]: boolean }>)({ [lastAt as number]: false });
       queryClient.invalidateQueries({ queryKey: title });
     },
   });
 
   return (
     <form
+      style={{ left: com_created_at ? 40 : 0 }}
       onSubmit={handleSubmit((data) => {
         return mutation.mutate({
           queryKey: title,
@@ -58,9 +64,11 @@ export const AddComment = (props: AddProps) => {
             : [Math.floor(+new Date() / 1000)],
         });
       })}>
-      <label>comment</label>
+      {!com_created_at && <label>comment</label>}
       <textarea
-        {...register("content")}
+        {...register("content", {
+          required: { value: true, message: "is required" },
+        })}
         placeholder={session?.user ? "댓글을 작성하세요." : "댓글 작성은 로그인이 필요합니다. 🐧"}
         disabled={!session?.user}
       />

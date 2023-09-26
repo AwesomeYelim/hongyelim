@@ -69,14 +69,7 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({
-  offset,
-  pageNum,
-  pageNumInit,
-  currentTag,
-  selected,
-  setSelected,
-}: Props): JSX.Element => {
+export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPosts = useSetRecoilState(postsAtom);
@@ -144,11 +137,7 @@ export const Tag = ({
 
   useEffect(() => {
     /* 초깃값 일때 && 페이지 새로고침 시에만 state 설정 */
-    if (
-      pageNum &&
-      (isEqual(pageNum[0], pageNumInit) ||
-        (!pageNum[0].current && !pageNum[0].total))
-    ) {
+    if (pageNum && (isEqual(pageNum[0], pageNumInit) || (!pageNum[0].current && !pageNum[0].total))) {
       pageNum[1](() => {
         return {
           current: Math.ceil((data?.length as number) / (offset as number)),
@@ -172,11 +161,9 @@ export const Tag = ({
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) =>
-                  el.tag.includes(currentTag as string)
-                );
+                const select = data?.filter((el: Post) => el.tag.includes(currentTag as string));
                 setSelected({
-                  keyword : e.currentTarget.innerText,
+                  keyword: e.currentTarget.innerText,
                   posts: select,
                 });
 
@@ -194,15 +181,14 @@ export const Tag = ({
                   setSelected({ keyword: "" });
                 }
               }
-            }}
-          >
+            }}>
             {/* main tag 영역 */}
             {
               // post 하위 tag 영역
               keyword !== "All" && list[0] !== "Recommand Title" ? (
                 <>
                   {keyword}
-                  <span>({tagCount[keyword]})</span>
+                  {!!tagCount[keyword] && <span>({tagCount[keyword]})</span>}
                 </>
               ) : // post All tag 영역
               keyword === "All" ? (

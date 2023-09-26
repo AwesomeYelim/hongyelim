@@ -1,4 +1,5 @@
-import { Post } from "@/service/posts";
+import { commentsTree } from "@/app/api/[id]/comment/route";
+import { CommentEl, Post } from "@/service/posts";
 import axios from "axios";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../../../firebase";
@@ -78,5 +79,5 @@ export const getTargetPostApi = async (queryKey: string) => {
     },
   });
 
-  return { post: post as Post, mdPost };
+  return { post: { ...post, comments: post.comments ? commentsTree(post.comments) : [] } as Post, mdPost };
 };

@@ -10,6 +10,55 @@ import { NextResponse } from "next/server";
 import { getDoc, doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { getServerSession } from "next-auth";
+import { transporter } from "@/app/nodemail";
+
+export const sendEmail = async ({ arr, target }: { arr: CommentEl[]; target: CommentEl }) => {
+  const relatedCo = arr.filter((item) => {
+    const {com_created_at : ic, userInfo : {email : ie}} = item // prettier-ignore
+    const {com_created_at : tc, userInfo : {email : te}} = target // prettier-ignore
+
+    return tc.includes(ic[ic.length - 1]) && ie !== te;
+  });
+
+  relatedCo.forEach(async (item) => {
+    console.log(item.userInfo.email);
+
+    transporter.sendMail(
+      {
+        from: `"Yelim Blog" <${process.env.NEXT_PUBLIC_NODEMAILER_USER}>`,
+        to: item.userInfo.email,
+        subject: "New Comment !",
+        text: "새로운 댓글이 있어요 !",
+      },
+      (err, info) => {
+        if (err) console.error(err);
+        if (info) return info;
+      }
+    );
+  });
+};
+
+export const commentsTree = (arr: CommentEl[]) => {
+  /** length 긴 -> 적 */
+  arr = arr.sort((a, b) => b.com_created_at.length - a.com_created_at.length);
+
+  const lengthOne = arr.filter((highData) => {
+    [...arr].forEach((data) => {
+      const h = highData.com_created_at;
+      const d = data.com_created_at;
+      const duplePrevent = !highData.children
+        ?.map((el) => el.com_created_at[el.com_created_at.length - 1])
+        .includes(d[d.length - 1]);
+
+      if (h[h.length - 1] === d[d.length - 2] && duplePrevent) {
+        (highData.children || (highData.children = [])).push(data);
+      }
+    });
+
+    return highData?.com_created_at?.length === 1;
+  });
+  return lengthOne;
+};
 
 export async function POST(req: Request, res: Response) {
   const data = await req.json();
@@ -28,36 +77,21 @@ export async function POST(req: Request, res: Response) {
   await setDoc(userData, {
     comments: {
       ...user.data()?.comments,
-      [title]: user.data()?.comments[title]
-        ? [...user.data()?.comments[title], rest]
-        : [rest],
+      [title]: user.data()?.comments[title] ? [...user.data()?.comments[title], rest] : [rest],
     },
   });
 
-  const commentsTree = [...post.data()?.comments, { ...data }]
-    .map((data: CommentEl, i, arr) => {
-      const par = data?.com_created_at?.every((el) =>
-        arr[i + 1]?.com_created_at?.includes(el)
-      );
-
-      if (par) {
-        (data.children || (data.children = [])).push(arr[i + 1]);
-      }
-
-      return data;
-    })
-    .filter((data) => data?.com_created_at?.length === 1);
-
-
   await updateDoc(postData, {
-    comments: commentsTree,
+    comments: [...post.data()?.comments, { ...data }],
   });
+
+  sendEmail({ arr: [...post.data()?.comments], target: data });
 
   const updatedPost = await getDoc(doc(db, "posts", title));
 
   return NextResponse.json({
     message: "success!",
-    post: updatedPost.data(),
+    post: { ...updatedPost.data(), comments: commentsTree(updatedPost?.data()?.comments) },
   });
 }
 
@@ -81,7 +115,8 @@ export async function DELETE(req: Request) {
       [title]: user.data()?.comments[title]
         ? [
             ...user.data()?.comments[title]?.filter((el: CommentEl) => {
-              const target = el.com_created_at[el.com_created_at.length - 1];
+              const c = el.com_created_at;
+              const target = c[c.length - 1];
               return target !== +(targetKey as string);
             }),
           ]
@@ -92,8 +127,10 @@ export async function DELETE(req: Request) {
   await updateDoc(postData, {
     comments: [
       ...post.data()?.comments.filter((el: CommentEl) => {
-        const target = el.com_created_at[el.com_created_at.length - 1];
-        return target !== +(targetKey as string);
+        const c = el.com_created_at;
+        // const target = c[c.length - 1];
+        // return target !== +(targetKey as string);
+        return !c.includes(+(targetKey as string));
       }),
     ],
   });
