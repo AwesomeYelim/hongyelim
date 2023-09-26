@@ -12,7 +12,13 @@ import { db } from "../../../firebase";
 import { getServerSession } from "next-auth";
 import { transporter } from "@/app/nodemail";
 
-export const sendEmail = async ({ arr, target }: { arr: CommentEl[]; target: CommentEl }) => {
+export const sendEmail = async ({
+  arr,
+  target,
+}: {
+  arr: CommentEl[];
+  target: CommentEl;
+}) => {
   const relatedCo = arr.filter((item) => {
     const {com_created_at : ic, userInfo : {email : ie}} = item // prettier-ignore
     const {com_created_at : tc, userInfo : {email : te}} = target // prettier-ignore
@@ -20,6 +26,7 @@ export const sendEmail = async ({ arr, target }: { arr: CommentEl[]; target: Com
     return tc.includes(ic[ic.length - 1]) && ie !== te;
   });
 
+  console.log(relatedCo);
   relatedCo.forEach(async (item) => {
     console.log(item.userInfo.email);
 
@@ -73,12 +80,19 @@ export async function POST(req: Request, res: Response) {
 
   const { userInfo, ...rest } = data;
 
+
   /** 사용자별 게시물 comments 상태  업데이트 */
+
   await setDoc(userData, {
-    comments: {
-      ...user.data()?.comments,
-      [title]: user.data()?.comments[title] ? [...user.data()?.comments[title], rest] : [rest],
-    },
+    ...user.data(),
+    comments: user.data()?.comments
+      ? {
+          ...user.data()?.comments,
+          [title]: user.data()?.comments[title]
+            ? [...user.data()?.comments[title], rest]
+            : [rest],
+        }
+      : { [title]: [rest] },
   });
 
   await updateDoc(postData, {
@@ -91,7 +105,10 @@ export async function POST(req: Request, res: Response) {
 
   return NextResponse.json({
     message: "success!",
-    post: { ...updatedPost.data(), comments: commentsTree(updatedPost?.data()?.comments) },
+    post: {
+      ...updatedPost.data(),
+      comments: commentsTree(updatedPost?.data()?.comments),
+    },
   });
 }
 
