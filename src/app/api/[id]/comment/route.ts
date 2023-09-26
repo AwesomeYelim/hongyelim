@@ -15,7 +15,6 @@ export async function POST(req: Request, res: Response) {
   const data = await req.json();
   const title = data.queryKey;
   const session = await getServerSession();
-  console.log(data);
 
   const userData = doc(db, "user", session?.user?.email as string);
   const user = await getDoc(userData);
@@ -29,12 +28,29 @@ export async function POST(req: Request, res: Response) {
   await setDoc(userData, {
     comments: {
       ...user.data()?.comments,
-      [title]: user.data()?.comments[title] ? [...user.data()?.comments[title], rest] : [rest],
+      [title]: user.data()?.comments[title]
+        ? [...user.data()?.comments[title], rest]
+        : [rest],
     },
   });
 
+  const commentsTree = [...post.data()?.comments, { ...data }]
+    .map((data: CommentEl, i, arr) => {
+      const par = data?.com_created_at?.every((el) =>
+        arr[i + 1]?.com_created_at?.includes(el)
+      );
+
+      if (par) {
+        (data.children || (data.children = [])).push(arr[i + 1]);
+      }
+
+      return data;
+    })
+    .filter((data) => data?.com_created_at?.length === 1);
+
+
   await updateDoc(postData, {
-    comments: [...post.data()?.comments, { ...data }],
+    comments: commentsTree,
   });
 
   const updatedPost = await getDoc(doc(db, "posts", title));
@@ -65,7 +81,7 @@ export async function DELETE(req: Request) {
       [title]: user.data()?.comments[title]
         ? [
             ...user.data()?.comments[title]?.filter((el: CommentEl) => {
-              const [target] = el.com_created_at;
+              const target = el.com_created_at[el.com_created_at.length - 1];
               return target !== +(targetKey as string);
             }),
           ]
@@ -76,7 +92,7 @@ export async function DELETE(req: Request) {
   await updateDoc(postData, {
     comments: [
       ...post.data()?.comments.filter((el: CommentEl) => {
-        const [target] = el.com_created_at;
+        const target = el.com_created_at[el.com_created_at.length - 1];
         return target !== +(targetKey as string);
       }),
     ],

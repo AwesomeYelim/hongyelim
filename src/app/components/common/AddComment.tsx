@@ -15,7 +15,6 @@ export interface AddProps {
 
 export const AddComment = (props: AddProps) => {
   const { comments, setComments, title, session, com_created_at } = props;
-  console.log(props);
 
   const queryClient = useQueryClient();
 
