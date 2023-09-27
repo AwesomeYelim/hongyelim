@@ -12,13 +12,7 @@ import { db } from "../../../firebase";
 import { getServerSession } from "next-auth";
 import { transporter } from "@/app/nodemail";
 
-export const sendEmail = async ({
-  arr,
-  target,
-}: {
-  arr: CommentEl[];
-  target: CommentEl;
-}) => {
+export const sendEmail = async ({ arr, target, title }: { arr: CommentEl[]; target: CommentEl; title: string }) => {
   const relatedCo = arr.filter((item) => {
     const {com_created_at : ic, userInfo : {email : ie}} = item // prettier-ignore
     const {com_created_at : tc, userInfo : {email : te}} = target // prettier-ignore
@@ -26,16 +20,13 @@ export const sendEmail = async ({
     return tc.includes(ic[ic.length - 1]) && ie !== te;
   });
 
-  console.log(relatedCo);
-  relatedCo.forEach(async (item) => {
-    console.log(item.userInfo.email);
-
+  [...new Set(relatedCo.map((el) => el.userInfo.email))].forEach(async (email) => {
     transporter.sendMail(
       {
         from: `"Yelim Blog" <${process.env.NEXT_PUBLIC_NODEMAILER_USER}>`,
-        to: item.userInfo.email,
-        subject: "New Comment !",
-        text: "새로운 댓글이 있어요 !",
+        to: email,
+        subject: `${title} 게시물 comments`,
+        text: `${target.userInfo.name} : ${target.contents}`,
       },
       (err, info) => {
         if (err) console.error(err);
@@ -80,7 +71,6 @@ export async function POST(req: Request, res: Response) {
 
   const { userInfo, ...rest } = data;
 
-
   /** 사용자별 게시물 comments 상태  업데이트 */
 
   await setDoc(userData, {
@@ -88,9 +78,7 @@ export async function POST(req: Request, res: Response) {
     comments: user.data()?.comments
       ? {
           ...user.data()?.comments,
-          [title]: user.data()?.comments[title]
-            ? [...user.data()?.comments[title], rest]
-            : [rest],
+          [title]: user.data()?.comments[title] ? [...user.data()?.comments[title], rest] : [rest],
         }
       : { [title]: [rest] },
   });
@@ -99,7 +87,7 @@ export async function POST(req: Request, res: Response) {
     comments: [...post.data()?.comments, { ...data }],
   });
 
-  sendEmail({ arr: [...post.data()?.comments], target: data });
+  sendEmail({ arr: [...post.data()?.comments], target: data, title });
 
   const updatedPost = await getDoc(doc(db, "posts", title));
 

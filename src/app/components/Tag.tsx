@@ -123,7 +123,7 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
       
       switch (location) {
         case "/": {
-          setList(["Tag", ...((tagList as string[]).filter(item => /^[a-z]/.test(item)))]);
+          setList(["Tag", ...((tagList as string[]).filter(item => /^[a-z]/.test(item)))]); // 소문자로 시작되는 핵심 키워드만 골라준다.
         } break;
         case "/posts": {
           setList(["All", ...(tagList as string[])]);
@@ -156,7 +156,7 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
             key={keyword}
             href={{
               pathname: "/posts",
-              query: { tag: keyword },
+              query: { tag: keyword !== "Tag" ? keyword : "All" },
             }}
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
