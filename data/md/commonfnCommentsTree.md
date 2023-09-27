@@ -68,8 +68,13 @@ const data = [
 ];
 
 const commentsTree = (arr: Data[]) => {
-  // 우선 length 긴 애들부터 재배치 한다.
-  arr = arr.sort((a, b) => b.com_created_at.length - a.com_created_at.length);
+  // 우선 length 긴 애들부터 재배치 한다. 자식요소들 시간순으로 고정배치되도록함
+  arr = arr.sort((a, b) => {
+    const ac = a.com_created_at;
+    const bc = b.com_created_at;
+    if (ac.length === bc.length) return bc[bc.length - 1] - ac[ac.length - 1];
+    return bc.length - ac.length;
+  });
 
   const lengthOne = arr.filter((highData) => {
     arr.forEach((data) => {
@@ -82,7 +87,10 @@ const commentsTree = (arr: Data[]) => {
 
       // 부모요소의 끝에부분과 자식요소의 끝에서 두번째 부분이 일치 하고 & 중복요소가 포함되지 않도록 조건을 건다.
       if (h[h.length - 1] === d[d.length - 2] && duplePrevent) {
-        ((highData as ChildrenD).children || ((highData as ChildrenD).children = [])).push(data);
+        (
+          (highData as ChildrenD).children ||
+          ((highData as ChildrenD).children = [])
+        ).push(data);
       }
     });
 
