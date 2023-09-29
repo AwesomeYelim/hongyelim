@@ -3,10 +3,10 @@
 import classNames from "classnames";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { postsAtom, selectedTag } from "../Recoil";
-import "./PageNation.scss";
 import { PageNum } from "../Techlog";
 import { Selected } from "../Tag";
 import { useState } from "react";
+import "./PageNation.scss";
 
 interface Props {
   selected: Selected;
@@ -59,6 +59,12 @@ export const PageNation = (props: Props): JSX.Element => {
                     ...dimension,
                     rightPageNum: rightPageNum - 1,
                   });
+
+                  setpageNum({
+                    ...pageNum,
+                    current: idArr.length - (twoD?.[rightPageNum - 1]?.[0] - 1),
+                    selectedNum: twoD?.[rightPageNum - 1]?.[0],
+                  });
                 }}
               />
             )}
@@ -85,6 +91,11 @@ export const PageNation = (props: Props): JSX.Element => {
                   setDimension({
                     ...dimension,
                     rightPageNum: rightPageNum + 1,
+                  });
+                  setpageNum({
+                    ...pageNum,
+                    current: idArr.length - (twoD?.[rightPageNum + 1]?.[0] - 1),
+                    selectedNum: twoD?.[rightPageNum + 1]?.[0],
                   });
                 }}
               />
