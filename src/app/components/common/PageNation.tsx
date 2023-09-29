@@ -6,6 +6,7 @@ import { postsAtom, selectedTag } from "../Recoil";
 import "./PageNation.scss";
 import { PageNum } from "../Techlog";
 import { Selected } from "../Tag";
+import { useState } from "react";
 
 interface Props {
   selected: Selected;
@@ -17,34 +18,78 @@ export const PageNation = (props: Props): JSX.Element => {
   const postsId = useRecoilValue(postsAtom)?.map((el) => el.id);
   const setTag = useSetRecoilState(selectedTag);
 
+  const [dimension, setDimension] = useState({ page: 5, rightPageNum: 0 });
+
+  const { page, rightPageNum } = dimension;
+
   const {
     offset,
     pageNum: [pageNum, setpageNum],
     selected: { keyword },
   } = props;
 
-  const idArr = postsId && Array(Math.ceil(postsId.length / offset)).fill(0);
+  const idArr = postsId && Array(Math.ceil(postsId?.length / offset)).fill(0);
+
+  /** 2차원 배열 만들기  */
+  const twoD =
+    idArr &&
+    Array(Math.ceil(idArr?.length / page))
+      .fill([])
+      .map((oneD, i) => {
+        oneD = Array(page)
+          .fill(0)
+          .map((el, j) => {
+            const calc = el + (j + 1) + page * i;
+            return calc <= idArr.length ? calc : false;
+          })
+          .filter((el) => !!el);
+        return oneD;
+      });
 
   return keyword === "All" ? (
     <div className="pageNum_wrapper">
-      {idArr?.map((_, i, arr) => {
+      {twoD?.[rightPageNum]?.map((el: number) => {
         return (
-          <span
-            className={classNames("pageNum_el", {
-              active: pageNum.selectedNum === i + 1,
-            })}
-            key={i}
-            onClick={() => {
-              setpageNum({
-                current: arr.length - i,
-                total: postsId.length,
-                selectedNum: i + 1,
-              });
-              setTag("");
-            }}
-          >
-            {i + 1}
-          </span>
+          <>
+            {el !== 1 && el === twoD?.[rightPageNum]?.[0] && (
+              <i
+                className="left-btn"
+                onClick={() => {
+                  setDimension({
+                    ...dimension,
+                    rightPageNum: rightPageNum - 1,
+                  });
+                }}
+              />
+            )}
+            <span
+              className={classNames("pageNum_el", {
+                active: pageNum.selectedNum === el,
+              })}
+              key={el}
+              onClick={() => {
+                setpageNum({
+                  current: idArr.length - (el - 1),
+                  total: postsId.length,
+                  selectedNum: el,
+                });
+                setTag("");
+              }}
+            >
+              {el}
+            </span>
+            {el === twoD?.[rightPageNum]?.[page - 1] && (
+              <i
+                className="right-btn"
+                onClick={() => {
+                  setDimension({
+                    ...dimension,
+                    rightPageNum: rightPageNum + 1,
+                  });
+                }}
+              />
+            )}
+          </>
         );
       })}
     </div>

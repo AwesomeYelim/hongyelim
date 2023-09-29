@@ -20,4 +20,17 @@
       background-color: rgba(35, 35, 35, 0.555);
     }
   }
+
+  i {
+    display: block;
+    cursor: pointer;
+    width: 10px;
+    height: 16px;
+    &.left-btn {
+      background: url($img) no-repeat -177px -48px;
+    }
+    &.right-btn {
+      background: url($img) no-repeat -191px -48px;
+    }
+  }
 }
