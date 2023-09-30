@@ -13,11 +13,6 @@ export const postsAtom = atom<Post[]>({
   default: [],
 });
 
-export const selectedTag = atom<string>({
-  key: "tag",
-  default: '',
-});
-
 export default function Recoil({ children }: Props) {
   return <RecoilRoot>{children}</RecoilRoot>;
 }

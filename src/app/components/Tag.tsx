@@ -73,7 +73,6 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPosts = useSetRecoilState(postsAtom);
-  // const [tag, setTag] = useRecoilState(selectedTag);
 
   /**  tag 별 게시물 갯수  */
   const tagCount: { [key in string]: number } = {};

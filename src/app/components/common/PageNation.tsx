@@ -1,8 +1,8 @@
 "use client";
 
 import classNames from "classnames";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { postsAtom, selectedTag } from "../Recoil";
+import { useRecoilValue } from "recoil";
+import { postsAtom } from "../Recoil";
 import { PageNum } from "../Techlog";
 import { Selected } from "../Tag";
 import { useState } from "react";
@@ -16,7 +16,6 @@ interface Props {
 
 export const PageNation = (props: Props): JSX.Element => {
   const postsId = useRecoilValue(postsAtom)?.map((el) => el.id);
-  const setTag = useSetRecoilState(selectedTag);
 
   const [dimension, setDimension] = useState({ page: 5, rightPageNum: 0 });
 
@@ -79,7 +78,6 @@ export const PageNation = (props: Props): JSX.Element => {
                   total: postsId.length,
                   selectedNum: el,
                 });
-                setTag("");
               }}
             >
               {el}
