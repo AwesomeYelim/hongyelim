@@ -6,7 +6,7 @@ module.exports = {
   sitemapSize: 7000,
   changefreq: "daily",
   priority: 1,
-  // exclude: ["/ignore-pages/page", "/ignore-pages/**"],
+  exclude: ["/ignore-pages/page", "/ignore-pages/**"],
   robotsTxtOptions: {
     policies: [
       {

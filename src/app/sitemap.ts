@@ -14,13 +14,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: "https://hongyelim.vercel.app/posts",
       lastModified: new Date(),
     },
-    {
-      url: "https://hongyelim.vercel.app/memo",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://hongyelim.vercel.app/archives",
-      lastModified: new Date(),
-    },
   ];
 }
