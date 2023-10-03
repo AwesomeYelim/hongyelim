@@ -17,31 +17,43 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "hongyelim",
-  description: "this is yelim blog :)",
+  description: "https://hongyelim.vercel.app/",
+  authors: {
+    name: "hongyelim",
+  },
+  creator: "hongyelim",
+  publisher: "hongyelim",
   icons: {
     shortcut: "/images/favicon.png",
   },
-  openGraph : {
-    title: 'YelimBlog',
-    images : 'https://hongyelim.vercel.app/images/main.jpg'
-  }
+  openGraph: {
+    title: "YelimBlog",
+    images: "https://hongyelim.vercel.app/images/main.jpg",
+  },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <GoogleAnalytics />
       <head>
-        {/* <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
-        <meta httpEquiv="Expires" content="0" />
-        <meta httpEquiv="Pragma" content="no-cache" /> */}
+        <meta
+          name="google-site-verification"
+          content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI"
+        />
+
         <script
           dangerouslySetInnerHTML={{
             __html: `
             const modecookie = document.cookie.match('theme=([^;]*)(;|$)')
             document.documentElement.dataset.theme = modecookie[1]
           `,
-          }}></script>
+          }}
+        ></script>
       </head>
       <StyledComponentsRegistry>
         <AuthSession>
