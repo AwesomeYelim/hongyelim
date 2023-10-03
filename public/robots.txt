@@ -8,4 +8,3 @@ Host: https://hongyelim.vercel.app/
 
 # Sitemaps
 Sitemap: https://hongyelim.vercel.app/sitemap.xml
-Sitemap: https://hongyelim.vercel.app//sitemap/posts-sitemap.xml

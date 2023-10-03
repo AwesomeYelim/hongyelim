@@ -138,8 +138,8 @@ export async function DELETE(req: Request) {
         ? [
             ...user.data()?.comments[title]?.filter((el: CommentEl) => {
               const c = el.com_created_at;
-              const target = c[c.length - 1];
-              return target !== +(targetKey as string);
+              // const target = c[c.length - 1];
+              return !c.includes(+(targetKey as string));
             }),
           ]
         : [],

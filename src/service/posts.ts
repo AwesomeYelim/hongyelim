@@ -36,24 +36,28 @@ export async function getPosts(): Promise<Post[]> {
     posts.push(doc.data() as Post);
   });
 
-  // // seo 동적사이트 감지되도록
-  // const sitemaps: ISitemapField[] = posts.map((idx: Post) => {
-  //   return {
-  //     // 페이지 경로
-  //     loc: `${process.env.NEXTAUTH_URL || `http://localhost:3000`}/posts/${idx.title}`,
-  //     // 변경일
-  //     lastmod: new Date().toISOString(),
-  //     changefreq: "daily",
-  //     priority: 1,
-  //   };
-  // });
+  // seo 동적사이트 감지되도록
+  const sitemaps: ISitemapField[] = posts.map((idx: Post) => {
+    return {
+      // 페이지 경로
+      loc: `${process.env.NEXTAUTH_URL || `http://localhost:3000`}/posts/${
+        idx.title
+      }`,
+      // 변경일
+      lastmod: new Date().toISOString(),
+      changefreq: "daily",
+      priority: 1,
+    };
+  });
 
-  // getServerSideSitemap(posts as any, sitemaps);
+  getServerSideSitemap(posts as any, sitemaps);
 
   return posts;
 }
 
-export async function getPost(id_title: string): Promise<{ post: Post; mdPost: string }> {
+export async function getPost(
+  id_title: string
+): Promise<{ post: Post; mdPost: string }> {
   const mdPath = path.join(process.cwd(), "data/md", `${id_title}.md`);
 
   const mdPost = await fs.readFile(mdPath, "utf-8");
