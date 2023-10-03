@@ -30,6 +30,8 @@ export const metadata: Metadata = {
     title: "YelimBlog",
     images: "https://hongyelim.vercel.app/images/main.jpg",
   },
+  robots : "index, follow",
+  
 };
 
 export default async function RootLayout({
@@ -41,10 +43,11 @@ export default async function RootLayout({
     <html lang="ko" suppressHydrationWarning={true}>
       <GoogleAnalytics />
       <head>
-        <meta
+        <meta name="googlebot" content="index, follow" />
+        {/* <meta
           name="google-site-verification"
           content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI"
-        />
+        /> */}
 
         <script
           dangerouslySetInnerHTML={{
