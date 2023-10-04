@@ -37,7 +37,7 @@ const TagWrap = styled.nav`
   overflow-y: auto;
   overflow-x: hidden;
   padding-left: 20px;
-  top: 125px;
+  top: 200px;
   right: -200px;
   width: 220px;
 
