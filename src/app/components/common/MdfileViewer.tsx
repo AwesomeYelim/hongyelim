@@ -219,7 +219,7 @@ export const MdfileViewer = ({
                   width={500}
                   height={150}
                   style={{ width: "100%", height: "auto" }}
-                  priority
+                  // priority
                 />
               );
             },
