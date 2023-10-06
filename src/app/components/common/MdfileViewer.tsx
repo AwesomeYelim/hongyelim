@@ -218,7 +218,7 @@ export const MdfileViewer = ({
                   alt="mdImag"
                   width={500}
                   height={150}
-                  style={{ width: "100%", height: "auto" }}
+                  // style={{ width: "100%" }}
                   loading="eager"
                   priority
                 />
