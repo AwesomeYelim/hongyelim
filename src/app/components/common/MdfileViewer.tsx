@@ -80,7 +80,6 @@ export const MdfileViewer = ({
     [key in string]: number;
   } = {};
 
-
   // 초기 md h tag 위치값 표기 및 h hag 랜더링
   const tocHandler = ({
     level,
@@ -130,7 +129,7 @@ export const MdfileViewer = ({
         {...titleCondition}
         onClick={(e) => {
           e.preventDefault();
-          
+
           window.scroll({
             left: 0,
             top: post![e.currentTarget.innerHTML] + 200,
@@ -160,6 +159,8 @@ export const MdfileViewer = ({
 
   useEffect(() => {
     document.addEventListener("scroll", scrollEffect);
+
+    return () => document.removeEventListener("scroll", scrollEffect);
   }, []);
 
   /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
@@ -218,7 +219,7 @@ export const MdfileViewer = ({
                   alt="mdImag"
                   width={500}
                   height={150}
-                  // style={{ width: "100%" }}
+                  style={{ width: "100%", height: "100%" }}
                   loading="eager"
                   priority
                 />
