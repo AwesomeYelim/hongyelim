@@ -12,8 +12,8 @@ import { titleCondition } from "./functions/ellipsis";
 import Image from "next/image";
 
 // import { useDark } from "../hooks";
-import "./MdfileViewer.scss";
 import { Inter } from "next/font/google";
+import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
   mdPost: string;
@@ -219,7 +219,8 @@ export const MdfileViewer = ({
                   width={500}
                   height={150}
                   style={{ width: "100%", height: "auto" }}
-                  // priority
+                  loading="eager"
+                  priority
                 />
               );
             },

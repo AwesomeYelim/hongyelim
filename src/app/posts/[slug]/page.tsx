@@ -8,8 +8,8 @@ import { getPost } from "@/service/posts";
 import { notFound } from "next/navigation";
 import { PrevNextButton } from "@/app/components/PrevNextButton";
 import { GetSessionParams } from "next-auth/react";
-import "./page.scss";
 import { DetailTag } from "@/app/components/DetailTag";
+import "./page.scss";
 
 type Props = {
   params:
@@ -48,6 +48,7 @@ export default async function page({ params }: Props) {
           alt={title}
           width={1000}
           height={1000}
+          loading="eager"
           priority
         />
       </div>
