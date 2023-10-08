@@ -163,18 +163,18 @@ export const MdfileViewer = ({
     return () => document.removeEventListener("scroll", scrollEffect);
   }, []);
 
-  /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
-  useEffect(() => {
-    if (
-      mdRef.current &&
-      mdRef.current.clientHeight < mdRef.current?.scrollHeight
-    ) {
-      mdRef.current.scroll({
-        top: mdRef.current?.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }, [mdPost]);
+  // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
+  // useEffect(() => {
+  //   if (
+  //     mdRef.current &&
+  //     mdRef.current.clientHeight < mdRef.current?.scrollHeight
+  //   ) {
+  //     mdRef.current.scroll({
+  //       top: mdRef.current?.scrollHeight,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // }, [mdPost]);
 
   const headingTag = useToc && {
     h1: tocHandler,
@@ -208,7 +208,6 @@ export const MdfileViewer = ({
                 </code>
               );
             },
-            ...headingTag,
             img: ({ node }) => {
               return (
                 <Image
@@ -225,6 +224,7 @@ export const MdfileViewer = ({
                 />
               );
             },
+            ...headingTag,
           }}
         >
           {mdPost}
