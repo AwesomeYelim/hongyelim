@@ -216,8 +216,6 @@ export const MdfileViewer = ({
                     (node.properties?.src as string).split("b_")[1]
                   }`}
                   alt="mdImag"
-                  width={500}
-                  height={150}
                   style={{ width: "100%", height: "100%" }}
                   loading="eager"
                   priority
