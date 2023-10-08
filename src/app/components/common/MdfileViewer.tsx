@@ -209,16 +209,25 @@ export const MdfileViewer = ({
               );
             },
             img: ({ node }) => {
-              return (
+              const src = (node.properties?.src as string).split("b_")[1];
+              return src ? (
                 <Image
                   className="main_img"
-                  src={`/images/md/${
-                    (node.properties?.src as string).split("b_")[1]
-                  }`}
+                  src={`/images/md/${src}`}
                   alt="mdImag"
+                  width={500}
+                  height={150}
                   style={{ width: "100%", height: "100%" }}
                   loading="eager"
                   priority
+                />
+              ) : (
+                <Image
+                  className="main_img"
+                  src={`/images/empty.png`}
+                  alt="mdImag"
+                  width={500}
+                  height={150}
                 />
               );
             },
