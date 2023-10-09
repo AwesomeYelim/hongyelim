@@ -91,15 +91,11 @@ const Heading = ({
       {...titleCondition}
       onClick={(e) => {
         e.preventDefault();
-
         window.scroll({
           left: 0,
           top: post![e.currentTarget.innerHTML],
           behavior: "smooth",
         });
-        // if (target !== e.currentTarget.innerHTML) {
-        //   setTarget(e.currentTarget.innerHTML);
-        // }
       }}
     >
       {children}
@@ -149,7 +145,8 @@ export const MdfileViewer = ({
     return <HeadingTag>{children as string}</HeadingTag>;
   };
 
-  const scrollEffect = useCallback(() => {
+  const scrollEffect = useCallback((e: Event) => {
+    e.stopPropagation();
     Object.entries(post).forEach(([key, scrollY], i, arr) => {
       /** 처음 과 끝 부분 */
       if (!i || arr[arr.length - 1]) {
@@ -163,7 +160,7 @@ export const MdfileViewer = ({
   }, []);
 
   useEffect(() => {
-    // document.addEventListener("scroll", scrollEffect);
+    document.addEventListener("scroll", scrollEffect);
 
     return () => document.removeEventListener("scroll", scrollEffect);
   }, [scrollEffect]);
@@ -202,7 +199,6 @@ export const MdfileViewer = ({
               posi.end.offset = (posi.end?.offset as number) + 150;
               posi.end.column = (posi.end?.column as number) + 150;
 
-              console.log({ node });
 
               const src = (node.properties?.src as string).split("b_")[1];
               return (
