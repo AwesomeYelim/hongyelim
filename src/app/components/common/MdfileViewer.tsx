@@ -218,15 +218,16 @@ export const MdfileViewer = ({
 
               const src = (node.properties?.src as string).split("b_")[1];
               return (
-                <Image
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
                   className="main_img"
                   src={src ? `/images/md/${src}` : `/images/empty.png`}
                   alt="mdImag"
-                  width={500}
-                  height={150}
+                  // width={500}
+                  // height={150}
                   style={{ width: "100%", height: "100%" }}
-                  loading="eager"
-                  priority
+                  // loading="eager"
+                  // priority
                 />
               );
             },
