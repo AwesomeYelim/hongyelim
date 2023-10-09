@@ -151,6 +151,7 @@ export const MdfileViewer = ({
 
   const scrollEffect = useCallback(() => {
     Object.entries(post).forEach(([key, scrollY], i, arr) => {
+      /** 처음 과 끝 부분 */
       if (!i || arr[arr.length - 1]) {
         if (window.scrollY === scrollY || window.scrollY > scrollY) {
           setTarget(key);
@@ -165,7 +166,7 @@ export const MdfileViewer = ({
     document.addEventListener("scroll", scrollEffect);
 
     return () => document.removeEventListener("scroll", scrollEffect);
-  }, []);
+  }, [scrollEffect]);
 
   // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
   // useEffect(() => {
