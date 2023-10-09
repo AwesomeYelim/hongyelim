@@ -163,7 +163,7 @@ export const MdfileViewer = ({
   }, []);
 
   useEffect(() => {
-    document.addEventListener("scroll", scrollEffect);
+    // document.addEventListener("scroll", scrollEffect);
 
     return () => document.removeEventListener("scroll", scrollEffect);
   }, [scrollEffect]);
