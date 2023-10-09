@@ -6,7 +6,7 @@ import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
-import { ElementContent } from "react-markdown/lib/ast-to-react";
+import { ElementContent, Position } from "react-markdown/lib/ast-to-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { titleCondition } from "./functions/ellipsis";
 import Image from "next/image";
@@ -132,7 +132,7 @@ export const MdfileViewer = ({
 
           window.scroll({
             left: 0,
-            top: post![e.currentTarget.innerHTML] + 200,
+            top: post![e.currentTarget.innerHTML],
             behavior: "smooth",
           });
           // if (target !== e.currentTarget.innerHTML) {
@@ -209,25 +209,24 @@ export const MdfileViewer = ({
               );
             },
             img: ({ node }) => {
+              const posi = node?.position as Position;
+
+              posi.end.offset = (posi.end?.offset as number) + 150;
+              posi.end.column = (posi.end?.column as number) + 150;
+
+              console.log({ node });
+
               const src = (node.properties?.src as string).split("b_")[1];
-              return src ? (
+              return (
                 <Image
                   className="main_img"
-                  src={`/images/md/${src}`}
+                  src={src ? `/images/md/${src}` : `/images/empty.png`}
                   alt="mdImag"
                   width={500}
                   height={150}
                   style={{ width: "100%", height: "100%" }}
                   loading="eager"
                   priority
-                />
-              ) : (
-                <Image
-                  className="main_img"
-                  src={`/images/empty.png`}
-                  alt="mdImag"
-                  width={500}
-                  height={150}
                 />
               );
             },
