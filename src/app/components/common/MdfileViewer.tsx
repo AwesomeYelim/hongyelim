@@ -14,6 +14,7 @@ import Image from "next/image";
 // import { useDark } from "../hooks";
 import { Inter } from "next/font/google";
 import "./MdfileViewer.scss";
+import { throttle } from "lodash";
 
 interface MarkdownViewProps {
   mdPost: string;
@@ -160,9 +161,9 @@ export const MdfileViewer = ({
   }, []);
 
   useEffect(() => {
-    document.addEventListener("scroll", scrollEffect);
+    document.addEventListener("scroll", throttle(scrollEffect, 300));
 
-    return () => document.removeEventListener("scroll", scrollEffect);
+    return () => document.removeEventListener("scroll", throttle(scrollEffect, 300));
   }, [scrollEffect]);
 
   // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
@@ -198,7 +199,6 @@ export const MdfileViewer = ({
 
               posi.end.offset = (posi.end?.offset as number) + 150;
               posi.end.column = (posi.end?.column as number) + 150;
-
 
               const src = (node.properties?.src as string).split("b_")[1];
               return (
