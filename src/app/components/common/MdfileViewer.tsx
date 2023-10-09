@@ -63,6 +63,50 @@ const TOCwrapper = styled.div`
 
 const inter = Inter({ subsets: ["latin"] });
 
+// 오른쪽 toc
+const Heading = ({
+  level,
+  children,
+  target,
+  post,
+}: {
+  level: number;
+  children: string;
+  target: string;
+  post: { [key in string]: number };
+}) => {
+  const style = {
+    style: {
+      marginLeft: level * 20,
+      fontSize: target === children ? 15 : 13,
+      fontWeight: target === children ? 700 : 700 - level * 150,
+    },
+  };
+  const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+
+  return (
+    <HeadingTag
+      key={children}
+      {...style}
+      {...titleCondition}
+      onClick={(e) => {
+        e.preventDefault();
+
+        window.scroll({
+          left: 0,
+          top: post![e.currentTarget.innerHTML],
+          behavior: "smooth",
+        });
+        // if (target !== e.currentTarget.innerHTML) {
+        //   setTarget(e.currentTarget.innerHTML);
+        // }
+      }}
+    >
+      {children}
+    </HeadingTag>
+  );
+};
+
 export const MdfileViewer = ({
   mdPost,
   useToc = false,
@@ -103,46 +147,6 @@ export const MdfileViewer = ({
     const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
 
     return <HeadingTag>{children as string}</HeadingTag>;
-  };
-
-  // 오른쪽 toc
-  const heading = ({
-    level,
-    children,
-  }: {
-    level: number;
-    children: string;
-  }) => {
-    const style = {
-      style: {
-        marginLeft: level * 20,
-        fontSize: target === children ? 15 : 13,
-        fontWeight: target === children ? 700 : 700 - level * 150,
-      },
-    };
-    const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
-
-    return (
-      <HeadingTag
-        key={children}
-        {...style}
-        {...titleCondition}
-        onClick={(e) => {
-          e.preventDefault();
-
-          window.scroll({
-            left: 0,
-            top: post![e.currentTarget.innerHTML],
-            behavior: "smooth",
-          });
-          // if (target !== e.currentTarget.innerHTML) {
-          //   setTarget(e.currentTarget.innerHTML);
-          // }
-        }}
-      >
-        {children}
-      </HeadingTag>
-    );
   };
 
   const scrollEffect = useCallback(() => {
@@ -191,6 +195,28 @@ export const MdfileViewer = ({
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
           components={{
+            img: ({ node }) => {
+              const posi = node?.position as Position;
+
+              posi.end.offset = (posi.end?.offset as number) + 150;
+              posi.end.column = (posi.end?.column as number) + 150;
+
+              console.log({ node });
+
+              const src = (node.properties?.src as string).split("b_")[1];
+              return (
+                <Image
+                  className="main_img"
+                  src={src ? `/images/md/${src}` : `/images/empty.png`}
+                  alt="mdImag"
+                  width={500}
+                  height={150}
+                  style={{ width: "100%", height: "100%" }}
+                  loading="eager"
+                  // priority
+                />
+              );
+            },
             code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
@@ -208,29 +234,7 @@ export const MdfileViewer = ({
                 </code>
               );
             },
-            img: ({ node }) => {
-              const posi = node?.position as Position;
 
-              posi.end.offset = (posi.end?.offset as number) + 150;
-              posi.end.column = (posi.end?.column as number) + 150;
-
-              console.log({ node });
-
-              const src = (node.properties?.src as string).split("b_")[1];
-              return (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  className="main_img"
-                  src={src ? `/images/md/${src}` : `/images/empty.png`}
-                  alt="mdImag"
-                  // width={500}
-                  // height={150}
-                  style={{ width: "100%", height: "100%" }}
-                  // loading="eager"
-                  // priority
-                />
-              );
-            },
             ...headingTag,
           }}
         >
@@ -251,7 +255,12 @@ export const MdfileViewer = ({
             </span>
             {innerText?.map((el) => {
               const [level, children] = el.split("# ");
-              return heading({ level: level.length + 1, children });
+              return Heading({
+                level: level.length + 1,
+                children,
+                target,
+                post,
+              });
             })}
           </div>
         </TOCwrapper>
