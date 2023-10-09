@@ -161,7 +161,7 @@ export const MdfileViewer = ({
   }, []);
 
   useEffect(() => {
-    document.addEventListener("scroll", throttle(scrollEffect, 300));
+    // document.addEventListener("scroll", throttle(scrollEffect, 300));
 
     return () => document.removeEventListener("scroll", throttle(scrollEffect, 300));
   }, [scrollEffect]);
