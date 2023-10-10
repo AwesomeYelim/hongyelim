@@ -241,12 +241,14 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
             </span>
             {innerText?.map((el) => {
               const [level, children] = el.split("# ");
-              return Heading({
+
+              const props = {
                 level: level.length + 1,
                 children,
                 target,
                 post,
-              });
+              };
+              return <Heading key={children} {...props} />;
             })}
           </div>
         </TOCwrapper>
