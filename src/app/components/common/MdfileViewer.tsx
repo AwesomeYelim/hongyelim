@@ -205,7 +205,7 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
                   height={150}
                   style={{ width: "100%", height: "100%" }}
                   loading="eager"
-                  decoding="auto"
+                  decoding="sync"
                   // priority
                 />
               );
