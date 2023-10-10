@@ -97,22 +97,16 @@ const Heading = ({
           top: post![e.currentTarget.innerHTML],
           behavior: "smooth",
         });
-      }}
-    >
+      }}>
       {children}
     </HeadingTag>
   );
 };
 
-export const MdfileViewer = ({
-  mdPost,
-  useToc = false,
-}: MarkdownViewProps): JSX.Element => {
+export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
   let innerText: RegExpMatchArray | string | null;
 
-  innerText = mdPost
-    ?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "")
-    .match(/#+\s(.+)/gm);
+  innerText = mdPost?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "").match(/#+\s(.+)/gm);
 
   const [target, setTarget] = useState("");
   const { mdRef } = { mdRef: useRef<HTMLDivElement>(null) };
@@ -161,7 +155,7 @@ export const MdfileViewer = ({
   }, []);
 
   useEffect(() => {
-    // document.addEventListener("scroll", throttle(scrollEffect, 300));
+    document.addEventListener("scroll", throttle(scrollEffect, 300));
 
     return () => document.removeEventListener("scroll", throttle(scrollEffect, 300));
   }, [scrollEffect]);
@@ -202,7 +196,8 @@ export const MdfileViewer = ({
 
               const src = (node.properties?.src as string).split("b_")[1];
               return (
-                <Image
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
                   className="main_img"
                   src={src ? `/images/md/${src}` : `/images/empty.png`}
                   alt="mdImag"
@@ -210,6 +205,7 @@ export const MdfileViewer = ({
                   height={150}
                   style={{ width: "100%", height: "100%" }}
                   loading="eager"
+                  decoding="auto"
                   // priority
                 />
               );
@@ -217,12 +213,7 @@ export const MdfileViewer = ({
             code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
-                <SyntaxHighlighter
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                  style={coldarkDark}
-                >
+                <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkDark}>
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
@@ -233,8 +224,7 @@ export const MdfileViewer = ({
             },
 
             ...headingTag,
-          }}
-        >
+          }}>
           {mdPost}
         </ReactMarkdown>
       </div>
@@ -246,8 +236,7 @@ export const MdfileViewer = ({
               onClick={() => {
                 window.scroll({ left: 0, top: 0, behavior: "smooth" });
                 setTarget("");
-              }}
-            >
+              }}>
               목차
             </span>
             {innerText?.map((el) => {
