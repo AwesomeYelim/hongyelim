@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
 import { ElementContent, Position } from "react-markdown/lib/ast-to-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { titleCondition } from "./functions/ellipsis";
 import Image from "next/image";
 
@@ -74,14 +74,14 @@ const Heading = ({
 }: {
   level: number;
   children: string;
-  target: string;
+  target: [string, number];
   post: { [key in string]: number };
 }) => {
   const style = {
     style: {
       marginLeft: level * 20,
-      fontSize: target === children ? 15 : 13,
-      fontWeight: target === children ? 700 : 700 - level * 150,
+      fontSize: target[0] === children ? 15 : 13,
+      fontWeight: target[0] === children ? 700 : 700 - level * 150,
     },
   };
   const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
@@ -110,7 +110,7 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
 
   innerText = mdPost?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "").match(/#+\s(.+)/gm);
 
-  const [target, setTarget] = useState("");
+  const [target, setTarget] = useState<[string, number]>(["", 0]);
   const { mdRef } = { mdRef: useRef<HTMLDivElement>(null) };
 
   const post: {
@@ -141,24 +141,24 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
     return <HeadingTag>{children as string}</HeadingTag>;
   };
 
-  const scrollEffect = () => {
+  const scrollEffect = useCallback(() => {
     Object.entries(post).forEach(([key, scrollY], i, arr) => {
       /** 처음 과 끝 부분 */
       if (!i || arr[arr.length - 1]) {
         if (window.scrollY === scrollY || window.scrollY > scrollY) {
-          setTarget(key);
+          setTarget([key, scrollY]);
         }
       } else if (window.scrollY === scrollY || window.scrollY + 110 > scrollY) {
-        setTarget(key);
+        setTarget([key, scrollY]);
       }
     });
-  };
+  }, [target[1]]);
 
-  useMemo(() => {
+  useEffect(() => {
     document.addEventListener("scroll", throttle(scrollEffect, 300), { capture: true });
 
     return () => document.removeEventListener("scroll", throttle(scrollEffect, 300), { capture: true });
-  }, [target]);
+  }, [scrollEffect]);
 
   // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
   // useEffect(() => {
@@ -235,7 +235,7 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
             <span
               onClick={() => {
                 window.scroll({ left: 0, top: 0, behavior: "smooth" });
-                setTarget("");
+                setTarget(["", 0]);
               }}>
               목차
             </span>
