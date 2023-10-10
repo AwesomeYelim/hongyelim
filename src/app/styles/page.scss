@@ -10,6 +10,9 @@
     flex-direction: column;
     gap: 20px;
     height: 100%;
+    .dance {
+      @include animate(1, down);
+    }
     .welcome_img {
       display: none;
       height: 100px;
@@ -24,6 +27,8 @@
     }
     .text_area {
       text-align: center;
+      @include animate(0, down);
+
       // font-family: fantasy;
       p {
         margin-bottom: 3px;

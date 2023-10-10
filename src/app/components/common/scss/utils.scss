@@ -60,3 +60,31 @@ $img: "/images/image.svg";
 @mixin anti-alias {
   transform: rotate(-0.03deg);
 }
+
+$distance: 30px;
+
+@mixin animate($delay: 0, $direction: "down") {
+  animation: fade-in-#{$direction} 1s;
+  animation-delay: #{$delay}s;
+  animation-fill-mode: both;
+
+  @keyframes fade-in-#{$direction} {
+    from {
+      opacity: 0;
+      @if $direction == "up" {
+        transform: translateY($distance);
+      } @else if $direction == "down" {
+        transform: translateY(-$distance);
+      } @else if $direction == "left" {
+        transform: translateX($distance);
+      } @else if $direction == "right" {
+        transform: translateX(-$distance);
+      }
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) translateX(0);
+    }
+  }
+}

@@ -3,6 +3,7 @@
 .profile_wrap {
   height: calc(100vh - 450px);
   h1 {
+    @include animate(0, down);
     display: block;
     border-bottom: 1px solid black;
     padding-bottom: 20px;
@@ -11,11 +12,14 @@
   .content_wrap {
     @include flex(center, center);
     // height: inherit;
+    @include animate(1, down);
+
     gap: 80px;
     .img_area {
       @include flex(center, space-between);
       flex-direction: column;
       gap: 12px;
+
       .main_img {
         margin-top: 20px;
         border-radius: 100%;
@@ -26,9 +30,8 @@
     @include flex(center, end);
     margin-right: 180px;
     .resume {
-      // @include flex(center, end);
+      @include animate(2, down);
       width: fit-content;
-      // margin-right: 200px;
       cursor: pointer;
       &:hover {
         border-bottom: 1px solid black;

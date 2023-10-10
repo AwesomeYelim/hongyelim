@@ -5,14 +5,23 @@
   .post_title {
     display: block;
     margin-bottom: 100px;
+    h1 {
+      @include animate(0, down);
+    }
+    span {
+      @include animate(1, down);
+    }
   }
   .posts_wrapper {
     .list_wrapper {
       // height: calc(100vh - 100px);
       .list {
         @include flex(center, initial);
+        @include animate(1, down);
+
         flex-wrap: wrap;
         width: 98%;
+
         li {
           @include flex(flex-start, initial);
           flex-direction: column;
