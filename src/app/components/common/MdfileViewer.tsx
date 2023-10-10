@@ -7,14 +7,15 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
 import { ElementContent, Position } from "react-markdown/lib/ast-to-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { titleCondition } from "./functions/ellipsis";
 import Image from "next/image";
 
 // import { useDark } from "../hooks";
 import { Inter } from "next/font/google";
-import "./MdfileViewer.scss";
 import { throttle } from "lodash";
+import "./MdfileViewer.scss";
+import React from "react";
 
 interface MarkdownViewProps {
   mdPost: string;
@@ -87,6 +88,7 @@ const Heading = ({
 
   return (
     <HeadingTag
+      className="heading_group"
       key={children}
       {...style}
       {...titleCondition}
@@ -103,7 +105,7 @@ const Heading = ({
   );
 };
 
-export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
+const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
   let innerText: RegExpMatchArray | string | null;
 
   innerText = mdPost?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "").match(/#+\s(.+)/gm);
@@ -132,7 +134,6 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
     const { value, position } = el as ElementContent & {
       value: string;
     };
-
     post[value] = position?.end.offset as number;
 
     const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
@@ -140,8 +141,7 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
     return <HeadingTag>{children as string}</HeadingTag>;
   };
 
-  const scrollEffect = useCallback((e: Event) => {
-    e.stopPropagation();
+  const scrollEffect = () => {
     Object.entries(post).forEach(([key, scrollY], i, arr) => {
       /** 처음 과 끝 부분 */
       if (!i || arr[arr.length - 1]) {
@@ -152,13 +152,13 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
         setTarget(key);
       }
     });
-  }, []);
+  };
 
-  useEffect(() => {
-    document.addEventListener("scroll", throttle(scrollEffect, 300));
+  useMemo(() => {
+    document.addEventListener("scroll", throttle(scrollEffect, 300), { capture: true });
 
-    return () => document.removeEventListener("scroll", throttle(scrollEffect, 300));
-  }, [scrollEffect]);
+    return () => document.removeEventListener("scroll", throttle(scrollEffect, 300), { capture: true });
+  }, [target]);
 
   // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
   // useEffect(() => {
@@ -196,17 +196,17 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
 
               const src = (node.properties?.src as string).split("b_")[1];
               return (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   className="main_img"
                   src={src ? `/images/md/${src}` : `/images/empty.png`}
                   alt="mdImag"
                   width={500}
                   height={150}
                   style={{ width: "100%", height: "100%" }}
-                  loading="eager"
                   decoding="sync"
-                  // priority
+                  priority
+                  // fill
+                  // placeholder="blur"
                 />
               );
             },
@@ -254,3 +254,5 @@ export const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX
     </>
   );
 };
+
+export default React.memo(MdfileViewer);

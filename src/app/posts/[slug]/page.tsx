@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Image from "next/image";
-import { MdfileViewer } from "@/app/components/common/MdfileViewer";
+import MdfileViewer from "@/app/components/common/MdfileViewer";
 import { Comments } from "@/app/components/common/Comments";
 import Heart from "@/app/components/common/heart";
 import { getPost } from "@/service/posts";
@@ -32,9 +32,7 @@ export default async function page({ params }: Props) {
   const imgForm = ["png", "jpg", "jpeg", "gif"];
   const isImagepath = imgForm
     .map((el) => {
-      return fs.existsSync(
-        path.join(process.cwd(), "public", "images", `${post.title}.${el}`)
-      );
+      return fs.existsSync(path.join(process.cwd(), "public", "images", `${post.title}.${el}`));
     })
     .includes(true);
 

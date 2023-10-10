@@ -6,6 +6,10 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    disableStaticImages: true,
+    // minimumCacheTTL: 60,
+  },
   // reactStrictMode: true,
   swcMinify: true,
   async headers() {

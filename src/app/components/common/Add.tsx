@@ -2,11 +2,15 @@
 
 import { useForm } from "react-hook-form";
 import { Selected } from "../Tag";
-import { MdfileViewer } from "./MdfileViewer";
+import MdfileViewer from "./MdfileViewer";
 import { useMutation, useQueryClient } from "react-query";
 import { postsAddApi } from "./functions/myapi";
 
-export const Add = ({ selected, setSelected }:{ selected: Selected;
+export const Add = ({
+  selected,
+  setSelected,
+}: {
+  selected: Selected;
   setSelected: React.Dispatch<React.SetStateAction<Selected>>;
 }): JSX.Element => {
   const {
