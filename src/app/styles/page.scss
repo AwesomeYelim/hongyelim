@@ -46,6 +46,7 @@
     }
   }
   .tag_wrap {
+    @include animate(2, down);
     position: initial;
     flex-wrap: wrap;
     justify-content: center;

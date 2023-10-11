@@ -14,8 +14,8 @@ import Image from "next/image";
 // import { useDark } from "../hooks";
 import { Inter } from "next/font/google";
 import { throttle } from "lodash";
-import "./MdfileViewer.scss";
 import React from "react";
+import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
   mdPost: string;

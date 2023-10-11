@@ -35,8 +35,12 @@ $img: "/images/image.svg";
   justify-content: $justify;
 }
 
-// 이미지 경로
-// $imgsrc: "/public/images/image.svg";
+@mixin undeline($color: #69afff) {
+  text-decoration: underline;
+  text-decoration-color: $color;
+  text-decoration-style: wavy;
+  text-underline-offset: 1px;
+}
 
 // 말줄임표
 @mixin ellipsis {
@@ -61,11 +65,9 @@ $img: "/images/image.svg";
   transform: rotate(-0.03deg);
 }
 
-$distance: 30px;
-
-@mixin animate($delay: 0, $direction: "down") {
+@mixin animate($delay: 0, $direction: "down", $distance: 30px) {
   animation: fade-in-#{$direction} 1s;
-  animation-delay: #{$delay}s;
+  animation-delay: #{$delay * 0.7}s;
   animation-fill-mode: both;
 
   @keyframes fade-in-#{$direction} {

@@ -1,14 +1,22 @@
+@import "src/app/components/common/scss/utils.scss";
+
 .md_wrapper {
   // white-space: pre-line;
   > * {
     // white-space: pre-line;
   }
+  h1 {
+    text-align: center;
+    border-bottom: 1px solid #333;
+    margin-bottom: 100px;
+  }
 
   h1,
   h2,
   h3,
-  h4 {
-    margin: 20px 0;
+  h4,
+  details {
+    margin: 50px 0 20px 0;
   }
   li {
     margin: 10px 0 10px 30px;
@@ -44,6 +52,9 @@
     align-items: center;
     line-height: 200%;
     flex-wrap: wrap;
+    &:has(code) code {
+      @include undeline();
+    }
   }
   table {
     margin: 30px 0;
@@ -106,5 +117,19 @@
   }
   img {
     margin: 20px 0;
+  }
+
+  details {
+    summary {
+      width: fit-content;
+      cursor: pointer;
+    }
+  }
+
+  mark {
+    font-weight: 700;
+    padding: 0 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
   }
 }
