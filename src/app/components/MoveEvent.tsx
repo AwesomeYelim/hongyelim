@@ -33,17 +33,26 @@ const EventEl = ({
         e.preventDefault();
         setDrag({ ...drag, to: el });
 
-        console.log(drag);
+        // console.log(drag);
       }}
       onDragEnd={(e) => {
+        e.preventDefault();
         drag.to = drag.to as EventEl;
         drag.target = drag.target as EventEl;
 
-        const [slice] = drag.list.splice(drag.target.id - 1, 1);
-        drag.list.splice(((drag as Drag).to as EventEl).id - 1, 0, slice);
+        const copyArr = [...drag.list];
+        const [tg_ind, t_ind] = [
+          copyArr.indexOf(drag.target),
+          copyArr.indexOf(drag.to),
+        ];
 
-        console.log((e.target as EventTarget & { innerHTML: string }).innerHTML, el, drag);
-      }}>
+        const [slice] = copyArr.splice(tg_ind, 1);
+
+        copyArr.splice(t_ind, 0, slice);
+
+        setDrag({ ...drag, list: copyArr });
+      }}
+    >
       {el.name}
     </div>
   );
