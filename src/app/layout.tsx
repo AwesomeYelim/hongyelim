@@ -6,11 +6,11 @@ import ReactQuery from "./components/ReactQuery";
 import AuthSession from "./components/AuthSession";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import StyledComponentsRegistry from "./registry";
+import { Metadata } from "next";
 
 import "./styles/reset.scss";
 import "./styles/layout.scss";
 import "./styles/dark.scss";
-import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 // const notable = Notable({ subsets: ["latin"], weight: "400" });
@@ -30,15 +30,10 @@ export const metadata: Metadata = {
     title: "YelimBlog",
     images: "https://hongyelim.vercel.app/images/main.jpg",
   },
-  robots : "index, follow",
-  
+  robots: "index, follow",
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <GoogleAnalytics />
@@ -55,8 +50,7 @@ export default async function RootLayout({
             const modecookie = document.cookie.match('theme=([^;]*)(;|$)')
             document.documentElement.dataset.theme = modecookie[1]
           `,
-          }}
-        ></script>
+          }}></script>
       </head>
       <StyledComponentsRegistry>
         <AuthSession>
