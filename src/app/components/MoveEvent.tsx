@@ -26,7 +26,9 @@ const EventEl = ({
   el: EventEl;
 }) => {
   const target = (arg: number) => {
-    const tg = document.querySelector(`.moveEvent_wrap .moveEvent_el:nth-child(${arg + 1})`);
+    const tg = document.querySelector(
+      `.moveEvent_wrap .moveEvent_el:nth-child(${arg + 1})`
+    );
     if (tg) return tg;
   };
 
@@ -58,7 +60,7 @@ const EventEl = ({
               /** pointer 가 위를 향할때 */
               if (arg) {
                 if (!i) {
-                  style.marginBottom = "20px";
+                  style.marginBottom = "10px";
                 } else {
                   style.marginBottom = "0px";
                 }
@@ -67,7 +69,7 @@ const EventEl = ({
                 if (i !== 1) {
                   style.marginBottom = "0px";
                 } else {
-                  style.marginBottom = "20px";
+                  style.marginBottom = "10px";
                 }
               }
             }
@@ -83,25 +85,32 @@ const EventEl = ({
 
         // console.log(el, indfn(drag.to), drag.list[indfn(drag.to) - 1], target(indfn(drag.to)));
       }}
-      onDragEnd={(e) => {
+      onDrop={(e) => {
         e.preventDefault();
         drag.to = drag.to as EventEl;
         drag.target = drag.target as EventEl;
 
         const copyArr = [...drag.list];
-        const [tg_ind, t_ind] = [copyArr.indexOf(drag.target), copyArr.indexOf(drag.to)];
+        const [tg_ind, t_ind] = [
+          copyArr.indexOf(drag.target),
+          copyArr.indexOf(drag.to),
+        ];
 
         const [slice] = copyArr.splice(tg_ind, 1);
 
         copyArr.splice(t_ind, 0, slice);
 
         setDrag({ ...drag, list: copyArr, grab: false });
+      }}
+      onDragEnd={(e) => {
+        e.preventDefault();
 
         /** 초기화   */
         targetAll.forEach((el) => {
           (el as Style).style.marginBottom = "0px";
         });
-      }}>
+      }}
+    >
       {el.name}
     </div>
   );
