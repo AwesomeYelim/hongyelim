@@ -5,9 +5,11 @@
   > * {
     // white-space: pre-line;
   }
-  h1 {
+
+  .h1_wrap {
     text-align: center;
     border-bottom: 1px solid #333;
+    padding-bottom: 20px;
     margin-bottom: 100px;
   }
 

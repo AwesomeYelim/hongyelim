@@ -36,7 +36,7 @@ export default async function page({ params }: Props) {
     })
     .includes(true);
 
-  const { title, id, tag } = post;
+  const { title, id } = post;
 
   return (
     <div className="detail_page_wrapper">
@@ -51,7 +51,7 @@ export default async function page({ params }: Props) {
         />
       </div>
       <Heart {...post} />
-      <MdfileViewer mdPost={mdPost} useToc={true} />
+      <MdfileViewer {...post} mdPost={mdPost} useToc={true} />
       <DetailTag {...post} />
       <PrevNextButton id={id} />
       <Comments {...post} />

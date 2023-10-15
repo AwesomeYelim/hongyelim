@@ -14,7 +14,7 @@
   }
   .posts_wrapper {
     .tag_wrap {
-      @include animate(1, down);
+      // @include animate(1, down);
     }
     .list_wrapper {
       // height: calc(100vh - 100px);

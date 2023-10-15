@@ -69,7 +69,14 @@ const TagWrap = styled.nav`
     }
   }
 `;
-export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSelected }: Props): JSX.Element => {
+export const Tag = ({
+  offset,
+  pageNum,
+  pageNumInit,
+  currentTag,
+  selected,
+  setSelected,
+}: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
   const setPosts = useSetRecoilState(postsAtom);
@@ -122,7 +129,7 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
       
       switch (location) {
         case "/": {
-          setList(["Tag", ...((tagList as string[]).filter(item => /^[a-z]/.test(item)))]); // 소문자로 시작되는 핵심 키워드만 골라준다.
+          setList([...((tagList as string[]).filter(item => /^[a-z]/.test(item)))]); // 소문자로 시작되는 핵심 키워드만 골라준다.
         } break;
         case "/posts": {
           setList(["All", ...(tagList as string[])]);
@@ -136,7 +143,11 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
 
   useEffect(() => {
     /* 초깃값 일때 && 페이지 새로고침 시에만 state 설정 */
-    if (pageNum && (isEqual(pageNum[0], pageNumInit) || (!pageNum[0].current && !pageNum[0].total))) {
+    if (
+      pageNum &&
+      (isEqual(pageNum[0], pageNumInit) ||
+        (!pageNum[0].current && !pageNum[0].total))
+    ) {
       pageNum[1](() => {
         return {
           current: Math.ceil((data?.length as number) / (offset as number)),
@@ -155,12 +166,14 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
             key={keyword}
             href={{
               pathname: "/posts",
-              query: { tag: keyword !== "Tag" ? keyword : "All" },
+              query: { tag: keyword },
             }}
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) => el.tag.includes(currentTag as string));
+                const select = data?.filter((el: Post) =>
+                  el.tag.includes(currentTag as string)
+                );
                 setSelected({
                   keyword: e.currentTarget.innerText,
                   posts: select,
@@ -180,7 +193,8 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
                   setSelected({ keyword: "" });
                 }
               }
-            }}>
+            }}
+          >
             {/* main tag 영역 */}
             {
               // post 하위 tag 영역

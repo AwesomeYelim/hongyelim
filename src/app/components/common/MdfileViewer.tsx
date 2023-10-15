@@ -12,12 +12,14 @@ import { titleCondition } from "./functions/ellipsis";
 import Image from "next/image";
 
 // import { useDark } from "../hooks";
+import dateFn from "./functions/date";
 import { Inter } from "next/font/google";
 import { throttle } from "lodash";
 import React from "react";
 import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
+  created_at: number;
   mdPost: string;
   useToc?: boolean;
 }
@@ -99,16 +101,23 @@ const Heading = ({
           top: post![e.currentTarget.innerHTML],
           behavior: "smooth",
         });
-      }}>
+      }}
+    >
       {children}
     </HeadingTag>
   );
 };
 
-const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Element => {
+const MdfileViewer = ({
+  mdPost,
+  useToc = false,
+  created_at,
+}: MarkdownViewProps): JSX.Element => {
   let innerText: RegExpMatchArray | string | null;
 
-  innerText = mdPost?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "").match(/#+\s(.+)/gm);
+  innerText = mdPost
+    ?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "")
+    .match(/#+\s(.+)/gm);
 
   const [target, setTarget] = useState<[string, number]>(["", 0]);
   const { mdRef } = { mdRef: useRef<HTMLDivElement>(null) };
@@ -117,7 +126,7 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
     [key in string]: number;
   } = {};
 
-  // 초기 md h tag 위치값 표기 및 h hag 랜더링
+  // 초기 md h tag 위치값 표기 및 h tag 랜더링
   const tocHandler = ({
     level,
     children,
@@ -137,7 +146,14 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
     post[value] = position?.end.offset as number;
 
     const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
-
+    if (HeadingTag === "h1") {
+      return (
+        <div className="h1_wrap">
+          <HeadingTag>{children as string}</HeadingTag>
+          <span>{dateFn(created_at)}</span>
+        </div>
+      );
+    }
     return <HeadingTag>{children as string}</HeadingTag>;
   };
 
@@ -155,9 +171,14 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
   }, [target[1]]);
 
   useEffect(() => {
-    document.addEventListener("scroll", throttle(scrollEffect, 300), { capture: true });
+    document.addEventListener("scroll", throttle(scrollEffect, 300), {
+      capture: true,
+    });
 
-    return () => document.removeEventListener("scroll", throttle(scrollEffect, 300), { capture: true });
+    return () =>
+      document.removeEventListener("scroll", throttle(scrollEffect, 300), {
+        capture: true,
+      });
   }, [scrollEffect]);
 
   // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
@@ -213,7 +234,12 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
             code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
-                <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkDark}>
+                <SyntaxHighlighter
+                  language={match[1]}
+                  PreTag="div"
+                  {...props}
+                  style={coldarkDark}
+                >
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
@@ -224,7 +250,8 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
             },
 
             ...headingTag,
-          }}>
+          }}
+        >
           {mdPost}
         </ReactMarkdown>
       </div>
@@ -236,7 +263,8 @@ const MdfileViewer = ({ mdPost, useToc = false }: MarkdownViewProps): JSX.Elemen
               onClick={() => {
                 window.scroll({ left: 0, top: 0, behavior: "smooth" });
                 setTarget(["", 0]);
-              }}>
+              }}
+            >
               목차
             </span>
             {innerText?.map((el) => {

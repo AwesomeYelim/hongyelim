@@ -7,7 +7,8 @@ import "./styles/page.scss";
 export default async function HomePage() {
   return (
     <div className="main_wrapper">
-      <div className="svg_wrapper">
+      <h1>Tag</h1>
+      {/* <div className="svg_wrapper">
         <div className="welcome_img">
           <Welcome width={200} height={150} />
         </div>
@@ -26,7 +27,7 @@ export default async function HomePage() {
           height={200}
           width={200}
         />
-      </div>
+      </div> */}
       <Tag />
     </div>
   );

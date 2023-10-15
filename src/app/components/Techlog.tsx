@@ -9,15 +9,16 @@ import { useQuery } from "react-query";
 import { getPostsApi } from "./common/functions/myapi";
 import { useSession } from "next-auth/react";
 import { PageNation } from "./common/PageNation";
-import {  useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { postsAtom } from "./Recoil";
 import { useSearchParams } from "next/navigation";
+import dateFn from "./common/functions/date";
 
 export type PageNum = { current: number; total: number; selectedNum: number };
 
 export default function Techlog() {
   const posts = useRecoilValue(postsAtom);
-  const currentTag = useSearchParams().get('tag');
+  const currentTag = useSearchParams().get("tag");
   const pageNumInit = { current: 1, total: 0, selectedNum: 0 };
   const pageNum = useState<PageNum>(pageNumInit);
   const offset = 5;
@@ -54,21 +55,20 @@ export default function Techlog() {
         posts: posts?.filter((el: Post) => el.tag.includes(currentTag)),
       });
 
-      if(currentTag === 'All') {
+      if (currentTag === "All") {
         setSelected({
           keyword: "All",
           posts: data,
         });
       }
     }
-    
   }, [data, currentTag]);
 
   const props = {
     offset,
     pageNum,
     selected,
-    currentTag : currentTag as string,
+    currentTag: currentTag as string,
     setSelected,
     pageNumInit,
   };
@@ -89,15 +89,6 @@ export default function Techlog() {
                 heart,
                 post_title,
               }) => {
-                const date = new Date(created_at * 1000).toLocaleDateString(
-                  "ko-kr",
-                  {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  }
-                );
-
                 return (
                   <li key={id}>
                     <div className="text_wrapper">
@@ -111,7 +102,7 @@ export default function Techlog() {
                       <span>{content}</span>
                     </div>
                     <div className="bottom_wrap">
-                      <span className="date">{date}</span>
+                      <span className="date">{dateFn(created_at)}</span>
                       <i
                         className={classNames("static_heart", {
                           like: heart?.[session?.user?.email as string],

@@ -1,7 +1,6 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-
 import "./MoveEvent.scss";
 
 interface EventEl {

@@ -5,46 +5,50 @@
   gap: 50px;
   height: calc(100vh - 180px);
 
-  .svg_wrapper {
-    @include flex(center, center);
-    flex-direction: column;
-    gap: 20px;
-    height: 100%;
-    .dance {
-      @include animate(1, down);
-    }
-    .welcome_img {
-      display: none;
-      height: 100px;
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      background-color: rgb(172 216 255 / 71%);
-      svg {
-        transform: rotate(20deg);
-      }
-    }
-    .main_ctimg {
-      border-radius: 50%;
-    }
-    .text_area {
-      text-align: center;
-      @include animate(0, down);
-
-      // font-family: fantasy;
-      p {
-        margin-bottom: 3px;
-        &.upper {
-          text-transform: uppercase;
-          font-weight: 700;
-        }
-        span {
-          font-size: initial;
-          text-transform: uppercase;
-          font-weight: 700;
-          color: orange;
-        }
-      }
-    }
+  h1 {
+    border-right: 5px solid #ccc;
+    padding-right: 30px;
   }
+  // .svg_wrapper {
+  //   @include flex(center, center);
+  //   flex-direction: column;
+  //   gap: 20px;
+  //   height: 100%;
+  //   .dance {
+  //     @include animate(1, down);
+  //   }
+  //   .welcome_img {
+  //     display: none;
+  //     height: 100px;
+  //     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  //     background-color: rgb(172 216 255 / 71%);
+  //     svg {
+  //       transform: rotate(20deg);
+  //     }
+  //   }
+  //   .main_ctimg {
+  //     border-radius: 50%;
+  //   }
+  //   .text_area {
+  //     text-align: center;
+  //     @include animate(0, down);
+
+  //     // font-family: fantasy;
+  //     p {
+  //       margin-bottom: 3px;
+  //       &.upper {
+  //         text-transform: uppercase;
+  //         font-weight: 700;
+  //       }
+  //       span {
+  //         font-size: initial;
+  //         text-transform: uppercase;
+  //         font-weight: 700;
+  //         color: orange;
+  //       }
+  //     }
+  //   }
+  // }
   .tag_wrap {
     @include animate(2, down);
     position: initial;
@@ -58,7 +62,8 @@
     a {
       display: block;
       &:first-child {
-        background-color: rgb(201, 206, 255);
+        color: #191919;
+        // background-color: rgb(201, 206, 255);
         border: 1px solid transparent !important;
       }
       margin: 0px;
