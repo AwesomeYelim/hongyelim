@@ -88,7 +88,7 @@ export const Add = ({
           </div>
           <div className="written_area">
             <label>Viwer</label>
-            <MdfileViewer mdPost={watch("content")} />
+            {/* <MdfileViewer mdPost={watch("content")} /> */}
           </div>
         </div>
         {errors.content && <p>{errors.content.message as string}</p>}
