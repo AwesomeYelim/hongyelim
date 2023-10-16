@@ -203,6 +203,32 @@ const MdfileViewer = ({
 
   return (
     <>
+      {/* 오른쪽 TOC */}
+      {useToc && (
+        <TOCwrapper className="toc_wrapper">
+          <div className="toc_content">
+            <span
+              onClick={() => {
+                window.scroll({ left: 0, top: 0, behavior: "smooth" });
+                setTarget(["", 0]);
+              }}
+            >
+              목차
+            </span>
+            {innerText?.map((el) => {
+              const [level, children] = el.split("# ");
+
+              const props = {
+                level: level.length + 1,
+                children,
+                target,
+                post,
+              };
+              return <Heading key={children} {...props} />;
+            })}
+          </div>
+        </TOCwrapper>
+      )}
       {/* markdown contents */}
       <div className="md_wrapper" ref={mdRef}>
         <ReactMarkdown
@@ -255,32 +281,6 @@ const MdfileViewer = ({
           {mdPost}
         </ReactMarkdown>
       </div>
-      {/* 오른쪽 TOC */}
-      {useToc && (
-        <TOCwrapper>
-          <div className="toc_content">
-            <span
-              onClick={() => {
-                window.scroll({ left: 0, top: 0, behavior: "smooth" });
-                setTarget(["", 0]);
-              }}
-            >
-              목차
-            </span>
-            {innerText?.map((el) => {
-              const [level, children] = el.split("# ");
-
-              const props = {
-                level: level.length + 1,
-                children,
-                target,
-                post,
-              };
-              return <Heading key={children} {...props} />;
-            })}
-          </div>
-        </TOCwrapper>
-      )}
     </>
   );
 };

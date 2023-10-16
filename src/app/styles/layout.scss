@@ -121,5 +121,24 @@
         // z-index: 50;
       }
     }
+    .detail_page_wrapper {
+      .toc_wrapper {
+        position: static;
+        margin-top: 30px;
+        .toc_content {
+          position: static;
+          text-align: center;
+          margin: 0 auto;
+          height: auto;
+          span {
+            display: block;
+            width: 100%;
+          }
+          > * {
+            margin-left: 0 !important;
+          }
+        }
+      }
+    }
   }
 }
