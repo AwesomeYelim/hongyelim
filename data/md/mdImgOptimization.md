@@ -14,7 +14,7 @@
    - 랜더링 시점이 TTV (Time To View) 랑 맞지않을때(debounce 또는 throttle 이벤트를 사용했을때에도 시점이 안맞을 수 있음)
 3. 네트워크 불안정 및 이미지 자체의 비동기설정
 
-## 나 같은 경우에는..
+## 나 같은 경우에는
 
 - 다음과 같이 스크롤시 mdviewer 를 통해 랜더링된 이미지가 계속 깜박거리는 현상이 지속이 되었다.
 
@@ -62,7 +62,7 @@ useEffect(() => {
 <summary>참고 사이트 </summary>
 <div markdown="1">
 
-https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding
+<https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding>
 
 </div>
 </details>
@@ -111,4 +111,4 @@ useEffect(() => {
 }
 ```
 
-## 해결.. 베리굿 ..
+## 해결.. 베리굿

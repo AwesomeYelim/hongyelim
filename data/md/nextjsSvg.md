@@ -31,7 +31,7 @@ module.exports = {
 
 - 그리고 나서 다음과 같이 사용하면 된다.
 
-```tsx
+```jsx
 import Welcome from "../../public/images/welcome.svg";
 
 export default async function HomePage() {

@@ -4,14 +4,15 @@
 
 > 다양한 운영 체제에서 .git 폴더를 표시하는 방법 !
 
-1.  Windows
+1. Windows
 
 - 파일 탐색기에서 .git 폴더가 있는 디렉토리로 이동
 - "보기(View)" 탭을 클릭
 - "숨김 항목(Hidden items)" 옵션을 활성화
 
-<img src='./img/b_gitfolder.png'>
-2.  macOS
+  ![b_gitfolder](./img/b_gitfolder.png)
+
+2. macOS
 
 - Finder에서 .git 폴더가 있는 디렉토리로 이동
 - 키보드에서 Shift + Command + Period (⇧⌘.) 키를 누름, 이렇게 하면 숨김 파일 및 폴더가 표시됨

@@ -2,7 +2,6 @@
 
 - 이 명령어는 linux 및 macOS 운영 체제에서 동작한다.
 
-
 ## 전체 내용 복사
 
 ```sh
@@ -11,8 +10,7 @@ cat test.txt | tee testcopy.txt
 
 - 이 명령어를 사용하면 test.txt 파일의 내용을 읽어와 testcopy.txt 파일로 복사하며, 동시에 터미널에도 내용을 출력한다.
 
-
-##  특정 범위의 내용을 복사
+## 특정 범위의 내용을 복사
 
 - 만약 특정 범위의 내용을 복사하고 싶다면 cat test.txt | tee testcopy.txt 명령어 대신 다음과 같이 sed 명령어를 사용할 수 있다.
 

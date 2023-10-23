@@ -1,4 +1,4 @@
-# 댓글 구조 만들며 tree 구조 재구현해보기..
+# 댓글 구조 만들며 tree 구조 재구현해보기
 
 ## 예전 tree 구조
 
@@ -87,10 +87,7 @@ const commentsTree = (arr: Data[]) => {
 
       // 부모요소의 끝에부분과 자식요소의 끝에서 두번째 부분이 일치 하고 & 중복요소가 포함되지 않도록 조건을 건다.
       if (h[h.length - 1] === d[d.length - 2] && duplePrevent) {
-        (
-          (highData as ChildrenD).children ||
-          ((highData as ChildrenD).children = [])
-        ).push(data);
+        ((highData as ChildrenD).children || ((highData as ChildrenD).children = [])).push(data);
       }
     });
 
@@ -103,7 +100,7 @@ const commentsTree = (arr: Data[]) => {
 console.log(commentsTree(data));
 ```
 
-## 회고....
+## 회고
 
 - 뭔가 더 복잡해진거 같은 기분이 들고,
 - 좀 아직 불완전한 부분들이 발생될거 같아서.. 계속 코드를 수정해 나가야겠다. ^^

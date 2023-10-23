@@ -1,6 +1,6 @@
 # ellipsis + titletag 공통 함수 만들기
 
-## 일일이 처리하기 귀찮은 부분...
+## 일일이 처리하기 귀찮은 부분
 
 ---
 
@@ -22,11 +22,11 @@
 
 ---
 
-1.  overflow 의 여부 는 어떻게 알수 있는가 => e.clientWidth < e.scrollWidth 부분이 overflow 되어있다는 부분..
+1. overflow 의 여부 는 어떻게 알수 있는가 => e.clientWidth < e.scrollWidth 부분이 overflow 되어있다는 부분..
 
-2.  화면에 랜더링 되기 이전에 overflow 의 여부가 확인 되어야함
+2. 화면에 랜더링 되기 이전에 overflow 의 여부가 확인 되어야함
 
-3.  onMouseOver 시에 title 태그가 확인되어야함
+3. onMouseOver 시에 title 태그가 확인되어야함
 
 ## 결과 코드
 
