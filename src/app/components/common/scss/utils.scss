@@ -65,7 +65,7 @@ $img: "/images/image.svg";
   transform: rotate(-0.03deg);
 }
 
-@mixin animate($delay: 0, $direction: "down", $distance: 30px) {
+@mixin animate($delay: 0, $direction: "down", $distance: 20px) {
   animation: fade-in-#{$direction} 1s;
   animation-delay: #{$delay * 0.7}s;
   animation-fill-mode: both;

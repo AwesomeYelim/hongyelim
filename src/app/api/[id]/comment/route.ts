@@ -51,7 +51,8 @@ export const commentsTree = (arr: CommentEl[]) => {
   arr = arr.sort((a, b) => {
     const ac = a.com_created_at;
     const bc = b.com_created_at;
-    if (ac.length === bc.length) return bc[bc.length - 1] - ac[ac.length - 1];
+    const [al,bl] = [ac.at(-1), bc.at(-1)] as number[];
+    if (ac.length === bc.length) return bl - al;
     return bc.length - ac.length;
   });
 

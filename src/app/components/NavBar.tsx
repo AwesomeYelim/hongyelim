@@ -93,11 +93,11 @@ export default function NavBar() {
         <Link href="/posts" className={classNames({ active: location?.includes("/posts") })}>
           Posts
         </Link>
-        {admin && (
+        {/* {admin && (
           <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
             Memo
           </Link>
-        )}
+        )} */}
         {admin && (
           <Link href="/archives" className={classNames({ active: location?.includes("/archives") })}>
             Archives
