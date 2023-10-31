@@ -1,0 +1,7 @@
+@import "src/app/components/common/scss/utils.scss";
+
+.line_wrapper {
+  img {
+    @include animate(0, down, 10);
+  }
+}

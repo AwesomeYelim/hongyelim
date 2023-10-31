@@ -1,21 +1,26 @@
 "use client";
+
 import { CSSProperties, useEffect, useState } from "react";
+import Image from "next/image";
+import { styled } from "styled-components";
+// import "../components/common/scss/utils.scss";
+import "./Line.scss";
 
 export const Line = (): JSX.Element => {
   const [lineHeight, setLineHeight] = useState(0);
-  const [dotobj, setDots] = useState({});
+  const [dotobj, setDots] = useState<number[]>([]);
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
-
     setLineHeight((pre) => (pre < scrollPosition ? scrollPosition : pre));
     const length = Math.floor(scrollPosition / 100);
-    setDots((pre) => ({ ...pre, [length]: scrollPosition }));
+    const arr = Array.from({ length }, (_, i) => i);
+    setDots((pre) => (pre.length > arr.length ? pre : arr));
   };
 
   useEffect(() => {
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -23,36 +28,53 @@ export const Line = (): JSX.Element => {
 
   const lineStyle = {
     width: "2px",
-    height: `${lineHeight}px`,
+    height: `${lineHeight - 100}px`,
     backgroundColor: "black",
-    transform: "translateY(-10px)",
-    transition: "height 0.1s",
+    transition: "height 0.1s linear",
+    // maxHeight: `${dotobj.length * 100}`,
   };
 
   const dotStyle = {
     width: "10px",
     height: "10px",
-    backgroundColor: "red",
+    backgroundColor: "black",
     borderRadius: "50%",
     position: "absolute",
-    left: "21px",
+    left: "-4px",
   };
 
   return (
-    <div style={{ height: "200vh" }}>
+    <div className="line_wrapper" style={{ position: "relative", height: "200vh" }}>
       <div style={lineStyle as CSSProperties} />
-      {Object.entries(dotobj).map(([dotY], index) => {
+      {dotobj.map((dotY) => {
         return (
           <div
-            key={index}
+            key={dotY}
             style={
               {
-                ...dotStyle,
-                top: `${+dotY * 100 + 110}px`,
-                transform: "translateX(-5px)",
+                width: "80vw",
+                height: 100,
+                position: "absolute",
+                top: `${+dotY * 100}px`,
               } as CSSProperties
-            }
-          />
+            }>
+            <div
+              style={
+                {
+                  ...dotStyle,
+                } as CSSProperties
+              }
+            />
+            <Image
+              src="/images/empty.png"
+              style={{ marginTop: 10, marginLeft: 100 }}
+              alt="img"
+              width={100}
+              height={80}
+              loading="eager"
+              priority
+            />
+          </div>
         );
       })}
     </div>

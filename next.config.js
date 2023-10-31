@@ -6,6 +6,11 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  compiler: {
+    styledComponents: {
+      displayName: false,
+    },
+  },
   // reactStrictMode: true,
   swcMinify: true,
   async headers() {
@@ -42,6 +47,19 @@ const nextConfig = {
     }
 
     return config;
+  },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+          "sass-extract-loader", // Add this loader
+        ],
+      },
+    ],
   },
 };
 

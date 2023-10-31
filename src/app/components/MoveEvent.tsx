@@ -1,7 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import "./MoveEvent.scss";
+import { styled } from "styled-components";
 
 interface EventEl {
   id: number;
@@ -17,6 +17,34 @@ interface Drag {
   list: EventEl[];
 }
 
+const MoveEventWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 40px;
+  .moveEvent_el {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    background-color: #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    color: #fff;
+    transition: 0.2s linear;
+    &::after {
+      content: "✋";
+      margin-left: 10px;
+      font-size: 1rem;
+      cursor: grab;
+    }
+    &:active {
+      &::after {
+        cursor: grabbing;
+      }
+    }
+  }
+`;
+
 const EventEl = ({
   dragging: [drag, setDrag],
   el,
@@ -25,9 +53,7 @@ const EventEl = ({
   el: EventEl;
 }) => {
   const target = (arg: number) => {
-    const tg = document.querySelector(
-      `.moveEvent_wrap .moveEvent_el:nth-child(${arg + 1})`
-    );
+    const tg = document.querySelector(`.moveEvent_wrap .moveEvent_el:nth-child(${arg + 1})`);
     if (tg) return tg;
   };
 
@@ -90,10 +116,7 @@ const EventEl = ({
         drag.target = drag.target as EventEl;
 
         const copyArr = [...drag.list];
-        const [tg_ind, t_ind] = [
-          copyArr.indexOf(drag.target),
-          copyArr.indexOf(drag.to),
-        ];
+        const [tg_ind, t_ind] = [copyArr.indexOf(drag.target), copyArr.indexOf(drag.to)];
 
         const [slice] = copyArr.splice(tg_ind, 1);
 
@@ -108,8 +131,7 @@ const EventEl = ({
         targetAll.forEach((el) => {
           (el as Style).style.marginBottom = "0px";
         });
-      }}
-    >
+      }}>
       {el.name}
     </div>
   );
@@ -127,7 +149,7 @@ export default function MoveEvent() {
   const [drag, setDrag] = useState<Drag>({ list: fakeData, grab: false });
 
   return (
-    <div className="moveEvent_wrap">
+    <MoveEventWrap className="moveEvent_wrap">
       {drag.list.map((el) => {
         const props = {
           dragging: [drag, setDrag] as [Drag, Dispatch<SetStateAction<Drag>>],
@@ -135,6 +157,6 @@ export default function MoveEvent() {
         };
         return <EventEl key={el.name} {...props} />;
       })}
-    </div>
+    </MoveEventWrap>
   );
 }

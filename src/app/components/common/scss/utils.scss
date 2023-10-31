@@ -90,3 +90,9 @@ $img: "/images/image.svg";
     }
   }
 }
+
+@function animate($duration, $direction, $amount) {
+  @if $direction == down {
+    @return $duration;
+  }
+}
