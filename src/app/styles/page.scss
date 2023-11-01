@@ -1,4 +1,4 @@
-@import "src/app/components/common/scss/utils.scss";
+@import "src/app/components/common/scss/utils.module.scss";
 
 .main_wrapper {
   @include flex(center, center);

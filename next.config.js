@@ -53,9 +53,6 @@ const nextConfig = {
       {
         test: /\.scss$/,
         use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader",
           "sass-extract-loader", // Add this loader
         ],
       },

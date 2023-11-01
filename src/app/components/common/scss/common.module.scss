@@ -1,0 +1,32 @@
+@import "src/app/components/common/scss/utils.module.scss";
+
+/** Line component  */
+.line_wrapper {
+  position: relative;
+  height: 200vh;
+  .line {
+    width: 2px;
+    background-color: black;
+    transition: height 0.1s linear;
+  }
+  .block {
+    @include flex(center, initial);
+    position: absolute;
+    width: 80vw;
+    height: 100;
+
+    img {
+      @include animate(0, down, 10);
+      margin-top: 10px;
+      margin-left: 100px;
+    }
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    left: -4px;
+  }
+}
