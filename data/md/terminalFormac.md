@@ -4,7 +4,7 @@
 
 - 자꾸 이런메세지가 뜬다..
 
-```
+```sh
 zsh: command not found: yarn
 ```
 
@@ -14,6 +14,20 @@ zsh: command not found: yarn
 sudo npm install -g yarn
 ```
 
-```
+```sh
 password: <개인컴터비번>
+```
+
+## 환경 변수 확인
+
+- node나 npm 명령어를 사용했을 때 에러가 발생한다면 환경 변수가 제대로 설정되어 있는지 확인해봐야 한다. 맥에서는 터미널에서 echo $PATH를 입력해 환경 변수 목록을 확인할 수 있다.
+
+```sh
+echo $PATH
+```
+
+- 결과로 출력되는 경로 중에(경로는 :으로 구분됩니다) 노드가 설치된 경로(기본적으로는 /usr/bin 또는 /usr/local/bin)가 들어 있지 않으면 명령어 실행 시 에러가 발생한다. 다음 명령어를 사용해서 PATH 환경 변수에 노드 설치 경로를 추가해주면 된다.
+
+```sh
+export PATH=$PATH:노드 설치 경로
 ```
