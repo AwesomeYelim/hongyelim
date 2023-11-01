@@ -10,14 +10,7 @@ export default function ProfilePage() {
       <h1>About me</h1>
       <div className="content_wrap">
         <div className="img_area">
-          <Image
-            className="main_img"
-            src={main}
-            alt="main yelim"
-            width={150}
-            height={150}
-            priority
-          />
+          <Image className="main_img" src={main} alt="main yelim" width={150} height={150} priority />
           <Footer />
         </div>
         <div>
@@ -39,8 +32,7 @@ export default function ProfilePage() {
       <Link
         href="https://tangy-slip-4d8.notion.site/About-Yelim-d8527c81adae431f8f75a9eb723f3b3c"
         className="resume_wrap"
-        target="_blank"
-      >
+        target="_blank">
         <b className="resume">→ &nbsp; resume</b>
       </Link>
     </div>

@@ -14,7 +14,8 @@ export default async function ArchivesPage() {
   //
   return (
     <div className="archive_page">
-      <h1>Project</h1>
+      <h1>Attempts</h1>
+      <span>다양한 시도들을 시기별로 나열합니다.</span>
       <Line />
       {/* <MoveEvent /> */}
     </div>

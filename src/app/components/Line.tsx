@@ -14,7 +14,7 @@ export const Line = (): JSX.Element => {
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     setLineHeight((pre) => (pre < scrollPosition ? scrollPosition : pre));
-    const length = Math.floor(scrollPosition / 100);
+    const length = Math.floor(scrollPosition / 200);
     const arr = Array.from({ length }, (_, i) => i);
     setDots((pre) => (pre.length > arr.length ? pre : arr));
   };
