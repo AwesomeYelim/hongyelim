@@ -48,16 +48,16 @@ const nextConfig = {
 
     return config;
   },
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          "sass-extract-loader", // Add this loader
-        ],
-      },
-    ],
-  },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.scss$/,
+  //       use: [
+  //         "sass-extract-loader", // Add this loader
+  //       ],
+  //     },
+  //   ],
+  // },
 };
 
 module.exports = nextConfig;

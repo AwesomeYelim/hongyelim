@@ -2,7 +2,7 @@
 
 .profile_wrap {
   height: calc(100vh - 450px);
-  h1 {
+  > h1 {
     @include animate(0, down);
     display: block;
     border-bottom: 1px solid black;

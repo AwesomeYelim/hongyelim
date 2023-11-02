@@ -1,8 +1,10 @@
 @import "src/app/components/common/scss/utils.module.scss";
 
-h1 {
-  @include animate(0, down);
-  display: block;
-  padding-bottom: 20px;
-  margin-bottom: 30px;
+.archive_page {
+  > h1 {
+    @include animate(0, down);
+    display: block;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
 }
