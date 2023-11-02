@@ -29,7 +29,7 @@ export const Line = (): JSX.Element => {
 
   return (
     <div className={line_wrapper}>
-      <div className={line} style={{ height: `${lineHeight - 30}px` }} />
+      <div className={line} style={{ height: `${lineHeight}px` }} />
       {dotobj.map((dotY) => {
         const props = { dotY, location };
         return <Block key={dotY} {...props} />;

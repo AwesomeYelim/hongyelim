@@ -4,7 +4,8 @@
   > h1 {
     @include animate(0, down);
     display: block;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
+  }
+  > span {
+    @include animate(1, down);
   }
 }

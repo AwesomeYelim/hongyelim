@@ -12,38 +12,28 @@ import { db } from "../../../firebase";
 import { getServerSession } from "next-auth";
 import { transporter } from "@/app/nodemail";
 
-export const sendEmail = async ({
-  arr,
-  target,
-  title,
-}: {
-  arr: CommentEl[];
-  target: CommentEl;
-  title: string;
-}) => {
+export const sendEmail = async ({ arr, target, title }: { arr: CommentEl[]; target: CommentEl; title: string }) => {
   const relatedCo = arr.filter((item) => {
     const {com_created_at : ic, userInfo : {email : ie}} = item // prettier-ignore
     const {com_created_at : tc, userInfo : {email : te}} = target // prettier-ignore
 
-    return tc.includes(ic[ic.length - 1]) && ie !== te;
+    return tc.includes(ic.at(-1) as number) && ie !== te;
   });
 
-  [...new Set(relatedCo.map((el) => el.userInfo.email))].forEach(
-    async (email) => {
-      transporter.sendMail(
-        {
-          from: `"Yelim Blog" <${process.env.NEXT_PUBLIC_NODEMAILER_USER}>`,
-          to: email,
-          subject: `${title} 게시물 comments`,
-          text: `${target.userInfo.name} : ${target.contents}`,
-        },
-        (err, info) => {
-          if (err) console.error(err);
-          if (info) return info;
-        }
-      );
-    }
-  );
+  [...new Set(relatedCo.map((el) => el.userInfo.email))].forEach(async (email) => {
+    transporter.sendMail(
+      {
+        from: `"Yelim Blog" <${process.env.NEXT_PUBLIC_NODEMAILER_USER}>`,
+        to: email,
+        subject: `${title} 게시물 comments`,
+        text: `${target.userInfo.name} : ${target.contents}`,
+      },
+      (err, info) => {
+        if (err) console.error(err);
+        if (info) return info;
+      }
+    );
+  });
 };
 
 export const commentsTree = (arr: CommentEl[]) => {
@@ -51,7 +41,7 @@ export const commentsTree = (arr: CommentEl[]) => {
   arr = arr.sort((a, b) => {
     const ac = a.com_created_at;
     const bc = b.com_created_at;
-    const [al,bl] = [ac.at(-1), bc.at(-1)] as number[];
+    const [al, bl] = [ac.at(-1), bc.at(-1)] as number[];
     if (ac.length === bc.length) return bl - al;
     return bc.length - ac.length;
   });
@@ -60,11 +50,9 @@ export const commentsTree = (arr: CommentEl[]) => {
     [...arr].forEach((data) => {
       const h = highData.com_created_at;
       const d = data.com_created_at;
-      const duplePrevent = !highData.children
-        ?.map((el) => el.com_created_at[el.com_created_at.length - 1])
-        .includes(d[d.length - 1]);
+      const duplePrevent = !highData.children?.map((el) => el.com_created_at.at(-1)).includes(d.at(-1));
 
-      if (h[h.length - 1] === d[d.length - 2] && duplePrevent) {
+      if (h.at(-1) === d.at(-2) && duplePrevent) {
         (highData.children || (highData.children = [])).push(data);
       }
     });
@@ -94,9 +82,7 @@ export async function POST(req: Request, res: Response) {
     comments: user.data()?.comments
       ? {
           ...user.data()?.comments,
-          [title]: user.data()?.comments[title]
-            ? [...user.data()?.comments[title], rest]
-            : [rest],
+          [title]: user.data()?.comments[title] ? [...user.data()?.comments[title], rest] : [rest],
         }
       : { [title]: [rest] },
   });

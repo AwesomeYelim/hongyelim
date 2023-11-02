@@ -13,6 +13,7 @@ export const Block = ({ dotY, location }: Props): JSX.Element => {
   return (
     <div className={block} key={dotY} style={{ top: `${+dotY * 200}px` }}>
       <div className={dot} />
+      <span>23.11.02</span>
       <Image src={`/images${location}/empty.png`} alt="img" width={200} height={150} loading="eager" priority />
     </div>
   );
