@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { CommentEl, User } from "@/service/posts";
 import { Session } from "next-auth";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/app/firebase";
 
 export interface AddProps {
   com_created_at?: number[];
@@ -16,7 +18,15 @@ export interface AddProps {
 }
 
 export const AddComment = (props: AddProps) => {
-  const { comments, setComments, title, session, com_created_at, setOpenReply, lastAt } = props;
+  const {
+    comments,
+    setComments,
+    title,
+    session,
+    com_created_at,
+    setOpenReply,
+    lastAt,
+  } = props;
 
   const queryClient = useQueryClient();
 
@@ -30,10 +40,11 @@ export const AddComment = (props: AddProps) => {
   const postsCommentApi = async (data: CommentEl & { queryKey: string }) => {
     if (data["children"]) delete data["children"];
 
+
     await axios
       .post(`/api/${data.queryKey}/comment`, JSON.stringify(data), {
         headers: {
-          "Cache-Control": "no-store",
+          // "Cache-Control": "no-store",
           "Content-Type": `application/json`,
         },
       })
@@ -46,7 +57,9 @@ export const AddComment = (props: AddProps) => {
     mutationFn: postsCommentApi,
     onSuccess: () => {
       setValue("content", "");
-      (setOpenReply as Dispatch<{ [key in number]: boolean }>)({ [lastAt as number]: false });
+      (setOpenReply as Dispatch<{ [key in number]: boolean }>)({
+        [lastAt as number]: false,
+      });
       queryClient.invalidateQueries({ queryKey: title });
     },
   });
@@ -63,13 +76,18 @@ export const AddComment = (props: AddProps) => {
             ? [...com_created_at, Math.floor(+new Date() / 1000)]
             : [Math.floor(+new Date() / 1000)],
         });
-      })}>
+      })}
+    >
       {!com_created_at && <label>comment</label>}
       <textarea
         {...register("content", {
           required: { value: true, message: "is required" },
         })}
-        placeholder={session?.user ? "댓글을 작성하세요." : "댓글 작성은 로그인이 필요합니다. 🐧"}
+        placeholder={
+          session?.user
+            ? "댓글을 작성하세요."
+            : "댓글 작성은 로그인이 필요합니다. 🐧"
+        }
         disabled={!session?.user}
       />
       {errors.content && <p>{errors.content.message as string}</p>}

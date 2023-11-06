@@ -28,7 +28,7 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
     await axios
       .delete(`/api/${data.queryKey}/comment`, {
         headers: {
-          "Cache-Control": "no-store",
+          // "Cache-Control": "no-store",
         },
         params: { data },
       })

@@ -61,7 +61,7 @@ export const postsAddApi = async (data: { [key in string]: string }) => {
     .post("/api/add", JSON.stringify(data), {
       headers: {
         "Content-Type": `application/json`,
-        "Cache-Control": "no-store",
+        // "Cache-Control": "no-store",
       },
     })
     .then((res) => {

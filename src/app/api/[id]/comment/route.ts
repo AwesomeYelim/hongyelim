@@ -76,7 +76,6 @@ export async function POST(req: Request, res: Response) {
   const { userInfo, ...rest } = data;
 
   /** 사용자별 게시물 comments 상태  업데이트 */
-
   await setDoc(userData, {
     ...user.data(),
     comments: user.data()?.comments
