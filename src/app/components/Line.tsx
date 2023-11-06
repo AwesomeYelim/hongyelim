@@ -10,7 +10,15 @@ export const Line = (): JSX.Element => {
   const [dotobj, setDots] = useState<number[]>([]);
   const location = usePathname();
   const { line_wrapper, line } = styles;
-
+  const fakeData = [
+    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
+    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
+    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
+    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
+    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
+    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
+    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
+  ];
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     setLineHeight((pre) => (pre < scrollPosition ? scrollPosition : pre));
@@ -28,10 +36,11 @@ export const Line = (): JSX.Element => {
   }, []);
 
   return (
-    <div className={line_wrapper}>
+    <div className={line_wrapper} style={{ height: fakeData.length * 200 }}>
       <div className={line} style={{ height: `${lineHeight}px` }} />
       {dotobj.map((dotY) => {
-        const props = { dotY, location };
+        const data = fakeData[dotY];
+        const props = { dotY, location, ...data };
         return <Block key={dotY} {...props} />;
       })}
     </div>

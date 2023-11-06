@@ -1,9 +1,35 @@
 @import "src/app/components/common/scss/utils.module.scss";
 
 .archive_page {
-  > h1 {
+  > .ar_title {
+    @include flex(center, initial);
+    gap: 20px;
     @include animate(0, down);
-    display: block;
+
+    h1 {
+      display: block;
+      width: fit-content;
+      position: relative;
+    }
+
+    i {
+      background: url($img) no-repeat -191px -48px;
+      width: 10px;
+      height: 16px;
+      transform: rotate(90deg);
+      position: relative;
+
+      animation: arrow infinite 1s;
+      top: 0;
+      // opacity: 0;
+    }
+
+    @keyframes arrow {
+      50% {
+        // opacity: 1;
+        top: 10px;
+      }
+    }
   }
   > span {
     @include animate(1, down);
