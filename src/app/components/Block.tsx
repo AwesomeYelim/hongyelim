@@ -15,6 +15,7 @@ export const Block = ({ dotY, location }: Props): JSX.Element => {
       <div className={dot} />
       <span>23.11.02</span>
       <Image src={`/images${location}/empty.png`} alt="img" width={200} height={150} loading="eager" priority />
+      <p>이러 저러한 일들을 해봤습니다</p>
     </div>
   );
 };

@@ -101,23 +101,16 @@ const Heading = ({
           top: post![e.currentTarget.innerHTML],
           behavior: "smooth",
         });
-      }}
-    >
+      }}>
       {children}
     </HeadingTag>
   );
 };
 
-const MdfileViewer = ({
-  mdPost,
-  useToc = false,
-  created_at,
-}: MarkdownViewProps): JSX.Element => {
+const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps): JSX.Element => {
   let innerText: RegExpMatchArray | string | null;
 
-  innerText = mdPost
-    ?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "")
-    .match(/#+\s(.+)/gm);
+  innerText = mdPost?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "").match(/#+\s(.+)/gm);
 
   const [target, setTarget] = useState<[string, number]>(["", 0]);
   const { mdRef } = { mdRef: useRef<HTMLDivElement>(null) };
@@ -171,14 +164,9 @@ const MdfileViewer = ({
   }, [target[1]]);
 
   useEffect(() => {
-    document.addEventListener("scroll", throttle(scrollEffect, 300), {
-      capture: true,
-    });
+    document.addEventListener("scroll", throttle(scrollEffect, 300));
 
-    return () =>
-      document.removeEventListener("scroll", throttle(scrollEffect, 300), {
-        capture: true,
-      });
+    return () => document.removeEventListener("scroll", throttle(scrollEffect, 300));
   }, [scrollEffect]);
 
   // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
@@ -211,8 +199,7 @@ const MdfileViewer = ({
               onClick={() => {
                 window.scroll({ left: 0, top: 0, behavior: "smooth" });
                 setTarget(["", 0]);
-              }}
-            >
+              }}>
               목차
             </span>
             {innerText?.map((el) => {
@@ -260,12 +247,7 @@ const MdfileViewer = ({
             code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
-                <SyntaxHighlighter
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                  style={coldarkDark}
-                >
+                <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkDark}>
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
@@ -276,8 +258,7 @@ const MdfileViewer = ({
             },
 
             ...headingTag,
-          }}
-        >
+          }}>
           {mdPost}
         </ReactMarkdown>
       </div>

@@ -15,8 +15,10 @@
     @include flex(center, initial);
     position: absolute;
     width: 80vw;
-    height: 100;
-
+    span,
+    p {
+      margin-left: 20px;
+    }
     img {
       @include animate(0, down, 10);
       margin-top: 10px;
