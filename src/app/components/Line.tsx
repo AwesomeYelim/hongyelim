@@ -15,9 +15,6 @@ export const Line = (): JSX.Element => {
     { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
     { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
     { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
-    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
-    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
-    { date: "23.11.02", img: "empty.png", contents: "이러저러랄랄" },
   ];
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
@@ -36,7 +33,7 @@ export const Line = (): JSX.Element => {
   }, []);
 
   return (
-    <div className={line_wrapper} style={{ height: fakeData.length * 200 }}>
+    <div className={line_wrapper} style={{ height: (fakeData.length + 2) * 200 }}>
       <div className={line} style={{ height: `${lineHeight}px` }} />
       {dotobj.map((dotY) => {
         const data = fakeData[dotY];

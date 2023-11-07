@@ -74,9 +74,9 @@ export const getTargetPostApi = async (queryKey: string) => {
     return res;
   });
   const mdPost = axios.get(`/api/${queryKey}`, {
-    headers: {
-      "Cache-Control": "no-store",
-    },
+    // headers: {
+    //   "Cache-Control": "no-store",
+    // },
   });
 
   return { post: { ...post, comments: post.comments ? commentsTree(post.comments) : [] } as Post, mdPost };

@@ -21,7 +21,7 @@ export async function POST(req: Request, res: Response) {
   const postData = doc(db, "posts", title);
 
   const user = await getDoc(userData);
-  const post = await getDoc(postData);
+  const post = () => getDoc(postData);
 
   try {
     if (session?.user?.email && data) {
@@ -31,20 +31,25 @@ export async function POST(req: Request, res: Response) {
       /** 사용자별 게시물 heart 상태 세팅 & 업데이트 */
       await setDoc(userData, {
         ...user.data(),
-        heart: user.data()?.heart ? { ...user.data()?.heart, [title]: userHeart } : { [title]: userHeart },
+        heart: user.data()?.heart
+          ? { ...user.data()?.heart, [title]: userHeart }
+          : { [title]: userHeart },
       });
 
       /** 게시물별 heart 개수 상태 업데이트 */
       await updateDoc(postData, {
-        heart: { ...post.data()?.heart, [session?.user?.email]: userHeart },
-        heart_count: userHeart ? post.data()?.heart_count + 1 : post.data()?.heart_count - 1,
+        heart: {
+          ...(await post()).data()?.heart,
+          [session?.user?.email]: userHeart,
+        },
+        heart_count: userHeart
+          ? (await post()).data()?.heart_count + 1
+          : (await post()).data()?.heart_count - 1,
       });
-
-      const updatedPost = await getDoc(doc(db, "posts", title));
 
       return NextResponse.json({
         message: "success!",
-        post: updatedPost.data(),
+        post: (await post()).data(),
       });
     }
   } catch (err) {
