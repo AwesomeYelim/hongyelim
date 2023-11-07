@@ -46,7 +46,10 @@ export default function NavBar() {
   }, []);
 
   return (
-    <div className="nav_wrapper" style={{ height: navInfo.hide ? "111px" : "0px" }}>
+    <div
+      className="nav_wrapper"
+      style={{ height: navInfo.hide ? "111px" : "0px" }}
+    >
       <Link href="/" className="logo">
         <i />
       </Link>
@@ -87,10 +90,16 @@ export default function NavBar() {
             alt="profile-img"
           />
         )}
-        <Link href="/profile" className={classNames({ active: location?.includes("/profile") })}>
+        <Link
+          href="/profile"
+          className={classNames({ active: location?.includes("/profile") })}
+        >
           Profile
         </Link>
-        <Link href="/posts" className={classNames({ active: location?.includes("/posts") })}>
+        <Link
+          href="/posts"
+          className={classNames({ active: location?.includes("/posts") })}
+        >
           Posts
         </Link>
         {/* {admin && (
@@ -98,11 +107,12 @@ export default function NavBar() {
             Memo
           </Link>
         )} */}
-        {admin && (
-          <Link href="/archives" className={classNames({ active: location?.includes("/archives") })}>
-            Archives
-          </Link>
-        )}
+        <Link
+          href="/archives"
+          className={classNames({ active: location?.includes("/archives") })}
+        >
+          Archives
+        </Link>
       </nav>
     </div>
   );
