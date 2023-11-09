@@ -72,25 +72,23 @@ const commentsTree = (arr: Data[]) => {
   arr = arr.sort((a, b) => {
     const ac = a.com_created_at;
     const bc = b.com_created_at;
-    if (ac.length === bc.length) return bc[bc.length - 1] - ac[ac.length - 1];
+    const [al, bl] = [ac.at(-1), bc.at(-1)] as number[];
+    if (ac.length === bc.length) return bl - al;
     return bc.length - ac.length;
   });
 
   const lengthOne = arr.filter((highData) => {
-    arr.forEach((data) => {
+    [...arr].forEach((data) => {
       const h = highData.com_created_at;
       const d = data.com_created_at;
       /** 중복제거 */
-      const duplePrevent = !(highData as ChildrenD).children
-        ?.map((el) => el.com_created_at[el.com_created_at.length - 1])
-        .includes(d[d.length - 1]);
+      const duplePrevent = !highData.children?.map((el) => el.com_created_at.at(-1)).includes(d.at(-1));
 
       // 부모요소의 끝에부분과 자식요소의 끝에서 두번째 부분이 일치 하고 & 중복요소가 포함되지 않도록 조건을 건다.
-      if (h[h.length - 1] === d[d.length - 2] && duplePrevent) {
-        ((highData as ChildrenD).children || ((highData as ChildrenD).children = [])).push(data);
+      if (h.at(-1) === d.at(-2) && duplePrevent) {
+        (highData.children || (highData.children = [])).push(data);
       }
     });
-
     // 마지막에 최상위 요소만 남긴다
     return highData?.com_created_at?.length === 1;
   });
@@ -102,5 +100,4 @@ console.log(commentsTree(data));
 
 ## 회고
 
-- 뭔가 더 복잡해진거 같은 기분이 들고,
-- 좀 아직 불완전한 부분들이 발생될거 같아서.. 계속 코드를 수정해 나가야겠다. ^^
+- 조금 더 고쳐나가 보자 ~!
