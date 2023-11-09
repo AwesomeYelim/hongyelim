@@ -35,7 +35,8 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" suppressHydrationWarning={true}>
+    // scroll 발생 에 따른 layout 변경 방지
+    <html lang="ko" suppressHydrationWarning={true} style={{ width: "100vw" }}>
       <GoogleAnalytics />
       <head>
         <meta name="googlebot" content="index, follow" />

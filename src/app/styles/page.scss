@@ -3,7 +3,7 @@
 .main_wrapper {
   @include flex(center, center);
   gap: 50px;
-  height: calc(100vh - 180px);
+  height: calc(100vh - 190px);
 
   h1 {
     border-right: 5px solid #ccc;
