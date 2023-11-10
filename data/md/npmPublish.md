@@ -90,3 +90,24 @@ import titleCondition from "react-text-settle";
 ```
 
 ![b_npmPublish422](./img/b_npmPublish422.png)
+
+<details>
+<summary>추가 참고 사이트 </summary>
+
+<div markdown="1">
+
+• 패키지 다운로드 추이 확인: <https://www.npmtrends.com>
+
+</div>
+<div markdown="2">
+
+• 패키지 이름에 네임스페이스 설정하기: <https://docs.npmjs.com/misc/scope>
+
+</div>
+<div markdown="3">
+
+• release-it: <https://github.com/release-it/release-it>
+
+</div>
+
+</details>
