@@ -6729,6 +6729,11 @@ react-syntax-highlighter@^15.5.0:
     prismjs "^1.27.0"
     refractor "^3.6.0"
 
+react-text-settle@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-text-settle/-/react-text-settle-0.0.4.tgz#bd7b9960cc7620942e6513f184fef0563ced2815"
+  integrity sha512-DOiafEh7TSqqoN+EADFDXkq7wKkZTdm7Bw8fS+GKAhP0zgevgEwFigt7EvFev6kUb9tPgikuSkbM8DgSjfQDlg==
+
 react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"

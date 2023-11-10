@@ -8,14 +8,13 @@ import rehypeRaw from "rehype-raw";
 import { styled } from "styled-components";
 import { ElementContent, Position } from "react-markdown/lib/ast-to-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { titleCondition } from "./functions/ellipsis";
 import Image from "next/image";
-
 // import { useDark } from "../hooks";
 import dateFn from "./functions/date";
 import { Inter } from "next/font/google";
 import { throttle } from "lodash";
 import React from "react";
+import titleCondition from "react-text-settle";
 import "./MdfileViewer.scss";
 
 interface MarkdownViewProps {
