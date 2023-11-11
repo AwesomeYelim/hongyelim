@@ -12,13 +12,37 @@
     padding-bottom: 20px;
     margin-bottom: 100px;
   }
-
+  code:not(pre code) {
+    @include undeline();
+  }
   h1,
   h2,
   h3,
   h4,
   details {
     margin: 50px 0 20px 0;
+  }
+
+  details {
+    width: 100%;
+    summary {
+      width: 100% !important;
+      padding: 10px;
+      box-sizing: border-box;
+      border-bottom: 1px solid #ccc;
+      background-color: #e3e3e32f;
+    }
+    div {
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+    border: 1px solid #ccc;
+    border-bottom: 1px solid transparent;
+    border-radius: 3px;
+  }
+
+  details[open] {
+    border-bottom: 1px solid #ccc;
   }
   li {
     margin: 10px 0 10px 30px;
@@ -54,9 +78,6 @@
     align-items: center;
     line-height: 200%;
     flex-wrap: wrap;
-    &:has(code) code {
-      @include undeline();
-    }
   }
   table {
     margin: 30px 0;
