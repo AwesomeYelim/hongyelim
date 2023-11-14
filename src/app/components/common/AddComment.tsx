@@ -4,8 +4,9 @@ import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { CommentEl, User } from "@/service/posts";
 import { Session } from "next-auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
+import { commentsTree, sendEmail } from "@/app/api/[id]/comment/route";
 
 export interface AddProps {
   com_created_at?: number[];
@@ -40,17 +41,48 @@ export const AddComment = (props: AddProps) => {
   const postsCommentApi = async (data: CommentEl & { queryKey: string }) => {
     if (data["children"]) delete data["children"];
 
+    const title = data.queryKey;
 
-    await axios
-      .post(`/api/${data.queryKey}/comment`, JSON.stringify(data), {
-        headers: {
-          // "Cache-Control": "no-store",
-          "Content-Type": `application/json`,
-        },
-      })
-      .then((res) => {
-        setComments(res.data.post.comments);
-      });
+    const userData = doc(db, "user", session?.user?.email as string);
+    const user = await getDoc(userData);
+
+    const postData = doc(db, "posts", title);
+    const post = await getDoc(postData);
+
+    const { userInfo, ...rest } = data;
+
+    /** 사용자별 게시물 comments 상태  업데이트 */
+    await setDoc(userData, {
+      ...user.data(),
+      comments: user.data()?.comments
+        ? {
+            ...user.data()?.comments,
+            [title]: user.data()?.comments[title]
+              ? [...user.data()?.comments[title], rest]
+              : [rest],
+          }
+        : { [title]: [rest] },
+    });
+
+    await updateDoc(postData, {
+      comments: [...post.data()?.comments, { ...data }],
+    });
+
+    sendEmail({ arr: [...post.data()?.comments], target: data, title });
+
+    const updatedPost = await getDoc(doc(db, "posts", title));
+
+    setComments(commentsTree(updatedPost?.data()?.comments));
+
+    // await axios
+    //   .post(`/api/${data.queryKey}/comment`, JSON.stringify(data), {
+    //     headers: {
+    //       "Content-Type": `application/json`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     setComments(res.data.post.comments);
+    //   });
   };
 
   const mutation = useMutation({

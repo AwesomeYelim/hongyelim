@@ -9,9 +9,12 @@ import { getTargetPostApi } from "./functions/myapi";
 import { useEffect, useState } from "react";
 import { AddComment, AddProps } from "./AddComment";
 import { Session } from "next-auth";
+import dateFn from "./functions/date";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/app/firebase";
+import { commentsTree } from "@/app/api/[id]/comment/route";
 
 import "./Comments.scss";
-import dateFn from "./functions/date";
 
 export const Comments = ({ title }: { title: string }): JSX.Element => {
   const { data: session } = useSession();
@@ -25,16 +28,53 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
   });
 
   const deleteCommentApi = async (data: CommentEl & { queryKey: string }) => {
-    await axios
-      .delete(`/api/${data.queryKey}/comment`, {
-        headers: {
-          // "Cache-Control": "no-store",
-        },
-        params: { data },
-      })
-      .then((res) => {
-        setComments(res.data.post.comments);
-      });
+    const targetKey = data["com_created_at"][0];
+    const title = data.queryKey as string;
+
+    const postData = doc(db, "posts", title);
+    const post = await getDoc(postData);
+
+    const userData = doc(db, "user", session?.user?.email as string);
+    const user = await getDoc(userData);
+
+    /** 사용자별 게시물 comments 상태 세팅 & 업데이트 */
+    await updateDoc(userData, {
+      comments: {
+        ...user.data()?.comments,
+        [title]: user.data()?.comments[title]
+          ? [
+              ...user.data()?.comments[title]?.filter((el: CommentEl) => {
+                const c = el.com_created_at;
+                // const target = c[c.length - 1];
+                return !c.includes(targetKey);
+              }),
+            ]
+          : [],
+      },
+    });
+
+    await updateDoc(postData, {
+      comments: [
+        ...post.data()?.comments.filter((el: CommentEl) => {
+          const c = el.com_created_at;
+          // const target = c[c.length - 1];
+          // return target !== +(targetKey as string);
+          return !c.includes(targetKey);
+        }),
+      ],
+    });
+
+    const updatedPost = await getDoc(doc(db, "posts", title));
+
+    setComments(commentsTree(updatedPost?.data()?.comments));
+
+    // await axios
+    //   .delete(`/api/${data.queryKey}/comment`, {
+    //     params: { data },
+    //   })
+    //   .then((res) => {
+    //     setComments(res.data.post.comments);
+    //   });
   };
 
   useEffect(() => {
