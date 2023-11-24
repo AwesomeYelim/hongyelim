@@ -78,7 +78,7 @@ declare class Strategy extends PassportStrategy {
 
 - axios 사이트에 가보면
 
-  > https://github.com/axios/axios
+  > <https://github.com/axios/axios>
 
   <img src='./img/b_axios.png' width='300px'/>
 
@@ -109,7 +109,7 @@ yarn add typescript
 
 🚩 타입 생성후 배포시 convention 이나 그밖의 룰 참고
 
-> https://github.com/DefinitelyTyped/DefinitelyTyped
+> <https://github.com/DefinitelyTyped/DefinitelyTyped>
 
 \*\* common mistakes 읽어보기
 
