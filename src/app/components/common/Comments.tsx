@@ -13,7 +13,6 @@ import dateFn from "./functions/date";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import { commentsTree } from "@/app/api/[id]/comment/route";
-
 import "./Comments.scss";
 
 export const Comments = ({ title }: { title: string }): JSX.Element => {

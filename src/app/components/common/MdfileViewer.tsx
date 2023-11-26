@@ -100,16 +100,23 @@ const Heading = ({
           top: post![e.currentTarget.innerHTML],
           behavior: "smooth",
         });
-      }}>
+      }}
+    >
       {children}
     </HeadingTag>
   );
 };
 
-const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps): JSX.Element => {
+const MdfileViewer = ({
+  mdPost,
+  useToc = false,
+  created_at,
+}: MarkdownViewProps): JSX.Element => {
   let innerText: RegExpMatchArray | string | null;
 
-  innerText = mdPost?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "").match(/#+\s(.+)/gm);
+  innerText = mdPost
+    ?.replace(/\`\`\`([\s\S]*?)\`\`\`/g, "")
+    .match(/#+\s(.+)/gm);
 
   const [target, setTarget] = useState<[string, number]>(["", 0]);
   const { mdRef } = { mdRef: useRef<HTMLDivElement>(null) };
@@ -165,7 +172,8 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
   useEffect(() => {
     document.addEventListener("scroll", throttle(scrollEffect, 300));
 
-    return () => document.removeEventListener("scroll", throttle(scrollEffect, 300));
+    return () =>
+      document.removeEventListener("scroll", throttle(scrollEffect, 300));
   }, [scrollEffect]);
 
   // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
@@ -198,7 +206,8 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
               onClick={() => {
                 window.scroll({ left: 0, top: 0, behavior: "smooth" });
                 setTarget(["", 0]);
-              }}>
+              }}
+            >
               목차
             </span>
             {innerText?.map((el) => {
@@ -227,7 +236,7 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
               posi.end.offset = (posi.end?.offset as number) + 150;
               posi.end.column = (posi.end?.column as number) + 150;
 
-              const src = (node.properties?.src as string).split("b_")[1];
+              const src = (node.properties?.src as string).split("_").at(-1);
               return (
                 <Image
                   className="main_img"
@@ -246,7 +255,12 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
             code({ inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return !inline && match ? (
-                <SyntaxHighlighter language={match[1]} PreTag="div" {...props} style={coldarkDark}>
+                <SyntaxHighlighter
+                  language={match[1]}
+                  PreTag="div"
+                  {...props}
+                  style={coldarkDark}
+                >
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
@@ -257,7 +271,8 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
             },
 
             ...headingTag,
-          }}>
+          }}
+        >
           {mdPost}
         </ReactMarkdown>
       </div>
