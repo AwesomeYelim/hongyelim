@@ -23,7 +23,7 @@
 
 ```json
 {
-  "pasteImage.defaultName": "${currentFileNameWithoutExt}s", // 기본 이미지 파일 이름
+  "pasteImage.defaultName": "${currentFileNameWithoutExt}hms", // 기본 이미지 파일 이름
   "pasteImage.basePath": "${projectRoot}", // 이미지 URL의 기본 경로
   "pasteImage.path": "${currentFileDir}/img", // 이미지 파일을 저장할 대상
   "pasteImage.namePrefix": "", // 이미지 파일 이름 앞에 추가되는 문자열
@@ -41,9 +41,9 @@
 
 ## 생각했던것들
 
-- 나는 각 디렉토리내의 img 폴더내의 `md파일이름_{unique 값}`(`${currentFileNameWithoutExt}s` ) 으로 저장시켜 줄 생각이었음
+- 나는 각 디렉토리내의 img 폴더내의 `md파일이름_{unique 값}`(`${currentFileNameWithoutExt}hms` ) 으로 저장시켜 줄 생각이었음
 
-- `${currentFileNameWithoutExt}s` s 부분에서 `index`을 써도 유니크 값으로 네이밍이 되지만 초단위로 끊는게 더 단순할거 같아서 `s` 를 넣어주었음
+- `${currentFileNameWithoutExt}hms` `hms` 부분에서 `index`을 써도 유니크 값으로 네이밍이 되지만 시분초단위로 끊는게 더 단순할거 같아서 `hms` 를 넣어주었음
 
 - 계속.. 절대경로가 포함되어 붙여넣어 지길래 계속 삽질하다가 발견한것이 `"pasteImage.namePrefix": "",` 이놈을 초기값으로 설정해 주지 않아서였다^^.. 아무도 나처럼 해매지 않길바란다...
 
