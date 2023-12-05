@@ -11,26 +11,9 @@ const nextConfig = {
       displayName: false,
     },
   },
-  // reactStrictMode: true,
+  reactStrictMode: true,
   swcMinify: true,
-  // async headers() {
-  //   return [
-  //     {
-  //       source: "/:path*",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "no-store",
-  //         },
 
-  //         {
-  //           key: "Etag",
-  //           value: "false",
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,
@@ -48,16 +31,6 @@ const nextConfig = {
 
     return config;
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.scss$/,
-  //       use: [
-  //         "sass-extract-loader", // Add this loader
-  //       ],
-  //     },
-  //   ],
-  // },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
