@@ -11,7 +11,7 @@ const nextConfig = {
       displayName: false,
     },
   },
-  reactStrictMode: true,
+  // reactStrictMode: true,
   swcMinify: true,
 
   webpack: (config, { isServer }) => {
