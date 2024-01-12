@@ -32,10 +32,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install TypeScript
-        run: yarn add typescript --dev
+        run: yarn add --dev typescript 
 
       - name: Install ts-node
-        run: yarn global add ts-node
+        run: yarn add --dev ts-node@latest
 
       - name: Run Test Script
         run: $(yarn global bin)/ts-node src/app/dataInterlock.ts
