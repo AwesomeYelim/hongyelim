@@ -38,4 +38,4 @@ jobs:
         run: yarn global add ts-node
 
       - name: Run Test Script
-        run: $(yarn global bin)/ts-node src/app/dataInterlock.ts
+        run: npx ts-node src/app/dataInterlock.ts
