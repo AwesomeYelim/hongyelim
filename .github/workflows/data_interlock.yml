@@ -34,8 +34,8 @@ jobs:
       - name: Install TypeScript
         run: yarn add typescript --dev
 
-      # - name: Install ts-node
-      #   run: yarn global add ts-node@10.9.1
+      - name: Install ts-node
+        run: yarn global add ts-node@10.9.1
 
       - name: Run Test Script
-        run: npx tsc src/app/dataInterlock.ts && node src/app/dataInterlock.js
+        run: $(yarn global bin)/ts-node src/app/dataInterlock.ts
