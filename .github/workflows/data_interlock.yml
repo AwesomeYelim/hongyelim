@@ -31,6 +31,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: node-version
+        run : nvm use 18
+
       - name: Install TypeScript
         run: yarn add typescript --dev
 
