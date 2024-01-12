@@ -31,14 +31,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: node-version
-        run : nvm use 18
-
       - name: Install TypeScript
         run: yarn add typescript --dev
 
       - name: Install ts-node
-        run: yarn global add ts-node@10.9.1
+        run: yarn global add ts-node
 
       - name: Run Test Script
-        run: $(yarn global bin)/ts-node src/dataInterlock.ts
+        run: $(yarn global bin)/ts-node src/app/dataInterlock.ts

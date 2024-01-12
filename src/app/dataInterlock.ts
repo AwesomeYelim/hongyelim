@@ -1,6 +1,6 @@
-import { db } from "./app/firebase";
+import { db } from "./firebase";
 import { doc, getDocs, setDoc, collection } from "firebase/firestore";
-import { Post } from "./service/posts";
+import { Post } from "@/service/posts";
 import fs from "fs";
 import path from "path";
 

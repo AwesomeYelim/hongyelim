@@ -7109,14 +7109,6 @@ next-auth@^4.23.0:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
-next-contentlayer@^0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/next-contentlayer/-/next-contentlayer-0.3.4.tgz#dd88ff27bca94ec8c619d77d225a0b15f2e6ccb2"
-  integrity sha512-UtUCwgAl159KwfhNaOwyiI7Lg6sdioyKMeh+E7jxx0CJ29JuXGxBEYmCI6+72NxFGIFZKx8lvttbbQhbnYWYSw==
-  dependencies:
-    "@contentlayer/core" "0.3.4"
-    "@contentlayer/utils" "0.3.4"
-
 next-cookies@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/next-cookies/-/next-cookies-2.0.3.tgz"
