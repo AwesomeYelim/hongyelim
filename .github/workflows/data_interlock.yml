@@ -41,4 +41,4 @@ jobs:
         # run: yarn node --loader ts-node/esm src/app/dataInterlock.ts
         # run: node --no-warnings=ExperimentalWarning --loader ts-node/esm src/app/dataInterlock.ts
         # run: yarn ts-node src/app/dataInterlock.ts
-        run: $(yarn global bin)/ts-node --loader ts-node/esm:mjs src/app/dataInterlock.ts
+        run: $(yarn global bin)/ts-node ts-node/esm:mjs src/app/dataInterlock.ts
