@@ -38,4 +38,4 @@ jobs:
         run: yarn add ts-node
 
       - name: Run Test Script
-        run: npx ts-node src/app/dataInterlock.ts
+        run: yarn node --loader ts-node/esm src/app/dataInterlock.ts
