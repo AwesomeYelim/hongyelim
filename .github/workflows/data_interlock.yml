@@ -32,11 +32,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install TypeScript
-        run: yarn add -D typescript 
+        run: yarn add -D typescript
 
       - name: Install ts-node
-        run: yarn add ts-node
+        run: yarn global add ts-node
 
       - name: Run Test Script
         # run: yarn node --loader ts-node/esm src/app/dataInterlock.ts
-        run: node --no-warnings=ExperimentalWarning --loader ts-node/esm src/app/dataInterlock.ts
+        # run: node --no-warnings=ExperimentalWarning --loader ts-node/esm src/app/dataInterlock.ts
+        run: yarn ts-node src/app/dataInterlock.ts
