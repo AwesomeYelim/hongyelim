@@ -16,7 +16,7 @@ async function getData() {
 
 async function dataInterlock() {
   const posts = await getData();
-  
+  console.log('제발')
   /** firebase 에 있는 data 배열의 titles */
   const postTitles = posts.map((el) => el.title);
 
