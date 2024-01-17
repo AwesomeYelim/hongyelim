@@ -28,6 +28,8 @@
 
 3. onMouseOver 시에 title 태그가 확인되어야함
 
+4. 안에 children 이 있을 경우 내부 text를 추적해서 적용해줘야함
+
 ## 결과 코드
 
 ---
@@ -44,9 +46,7 @@ export interface TitleEl extends Element {
 }
 
 export type TitleType = {
-  ref: (e: HTMLDivElement) => void;
-  onFocus: (e: React.FocusEvent<TitleEl>) => void;
-  onMouseOver: (e: React.MouseEvent<TitleEl>) => void;
+  ref: (e: HTMLDivElement | HTMLAnchorElement | null) => void;
   style?: React.CSSProperties;
 };
 
@@ -55,31 +55,42 @@ const ellipsisStyle = (e: HTMLDivElement) => {
   e.style.textOverflow = "ellipsis";
   e.style.whiteSpace = "nowrap";
   e.style.display = "block";
+  e.title = e.innerText;
+
   return e;
+};
+
+/** children 이 있을경우 */
+const depth = (currentTarget: TitleEl) => {
+  if (currentTarget) {
+    const { clientWidth, scrollWidth, children } = currentTarget;
+
+    if (!children?.length && currentTarget?.innerText && clientWidth < scrollWidth) {
+      ellipsisStyle(currentTarget as HTMLDivElement);
+    } else {
+      Array.prototype.filter.call(children, (el: TitleEl & HTMLCollectionOf<Element>) => depth(el));
+    }
+  }
 };
 
 /** 글자 width 값을 연산하여 ellipsis (...) 적용 및 title 태그를 반영해준다 */
 export const titleCondition: TitleType = {
-  // 우선 요소의 ref 를 받아서 해당 element 정보를 인자값으로 받는다.
   ref: (e) => {
     if (e && i18n.language !== "ko") {
-      if (e.clientWidth < e.scrollWidth) {
-        ellipsisStyle(e);
+      const { children } = e;
+
+      if (!children.length) {
+        if (e.clientWidth < e.scrollWidth) {
+          ellipsisStyle(e as HTMLDivElement);
+        }
+
+        // 화면에 딱 맞는 경우 flex 적용
+        if (e.clientWidth === e.scrollWidth) {
+          ellipsisStyle(e as HTMLDivElement);
+        }
+      } else {
+        depth(e);
       }
-    }
-  },
-  // 이거는 window 자체 속성으로 onMouseOver와 세트로 넣어야 에러가 안떴었다..
-  onFocus: (e) => {
-    e.stopPropagation();
-  },
-  onMouseOver: (e) => {
-    e.stopPropagation();
-    if (
-      i18n.language !== "ko" &&
-      e.currentTarget.innerText &&
-      e.currentTarget.clientWidth < e.currentTarget.scrollWidth
-    ) {
-      e.currentTarget.title = e.currentTarget.innerText;
     }
   },
 };
@@ -90,7 +101,6 @@ export const titleCondition: TitleType = {
 ---
 
 - 다음과 같이 텍스트를 바로 감싸고 있는 element에 사용이 가능하다.
-- 혹시 있을 자식요소를 방지하고 싶다면 `!e.currentTarget.children.length` 를 onMouseOver 함수 내 if 문에 포함시켜주자.
 
 ```js
 <div className="title" {...titleCondition}>
