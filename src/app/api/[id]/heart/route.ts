@@ -31,9 +31,7 @@ export async function POST(req: Request, res: Response) {
       /** 사용자별 게시물 heart 상태 세팅 & 업데이트 */
       await setDoc(userData, {
         ...user.data(),
-        heart: user.data()?.heart
-          ? { ...user.data()?.heart, [title]: userHeart }
-          : { [title]: userHeart },
+        heart: user.data()?.heart ? { ...user.data()?.heart, [title]: userHeart } : { [title]: userHeart },
       });
 
       /** 게시물별 heart 개수 상태 업데이트 */
@@ -44,7 +42,7 @@ export async function POST(req: Request, res: Response) {
         },
         heart_count: userHeart
           ? (await post()).data()?.heart_count + 1
-          : (await post()).data()?.heart_count - 1,
+          : (await post()).data()?.heart_count > 0 && (await post()).data()?.heart_count - 1,
       });
 
       return NextResponse.json({
