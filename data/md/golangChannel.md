@@ -274,3 +274,5 @@ func main() {
 ```
 
 이렇게 되면 중간에 행이 걸리는 순간이 있지만 go routine 두개를 사용하므로써 순차적인 값사용이 가능한것을 볼수 있다.
+
+![b_golangChannel_94748](./img/b_golangChannel_94748.png)
