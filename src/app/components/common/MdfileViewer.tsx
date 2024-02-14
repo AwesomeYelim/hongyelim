@@ -82,7 +82,7 @@ const Heading = ({
     style: {
       marginLeft: level * 20,
       fontSize: target[0] === children ? 15 : 13,
-      fontWeight: target[0] === children ? 700 : 700 - level * 150,
+      fontWeight: target[0] === children ? 700 : 500,
     },
   };
   const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
