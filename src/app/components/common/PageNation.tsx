@@ -78,11 +78,10 @@ export const PageNation = (props: Props): JSX.Element => {
                   total: postsId.length,
                   selectedNum: el,
                 });
-              }}
-            >
+              }}>
               {el}
             </span>
-            {el === twoD?.[rightPageNum]?.[page - 1] && (
+            {el !== twoD?.at(-1).at(-1) && el === twoD?.[rightPageNum]?.[page - 1] && (
               <i
                 className="right-btn"
                 onClick={() => {

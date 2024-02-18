@@ -228,6 +228,7 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
               posi.end.column = (posi.end?.column as number) + 150;
 
               const src = (node.properties?.src as string).split("_").at(-1);
+
               return (
                 <Image
                   className="main_img"
@@ -235,7 +236,7 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
                   alt="mdImag"
                   width={500}
                   height={150}
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: "70%", height: "initial" }}
                   decoding="sync"
                   priority
                   // fill

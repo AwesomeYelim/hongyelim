@@ -14,10 +14,26 @@
   }
   .posts_wrapper {
     .tag_wrap {
-      // @include animate(1, down);
+      position: absolute;
+      background-color: rgba(217, 217, 217, 0.332);
+      border-radius: 3px;
+      // overflow-y: auto;
+      // display: table-caption;
+      scrollbar-gutter: stable both-edges; // scroll 생성시 width 값 그대로
+      a {
+        padding: 3px 5px;
+        &:first-child {
+          position: sticky;
+          top: 0;
+          background-color: rgb(231, 242, 252);
+        }
+        &:nth-child(2) {
+          margin-top: 20px;
+        }
+      }
     }
     .list_wrapper {
-      // height: calc(100vh - 100px);
+      // height: calc(100vh - 70px);
       .list {
         @include flex(center, initial);
         @include animate(1, down);
