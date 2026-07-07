@@ -1,19 +1,9 @@
 /** @type { import('next').NextConfig } */
 
 const nextConfig = {
-  // output: "export",
-  // skipTrailingSlashRedirect: true, // middeleware 설정 부분
   experimental: {
-    appDir: true,
+    serverComponentsExternalPackages: ["nodemailer"],
   },
-  compiler: {
-    styledComponents: {
-      displayName: false,
-    },
-  },
-  // reactStrictMode: true,
-  swcMinify: true,
-
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,

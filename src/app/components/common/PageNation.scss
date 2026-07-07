@@ -5,19 +5,23 @@
   margin-top: 30px;
   width: 100%;
   gap: 10px;
+
+  // The outer <span key={el}> wrappers must not participate in flex layout
+  > span {
+    display: contents;
+  }
   .pageNum_el {
     @include flex(center, center);
     width: 20px;
     height: 20px;
-    // font-size: 1rem;
     border-radius: 50%;
-    background-color: rgba(204, 204, 204, 0.555);
+    background-color: var(--color-page-num);
     color: #fff;
     padding: 5px;
     cursor: pointer;
 
     &.active {
-      background-color: rgba(35, 35, 35, 0.555);
+      background-color: var(--color-page-num-active);
     }
   }
 

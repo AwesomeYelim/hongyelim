@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Techlog from "../components/Techlog";
 import "./page.scss";
 
@@ -8,7 +9,9 @@ export default async function PostPage() {
         <h1>Just Remember !</h1>
         <span>off the top of my head....</span>
       </div>
-      <Techlog />
+      <Suspense>
+        <Techlog />
+      </Suspense>
     </div>
   );
 }

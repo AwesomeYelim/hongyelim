@@ -10,14 +10,13 @@
     gap: 10px;
     position: fixed;
     top: 300px;
-    // left: -100px;
     width: 50px;
     height: 80px;
     padding: 20px;
-    border: 1px solid rgb(209, 209, 209);
+    border: 1px solid var(--color-border-light);
     border-radius: 40px;
     .like {
-      color: #333;
+      color: var(--color-heart-count);
     }
     .heart {
       background: url($img) no-repeat -4px -5px;
@@ -30,6 +29,24 @@
         width: 25px;
         height: 22px;
       }
+    }
+  }
+}
+
+// ===== Mobile: move heart inline =====
+@media (max-width: 1024px) {
+  .side_area {
+    position: relative;
+    left: 0;
+    .heart_wrap {
+      position: relative;
+      top: 0;
+      flex-direction: row;
+      width: auto;
+      height: auto;
+      padding: 10px 20px;
+      border-radius: 20px;
+      margin: 20px 0;
     }
   }
 }

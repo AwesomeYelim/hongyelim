@@ -5,11 +5,9 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import { styled } from "styled-components";
 import { ElementContent, Position } from "react-markdown/lib/ast-to-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-// import { useDark } from "../hooks";
 import dateFn from "./functions/date";
 import { Inter } from "next/font/google";
 import { throttle } from "lodash";
@@ -23,50 +21,8 @@ interface MarkdownViewProps {
   useToc?: boolean;
 }
 
-const TOCwrapper = styled.div`
-  position: absolute;
-  right: -1rem;
-  .toc_content {
-    position: fixed;
-    top: 30%;
-    max-width: 300px;
-    height: 500px;
-    overflow-y: auto;
-    padding-right: 20px;
-
-    h1,
-    h2,
-    h3,
-    h4 {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: 0.25s linear;
-      font-size: 15px;
-      height: 20px;
-      &:hover {
-        color: #858585;
-      }
-    }
-    h1 {
-      margin-top: 15px;
-    }
-    span {
-      font-size: 15px;
-      font-weight: bold;
-      border-bottom: 2px solid #ccc;
-      cursor: pointer;
-      padding-left: 4px;
-      padding-bottom: 5px;
-      margin-bottom: 10px;
-    }
-  }
-`;
-
 const inter = Inter({ subsets: ["latin"] });
 
-// 오른쪽 toc
 const Heading = ({
   level,
   children,
@@ -118,7 +74,6 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
     [key in string]: number;
   } = {};
 
-  // 초기 md h tag 위치값 표기 및 h tag 랜더링
   const tocHandler = ({
     level,
     children,
@@ -149,9 +104,12 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
     return <HeadingTag>{children as string}</HeadingTag>;
   };
 
+  const throttledScrollEffect = useRef(
+    throttle(() => {}, 300)
+  );
+
   const scrollEffect = useCallback(() => {
     Object.entries(post).forEach(([key, scrollY], i, arr) => {
-      /** 처음 과 끝 부분 */
       if (!i || arr[arr.length - 1]) {
         if (window.scrollY === scrollY || window.scrollY > scrollY) {
           setTarget([key, scrollY]);
@@ -163,23 +121,10 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
   }, [target[1]]);
 
   useEffect(() => {
-    document.addEventListener("scroll", throttle(scrollEffect, 300));
-
-    return () => document.removeEventListener("scroll", throttle(scrollEffect, 300));
+    const handler = throttle(scrollEffect, 300);
+    document.addEventListener("scroll", handler);
+    return () => document.removeEventListener("scroll", handler);
   }, [scrollEffect]);
-
-  // /**  memo 에서 md 파일 입력시 스크롤 이벤트 */
-  // useEffect(() => {
-  //   if (
-  //     mdRef.current &&
-  //     mdRef.current.clientHeight < mdRef.current?.scrollHeight
-  //   ) {
-  //     mdRef.current.scroll({
-  //       top: mdRef.current?.scrollHeight,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // }, [mdPost]);
 
   const headingTag = useToc && {
     h1: tocHandler,
@@ -190,9 +135,8 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
 
   return (
     <>
-      {/* 오른쪽 TOC */}
       {useToc && (
-        <TOCwrapper className="toc_wrapper">
+        <div className="toc_wrapper">
           <div className="toc_content">
             <span
               onClick={() => {
@@ -213,9 +157,8 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
               return <Heading key={children} {...props} />;
             })}
           </div>
-        </TOCwrapper>
+        </div>
       )}
-      {/* markdown contents */}
       <div className="md_wrapper" ref={mdRef}>
         <ReactMarkdown
           rehypePlugins={[rehypeRaw]}
@@ -239,8 +182,6 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
                   style={{ width: "70%", height: "initial" }}
                   decoding="sync"
                   priority
-                  // fill
-                  // placeholder="blur"
                 />
               );
             },

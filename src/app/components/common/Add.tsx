@@ -2,8 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { Selected } from "../Tag";
-import MdfileViewer from "./MdfileViewer";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postsAddApi } from "./functions/myapi";
 
 export const Add = ({
@@ -18,8 +17,6 @@ export const Add = ({
     handleSubmit,
     formState: { errors },
     setValue,
-    // setError,
-    watch,
   } = useForm();
 
   const queryClient = useQueryClient();
@@ -32,7 +29,7 @@ export const Add = ({
       setValue("title", "");
       setValue("tag", "");
       setValue("sub", "");
-      queryClient.invalidateQueries({ queryKey: "postsData" });
+      queryClient.invalidateQueries({ queryKey: ["postsData"] });
     },
   });
 
@@ -88,7 +85,6 @@ export const Add = ({
           </div>
           <div className="written_area">
             <label>Viwer</label>
-            {/* <MdfileViewer mdPost={watch("content")} /> */}
           </div>
         </div>
         {errors.content && <p>{errors.content.message as string}</p>}

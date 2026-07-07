@@ -1,27 +1,47 @@
-// import dynamic from "next/dynamic";
-import { Line } from "../components/Line";
-import MoveEvent from "../components/MoveEvent";
+import Link from "next/link";
+import { getPosts } from "@/service/posts";
 import "./page.scss";
 
-interface Props {
-  data?: number;
-}
-
-// const ClientMoveEvent = dynamic(() => import("../components/MoveEvent"), {
-//   ssr: false,
-// });
-
 export default async function ArchivesPage() {
-  //
+  const posts = await getPosts();
+  const sorted = posts.sort((a, b) => b.created_at - a.created_at);
+
+  // Group by year-month
+  const grouped: Record<string, typeof posts> = {};
+  sorted.forEach((post) => {
+    const date = new Date(post.created_at * 1000);
+    const key = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}`;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(post);
+  });
+
+  const formatDate = (epoch: number) => {
+    const d = new Date(epoch * 1000);
+    return `${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+  };
+
   return (
     <div className="archive_page">
       <div className="ar_title">
-        <h1>Attempts</h1>
-        <i />
+        <h1>Archives</h1>
       </div>
-      <span>다양한 시도들을 시기별로 나열합니다.</span>
-      <Line />
-      {/* <MoveEvent /> */}
+      <span className="ar_sub">총 {posts.length}개의 글</span>
+
+      <div className="timeline">
+        {Object.entries(grouped).map(([yearMonth, items]) => (
+          <div key={yearMonth} className="timeline_group">
+            <h2 className="timeline_date">{yearMonth}</h2>
+            <ul>
+              {items.map((post) => (
+                <li key={post.id}>
+                  <span className="post_date">{formatDate(post.created_at)}</span>
+                  <Link href={`/posts/${post.title}`}>{post.post_title}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

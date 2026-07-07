@@ -1,0 +1,78 @@
+// ===== CSS Custom Properties Theme System =====
+
+:root {
+  // Background
+  --color-bg: #ffffff;
+  --color-bg-alt: #f0f0f0;
+
+  // Text
+  --color-text-primary: #191919;
+  --color-text-secondary: #565656;
+  --color-text-muted: #bbbbbb;
+
+  // Border
+  --color-border: #000000;
+  --color-border-light: #cccccc;
+
+  // Accent
+  --color-accent: orange;
+
+  // Link
+  --color-link: #005a8e;
+
+  // Code
+  --color-code-bg: rgba(243, 213, 182, 0.47);
+  --color-md-block: #f0f0f0;
+
+  // Components
+  --color-tag-bg: rgb(239, 239, 239);
+  --color-tag-bg-first: rgb(231, 242, 252);
+  --color-nav-bg: #ffffff;
+  --color-comment-bg: aliceblue;
+  --color-heart-count: #333333;
+  --color-submit-bg: #000000;
+  --color-submit-text: aliceblue;
+  --color-page-num: rgba(204, 204, 204, 0.555);
+  --color-page-num-active: rgba(35, 35, 35, 0.555);
+  --color-table-header: #e3e3e3;
+  --color-blockquote-border: #edebeb;
+  --color-details-bg: #e3e3e32f;
+  --color-code-shadow: #ccc;
+}
+
+html[data-theme="dark"] {
+  // Background
+  --color-bg: #252527;
+  --color-bg-alt: #2b2b2b;
+
+  // Text
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #cccccc;
+  --color-text-muted: #8a8a8a;
+
+  // Border
+  --color-border: #ffffff;
+  --color-border-light: #cccccc;
+
+  // Link
+  --color-link: #69afff;
+
+  // Code
+  --color-code-bg: #2b2b2b;
+  --color-md-block: #2b2b2b;
+
+  // Components
+  --color-tag-bg: transparent;
+  --color-tag-bg-first: transparent;
+  --color-nav-bg: #252527;
+  --color-comment-bg: #3e3e3e;
+  --color-heart-count: #cccccc;
+  --color-submit-bg: #555555;
+  --color-submit-text: #ffffff;
+  --color-page-num: rgba(204, 204, 204, 0.3);
+  --color-page-num-active: rgba(200, 200, 200, 0.555);
+  --color-table-header: #3a3a3a;
+  --color-blockquote-border: #555555;
+  --color-details-bg: #3a3a3a2f;
+  --color-code-shadow: none;
+}

@@ -3,15 +3,15 @@
 import { useState } from "react";
 import { Add } from "./common/Add";
 import { Selected, Tag } from "./Tag";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getPostsApi } from "./common/functions/myapi";
 
 export const Memo = (): JSX.Element => {
   const [selected, setSelected] = useState<Selected>({ keyword: "" });
 
   const { data } = useQuery({
-    queryKey: 'All',
-    queryFn: (data) => getPostsApi({type : data.queryKey[0]}),
+    queryKey: ["All"],
+    queryFn: () => getPostsApi({ type: "All" }),
   });
 
   const props = {

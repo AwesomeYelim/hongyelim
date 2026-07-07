@@ -1,275 +1,60 @@
 @import "src/app/components/common/scss/utils.module.scss";
 
-html {
-  // transition: 0.2s ease-in-out;
-  &[data-theme="dark"] {
-    --bg-color: #252527;
-    --w: #fff;
-    --font: #ccc;
-    --mdblock: #2b2b2b;
-    --active: #8a8a8a;
-    background-color: var(--bg-color);
+// Minimal dark mode overrides for sprite icons and edge cases
+// Most theming is handled by CSS custom properties in variables.scss
 
-    * {
-      &::-webkit-scrollbar {
-        height: 100%;
-        width: 10px;
+html[data-theme="dark"] {
+  /** scrollbar */
+  * {
+    &::-webkit-scrollbar-thumb {
+      background: #b5b5b5;
+    }
+  }
+
+  /** nav bar - sprite icon positions for dark variants */
+  .nav_wrapper {
+    .logo > i {
+      background-position: -26px -31px;
+    }
+    nav {
+      .login {
+        background-position: -139px -6px;
+        &.logout {
+          background-position: -177px -6px;
+        }
       }
-
-      &::-webkit-scrollbar-thumb {
-        width: 2px;
-        background: #b5b5b5;
-        border-radius: 3px 3px 3px 3px;
+      .mode {
+        background-position: -95px -6px;
+        width: 12px;
       }
     }
+  }
 
-    /** 공통  */
-    .content {
-      h1,
-      label,
-      b {
-        color: var(--font) !important;
-      }
-      .list {
-        li {
-          border-bottom: 1px solid var(--w) !important;
-
-          * {
-            color: var(--w) !important;
-
-            // background-color: #5b6370 !important;
-          }
-        }
-      }
-
-      /** profile  */
-      .profile_wrap {
-        h1 {
-          border-bottom: 1px solid #ccc;
-        }
-        p {
-          color: var(--font) !important;
-        }
-
-        .resume {
-          &:hover {
-            border-bottom: 1px solid #ccc;
-          }
-        }
-      }
-
-      /** post category  */
-      .tag_wrap {
-        a {
-          &:not(:first-child) {
-            color: var(--font) !important;
-          }
-          &:first-child {
-            border-bottom: 1px solid var(--w) !important;
-          }
-        }
-      }
+  /** footer - sprite icon positions for dark variants */
+  .footer_wrapper footer .icon_group i {
+    &.email {
+      background-position: -57px -78px;
     }
-    /** main  */
-    .main_wrapper {
-      .svg_wrapper {
-        .dance {
-          display: none;
-        }
-        .welcome_img {
-          display: block;
-        }
-      }
-      svg {
-        g {
-          path {
-            stroke: var(--w);
-          }
-        }
-      }
-
-      p {
-        color: var(--w);
-      }
-      ul li a {
-        color: var(--w);
-      }
-      .tag_wrap {
-        a {
-          background-color: transparent !important;
-          border: 1px solid #ccc !important;
-          color: var(--font) !important;
-        }
-      }
+    &.github {
+      background-position: -90px -71px;
     }
-
-    /** profile  */
-
-    /** memo  */
-    .memo_page {
-      .memo_wrap {
-        form {
-          .content_wrap {
-            background-color: transparent;
-            border: 1px solid #ffd484;
-          }
-        }
-      }
+    &.instagram {
+      background-position: -125px -74px;
     }
-    /** nav bar  */
-    .nav_wrapper {
-      background-color: var(--bg-color);
-      .logo {
-        > i {
-          background: url($img) no-repeat -26px -31px;
-          width: 17px;
-          height: 51px;
-        }
-      }
-      nav {
-        .login {
-          background: url($img) no-repeat -139px -6px;
-          width: 17px;
-          height: 20px;
+  }
 
-          &.logout {
-            background: url($img) no-repeat -177px -6px;
-            width: 17px;
-            height: 20px;
-          }
-        }
-        .mode {
-          background: url($img) no-repeat -95px -6px;
-          width: 12px;
-          height: 20px;
-        }
-      }
-    }
+  /** tag - dark borders */
+  .main_wrapper .tag_wrap a {
+    border: 1px solid var(--color-border-light);
+  }
 
-    /** footer  */
-    .footer_wrapper {
-      footer {
-        .icon_group {
-          i {
-            &.email {
-              background: url($img) no-repeat -57px -78px;
-              width: 22px;
-              height: 18px;
-            }
-            &.github {
-              background: url($img) no-repeat -90px -71px;
-              width: 25px;
-              height: 25px;
-            }
-            &.instagram {
-              background: url($img) no-repeat -125px -74px;
-              width: 23px;
-              height: 22px;
-            }
-          }
-        }
-      }
-    }
+  /** markdown nested list */
+  .md_wrapper li > ul * {
+    color: var(--color-text-secondary);
+  }
 
-    /** post  */
-    .techpost_page {
-      .post_title {
-        h3 {
-          color: var(--w);
-        }
-      }
-    }
-
-    /** post_detail md 파일, memo page 공통  */
-    .md_wrapper {
-      nav > a,
-      ul li,
-      ol li,
-      h1,
-      h2,
-      h3,
-      h4,
-      p,
-      td,
-      summary,
-      em,
-      strong,
-      del,
-      code {
-        color: var(--font);
-
-        &.active {
-          color: var(--active) !important;
-        }
-      }
-      li > ul * {
-        color: #252527 !important;
-      }
-      /** post_detail md 파일 - code 블럭 */
-      pre {
-        > div {
-          background: var(--mdblock) !important;
-          box-shadow: none;
-          // span {
-          //   color: var(--font);
-
-          //   &.token {
-          //     color: var(--font);
-          //   }
-          // }
-        }
-      }
-
-      .h1_wrap {
-        border-bottom: 1px solid var(--w);
-      }
-    }
-    /** post_detail  */
-    .detail_page_wrapper {
-      /** post_detail heart  */
-      .heart_wrap {
-        .like {
-          color: var(--font);
-        }
-      }
-
-      /** post_detail toc  */
-      .toc_content {
-        > span,
-        h1,
-        h2,
-        h3,
-        h4 {
-          color: var(--font);
-        }
-      }
-
-      /** post_detail 하단 button  */
-      .btn_wrap {
-        a {
-          color: #ccc;
-        }
-      }
-
-      /** post_detail 하단 comment 영역  */
-      .comment_wrap {
-        form {
-          textarea {
-            color: var(--w) !important;
-            background-color: #3e3e3e;
-          }
-        }
-        .commented_wrap {
-          .commentedEl_wrap {
-            .cm_img_wrap {
-              color: var(--w) !important;
-            }
-            p {
-              color: var(--w) !important;
-            }
-          }
-        }
-      }
-    }
+  /** code block shadow */
+  .md_wrapper pre div {
+    box-shadow: none;
   }
 }

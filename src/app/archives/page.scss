@@ -2,36 +2,100 @@
 
 .archive_page {
   > .ar_title {
-    @include flex(center, initial);
-    gap: 20px;
     @include animate(0, down);
-
     h1 {
       display: block;
       width: fit-content;
-      position: relative;
+      color: var(--color-text-primary);
     }
+  }
+  > .ar_sub {
+    @include animate(1, down);
+    display: block;
+    margin: 10px 0 40px 0;
+  }
 
-    i {
-      background: url($img) no-repeat -191px -48px;
-      width: 10px;
-      height: 16px;
-      transform: rotate(90deg);
-      position: relative;
+  .timeline {
+    @include animate(1, down);
 
-      animation: arrow infinite 1s;
-      top: 0;
-      // opacity: 0;
-    }
+    .timeline_group {
+      margin-bottom: 30px;
+      padding-left: 20px;
+      border-left: 2px solid var(--color-border-light);
 
-    @keyframes arrow {
-      50% {
-        // opacity: 1;
-        top: 10px;
+      .timeline_date {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--color-accent);
+        margin-bottom: 12px;
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: -27px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 12px;
+          height: 12px;
+          background-color: var(--color-accent);
+          border-radius: 50%;
+        }
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        li {
+          @include flex(center, initial);
+          gap: 16px;
+          padding: 8px 0;
+          border-bottom: 1px solid rgba(204, 204, 204, 0.2);
+
+          .post_date {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            min-width: 45px;
+          }
+
+          a {
+            color: var(--color-text-primary);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            &:hover {
+              color: var(--color-accent);
+            }
+          }
+        }
       }
     }
   }
-  > span {
-    @include animate(1, down);
+}
+
+// ===== Mobile =====
+@media (max-width: 768px) {
+  .archive_page {
+    .ar_title h1 {
+      font-size: 2rem;
+    }
+    .timeline .timeline_group {
+      padding-left: 15px;
+
+      .timeline_date {
+        font-size: 1.1rem;
+        &::before {
+          width: 10px;
+          height: 10px;
+          left: -22px;
+        }
+      }
+      ul li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+    }
   }
 }

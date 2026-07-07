@@ -1,19 +1,16 @@
 import { Inter } from "next/font/google";
 import { Footer } from "./Footer";
 import NavBar from "./components/NavBar";
-import Recoil from "./components/Recoil";
-import ReactQuery from "./components/ReactQuery";
-import AuthSession from "./components/AuthSession";
+import Providers from "./components/Providers";
 import GoogleAnalytics from "./components/GoogleAnalytics";
-import StyledComponentsRegistry from "./registry";
 import { Metadata } from "next";
 
+import "./styles/variables.scss";
 import "./styles/reset.scss";
 import "./styles/layout.scss";
 import "./styles/dark.scss";
 
 const inter = Inter({ subsets: ["latin"] });
-// const notable = Notable({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: "hongyelim",
@@ -35,8 +32,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // scroll 발생 에 따른 layout 변경 방지
-    <html lang="ko" suppressHydrationWarning={true} style={{ width: "100vw" }}>
+    <html lang="ko" suppressHydrationWarning={true}>
       <GoogleAnalytics />
       <head>
         <meta name="googlebot" content="index, follow" />
@@ -44,26 +40,24 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script
           dangerouslySetInnerHTML={{
             __html: `
-            const modecookie = document.cookie.match('theme=([^;]*)(;|$)')
-            document.documentElement.dataset.theme = modecookie[1]
+            try {
+              var modecookie = document.cookie.match('theme=([^;]*)(;|$)');
+              document.documentElement.dataset.theme = modecookie ? modecookie[1] : 'light';
+            } catch(e) {
+              document.documentElement.dataset.theme = 'light';
+            }
           `,
           }}></script>
       </head>
-      <StyledComponentsRegistry>
-        <AuthSession>
-          <body className={inter.className}>
-            <div className="wrapper">
-              <NavBar />
-              <ReactQuery>
-                <Recoil>
-                  <div className="content">{children}</div>
-                </Recoil>
-              </ReactQuery>
-              <Footer detail={true} />
-            </div>
-          </body>
-        </AuthSession>
-      </StyledComponentsRegistry>
+      <Providers>
+        <body className={inter.className}>
+          <div className="wrapper">
+            <NavBar />
+            <main className="content">{children}</main>
+            <Footer detail={true} />
+          </div>
+        </body>
+      </Providers>
     </html>
   );
 }

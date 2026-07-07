@@ -1,14 +1,52 @@
 @import "src/app/components/common/scss/utils.module.scss";
 
-.md_wrapper {
-  // white-space: pre-line;
-  > * {
-    // white-space: pre-line;
-  }
+.toc_wrapper {
+  position: absolute;
+  right: -1rem;
+  .toc_content {
+    position: fixed;
+    top: 30%;
+    max-width: 300px;
+    height: 500px;
+    overflow-y: auto;
+    padding-right: 20px;
 
+    h1,
+    h2,
+    h3,
+    h4 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: 0.25s linear;
+      font-size: 15px;
+      height: 20px;
+      color: var(--color-text-secondary);
+      &:hover {
+        color: var(--color-text-muted);
+      }
+    }
+    h1 {
+      margin-top: 15px;
+    }
+    span {
+      font-size: 15px;
+      font-weight: bold;
+      border-bottom: 2px solid var(--color-border-light);
+      cursor: pointer;
+      padding-left: 4px;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+      color: var(--color-text-primary);
+    }
+  }
+}
+
+.md_wrapper {
   .h1_wrap {
     text-align: center;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--color-border);
     padding-bottom: 20px;
     margin-bottom: 100px;
   }
@@ -21,6 +59,7 @@
   h4,
   details {
     margin: 50px 0 20px 0;
+    color: var(--color-text-primary);
   }
 
   details {
@@ -29,26 +68,28 @@
       width: 100% !important;
       padding: 10px;
       box-sizing: border-box;
-      border-bottom: 1px solid #ccc;
-      background-color: #e3e3e32f;
+      border-bottom: 1px solid var(--color-border-light);
+      background-color: var(--color-details-bg);
+      color: var(--color-text-primary);
     }
     div {
       padding: 0 10px;
       box-sizing: border-box;
     }
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border-light);
     border-bottom: 1px solid transparent;
     border-radius: 3px;
   }
 
   details[open] {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-border-light);
   }
   li {
     margin: 10px 0 10px 30px;
+    color: var(--color-text-primary);
 
     > ul {
-      background-color: #f0f0f0;
+      background-color: var(--color-md-block);
       padding: 5px 10px;
       border-radius: 5px;
 
@@ -56,39 +97,33 @@
         margin: 10px 0 10px 30px;
       }
     }
-    &::marker {
-      // float: left;
-    }
   }
 
   ul li {
-    // list-style-position: inside;
     list-style-type: initial !important;
   }
   ol li {
-    // list-style-position: inside;
     list-style-type: decimal !important;
   }
 
-  li:has(p) {
-    // list-style-type: none !important;
-  }
   p {
     display: flex;
     align-items: center;
     line-height: 200%;
     flex-wrap: wrap;
+    color: var(--color-text-primary);
   }
   table {
     margin: 30px 0;
     thead tr {
       &:first-child {
-        background-color: #e3e3e3;
+        background-color: var(--color-table-header);
       }
     }
     tbody tr td {
-      border-bottom: 1px solid #696969;
+      border-bottom: 1px solid var(--color-text-secondary);
       padding: 3px;
+      color: var(--color-text-primary);
     }
   }
 
@@ -96,23 +131,24 @@
     line-height: 150%;
     border-radius: 5px;
     font-weight: 500;
+    color: var(--color-text-primary);
   }
   a {
     display: inline;
-    color: #005a8e;
+    color: var(--color-link);
     font-weight: 600;
   }
 
   pre {
     &:has(> code) {
       padding: 10px;
-      background-color: rgb(243 213 182 / 47%);
+      background-color: var(--color-code-bg);
       border-radius: 5px;
       overflow-x: auto;
     }
     div {
       border-radius: 5px;
-      box-shadow: 3px 3px 3px #ccc;
+      box-shadow: 3px 3px 3px var(--color-code-shadow);
       margin: 30px 0 !important;
       &::-webkit-scrollbar {
         width: 100%;
@@ -121,13 +157,12 @@
 
       &::-webkit-scrollbar-thumb {
         height: 2px;
-        background: #005a8e;
+        background: var(--color-link);
         border-radius: 5px 5px 5px 5px;
       }
 
       span {
         font-size: 1rem;
-        color: #ccc;
       }
     }
   }
@@ -135,7 +170,7 @@
   blockquote {
     margin: 20px 0;
     padding-left: 15px;
-    border-left: 5px solid #edebeb;
+    border-left: 5px solid var(--color-blockquote-border);
     font-size: 14px;
   }
   img {
@@ -154,5 +189,9 @@
     padding: 0 5px;
     border-radius: 5px;
     box-sizing: border-box;
+  }
+
+  em, strong, del {
+    color: var(--color-text-primary);
   }
 }

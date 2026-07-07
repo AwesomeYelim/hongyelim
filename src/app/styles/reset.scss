@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   outline: none;
-  color: #191919;
+  color: var(--color-text-primary);
 }
 
 *,
@@ -15,7 +15,9 @@
 html,
 body {
   box-sizing: border-box;
-  transition: 0.2s ease-in-out;
+  background-color: var(--color-bg);
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  overflow-x: hidden;
 
   * {
     &::-webkit-scrollbar {
@@ -25,7 +27,6 @@ body {
 
     &::-webkit-scrollbar-thumb {
       width: 2px;
-      // border: 1px solid #000000;
       background-color: rgba(104, 104, 104, 0.41);
       border-radius: 3px;
     }
@@ -48,7 +49,7 @@ a {
   @include no-outline;
   display: block;
   text-decoration: none;
-  color: #191919;
+  color: var(--color-text-primary);
 }
 
 i {
@@ -86,5 +87,5 @@ h1 {
 }
 span {
   font-size: 0.8rem;
-  color: rgb(187, 187, 187);
+  color: var(--color-text-muted);
 }

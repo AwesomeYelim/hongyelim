@@ -1,4 +1,4 @@
-import { commentsTree } from "@/app/api/[id]/comment/route";
+import { commentsTree } from "./comments";
 import { CommentEl, Post } from "@/service/posts";
 import axios from "axios";
 import { getDocs, collection, query, where } from "firebase/firestore";

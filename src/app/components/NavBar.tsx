@@ -11,83 +11,84 @@ export default function NavBar() {
   const { data: session } = useSession();
   const location = usePathname();
 
-  const {
-    navInfo: [navInfo, setNavInfo],
-    dark: [dark, setDark],
-  } = {
-    navInfo: useState({ to: 0, hide: true }),
-    dark: useState(Cookies.get("theme") === "dark"),
-  };
-
-  const admin = session?.user?.email === "uiop01900@gmail.com";
+  const [navInfo, setNavInfo] = useState({ to: 0, hide: true });
+  const [dark, setDark] = useState(Cookies.get("theme") === "dark");
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const scrollToHide = useCallback(() => {
-    setNavInfo((prev) => ({ ...prev, to: window.pageYOffset }));
-    //  스크롤 아래로 내릴때
-    if (navInfo.to < window.pageYOffset) {
-      setNavInfo({ to: window.pageYOffset, hide: false });
-      //  스크롤 위로 올릴때
-    } else if (navInfo.to > window.pageYOffset) {
-      setNavInfo({ to: window.pageYOffset, hide: true });
-    }
-  }, [navInfo]);
+    const currentY = window.pageYOffset;
+    setNavInfo((prev) => {
+      if (prev.to < currentY) {
+        return { to: currentY, hide: false };
+      } else if (prev.to > currentY) {
+        return { to: currentY, hide: true };
+      }
+      return { ...prev, to: currentY };
+    });
+  }, []);
 
   useEffect(() => {
     document.addEventListener("scroll", scrollToHide);
     return () => document.removeEventListener("scroll", scrollToHide);
-  }, [navInfo]);
+  }, [scrollToHide]);
 
   useEffect(() => {
-    if (dark) {
-      document.documentElement.dataset.theme = "dark";
-    } else {
-      document.documentElement.dataset.theme = "light";
-    }
-  }, []);
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+  }, [dark]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location]);
 
   return (
-    <div
+    <header
       className="nav_wrapper"
       style={{ height: navInfo.hide ? "111px" : "0px" }}
     >
       <Link href="/" className="logo">
         <i />
       </Link>
-      <nav>
-        <i
-          className="mode"
+
+      <button
+        className="hamburger"
+        aria-label="메뉴 열기"
+        aria-expanded={mobileOpen}
+        onClick={() => setMobileOpen(!mobileOpen)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+
+      <nav className={classNames({ open: mobileOpen })}>
+        <button
+          className="icon-btn mode"
+          aria-label="다크모드 전환"
           onClick={() => {
-            setDark(!dark);
-            if (dark) {
-              document.documentElement.dataset.theme = "light";
-              Cookies.set("theme", "light");
-            } else {
-              document.documentElement.dataset.theme = "dark";
-              Cookies.set("theme", "dark");
-            }
+            const next = !dark;
+            setDark(next);
+            document.documentElement.dataset.theme = next ? "dark" : "light";
+            Cookies.set("theme", next ? "dark" : "light");
           }}
         />
-        <i
-          title={(() => {
-            if (session?.user) {
-              return "logout";
-            }
-            return "login";
-          })()}
-          className={classNames("login", { logout: !!session?.user })}
+        <button
+          className="icon-btn login-btn"
+          title={session?.user ? "logout" : "login"}
+          aria-label={session?.user ? "로그아웃" : "로그인"}
           onClick={() => {
-            if (session?.user) {
-              return signOut();
-            }
+            if (session?.user) return signOut();
             return signIn();
           }}
-        />
+        >
+          <i className={classNames("login", { logout: !!session?.user })} />
+        </button>
         {session?.user && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={session?.user.image as string}
             style={{ width: 25, height: 25, borderRadius: "50%" }}
-            alt="profile-img"
+            alt={`${session.user.name} 프로필`}
           />
         )}
         <Link
@@ -102,11 +103,6 @@ export default function NavBar() {
         >
           Posts
         </Link>
-        {/* {admin && (
-          <Link href="/memo" className={classNames({ active: location?.includes("/memo") })}>
-            Memo
-          </Link>
-        )} */}
         <Link
           href="/archives"
           className={classNames({ active: location?.includes("/archives") })}
@@ -114,6 +110,6 @@ export default function NavBar() {
           Archives
         </Link>
       </nav>
-    </div>
+    </header>
   );
 }

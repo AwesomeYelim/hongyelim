@@ -2,9 +2,8 @@
 "use client";
 
 import { CommentEl } from "@/service/posts";
-import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getTargetPostApi } from "./functions/myapi";
 import { useEffect, useState } from "react";
 import { AddComment, AddProps } from "./AddComment";
@@ -12,7 +11,7 @@ import { Session } from "next-auth";
 import dateFn from "./functions/date";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
-import { commentsTree } from "@/app/api/[id]/comment/route";
+import { commentsTree } from "./functions/comments";
 import "./Comments.scss";
 
 export const Comments = ({ title }: { title: string }): JSX.Element => {
@@ -22,8 +21,8 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
   const [openReply, setOpenReply] = useState<{ [key in number]: boolean }>();
 
   const { data } = useQuery({
-    queryKey: title,
-    queryFn: (data) => getTargetPostApi(data.queryKey[0]),
+    queryKey: [title],
+    queryFn: () => getTargetPostApi(title),
   });
 
   const deleteCommentApi = async (data: CommentEl & { queryKey: string }) => {
@@ -36,7 +35,6 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
     const userData = doc(db, "user", session?.user?.email as string);
     const user = await getDoc(userData);
 
-    /** 사용자별 게시물 comments 상태 세팅 & 업데이트 */
     await updateDoc(userData, {
       comments: {
         ...user.data()?.comments,
@@ -44,7 +42,6 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
           ? [
               ...user.data()?.comments[title]?.filter((el: CommentEl) => {
                 const c = el.com_created_at;
-                // const target = c[c.length - 1];
                 return !c.includes(targetKey);
               }),
             ]
@@ -56,8 +53,6 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
       comments: [
         ...post.data()?.comments.filter((el: CommentEl) => {
           const c = el.com_created_at;
-          // const target = c[c.length - 1];
-          // return target !== +(targetKey as string);
           return !c.includes(targetKey);
         }),
       ],
@@ -66,14 +61,6 @@ export const Comments = ({ title }: { title: string }): JSX.Element => {
     const updatedPost = await getDoc(doc(db, "posts", title));
 
     setComments(commentsTree(updatedPost?.data()?.comments));
-
-    // await axios
-    //   .delete(`/api/${data.queryKey}/comment`, {
-    //     params: { data },
-    //   })
-    //   .then((res) => {
-    //     setComments(res.data.post.comments);
-    //   });
   };
 
   useEffect(() => {

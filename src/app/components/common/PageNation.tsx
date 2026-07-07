@@ -1,8 +1,7 @@
 "use client";
 
 import classNames from "classnames";
-import { useRecoilValue } from "recoil";
-import { postsAtom } from "../Recoil";
+import { usePostsStore } from "@/store/posts";
 import { PageNum } from "../Techlog";
 import { Selected } from "../Tag";
 import { useState } from "react";
@@ -15,7 +14,7 @@ interface Props {
 }
 
 export const PageNation = (props: Props): JSX.Element => {
-  const postsId = useRecoilValue(postsAtom)?.map((el) => el.id);
+  const postsId = usePostsStore((s) => s.posts)?.map((el) => el.id);
 
   const [dimension, setDimension] = useState({ page: 5, rightPageNum: 0 });
 
@@ -49,7 +48,7 @@ export const PageNation = (props: Props): JSX.Element => {
     <div className="pageNum_wrapper">
       {twoD?.[rightPageNum]?.map((el: number) => {
         return (
-          <>
+          <span key={el}>
             {el !== 1 && el === twoD?.[rightPageNum]?.[0] && (
               <i
                 className="left-btn"
@@ -71,7 +70,6 @@ export const PageNation = (props: Props): JSX.Element => {
               className={classNames("pageNum_el", {
                 active: pageNum.selectedNum === el,
               })}
-              key={el}
               onClick={() => {
                 setpageNum({
                   current: idArr.length - (el - 1),
@@ -97,7 +95,7 @@ export const PageNation = (props: Props): JSX.Element => {
                 }}
               />
             )}
-          </>
+          </span>
         );
       })}
     </div>

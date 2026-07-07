@@ -1,12 +1,11 @@
 import React, { Dispatch } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
-import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CommentEl, User } from "@/service/posts";
 import { Session } from "next-auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
-import { commentsTree, sendEmail } from "@/app/api/[id]/comment/route";
+import { commentsTree } from "./functions/comments";
 
 export interface AddProps {
   com_created_at?: number[];
@@ -51,7 +50,6 @@ export const AddComment = (props: AddProps) => {
 
     const { userInfo, ...rest } = data;
 
-    /** 사용자별 게시물 comments 상태  업데이트 */
     await setDoc(userData, {
       ...user.data(),
       comments: user.data()?.comments
@@ -68,21 +66,9 @@ export const AddComment = (props: AddProps) => {
       comments: [...post.data()?.comments, { ...data }],
     });
 
-    sendEmail({ arr: [...post.data()?.comments], target: data, title });
-
     const updatedPost = await getDoc(doc(db, "posts", title));
 
     setComments(commentsTree(updatedPost?.data()?.comments));
-
-    // await axios
-    //   .post(`/api/${data.queryKey}/comment`, JSON.stringify(data), {
-    //     headers: {
-    //       "Content-Type": `application/json`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setComments(res.data.post.comments);
-    //   });
   };
 
   const mutation = useMutation({
@@ -92,7 +78,7 @@ export const AddComment = (props: AddProps) => {
       (setOpenReply as Dispatch<{ [key in number]: boolean }>)({
         [lastAt as number]: false,
       });
-      queryClient.invalidateQueries({ queryKey: title });
+      queryClient.invalidateQueries({ queryKey: [title] });
     },
   });
 

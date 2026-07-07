@@ -1,93 +1,212 @@
 @import "src/app/components/common/scss/utils.module.scss";
 
-.main_wrapper {
-  @include flex(center, center);
-  gap: 50px;
-  height: calc(100vh - 190px);
+.home_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 40px 0;
 
-  h1 {
-    border-right: 5px solid #ccc;
-    padding-right: 30px;
-  }
-  // .svg_wrapper {
-  //   @include flex(center, center);
-  //   flex-direction: column;
-  //   gap: 20px;
-  //   height: 100%;
-  //   .dance {
-  //     @include animate(1, down);
-  //   }
-  //   .welcome_img {
-  //     display: none;
-  //     height: 100px;
-  //     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  //     background-color: rgb(172 216 255 / 71%);
-  //     svg {
-  //       transform: rotate(20deg);
-  //     }
-  //   }
-  //   .main_ctimg {
-  //     border-radius: 50%;
-  //   }
-  //   .text_area {
-  //     text-align: center;
-  //     @include animate(0, down);
+  // ===== Hero Section =====
+  .hero {
+    @include flex(center, space-between);
+    @include animate(0, down);
+    gap: 40px;
+    padding: 40px 0;
 
-  //     // font-family: fantasy;
-  //     p {
-  //       margin-bottom: 3px;
-  //       &.upper {
-  //         text-transform: uppercase;
-  //         font-weight: 700;
-  //       }
-  //       span {
-  //         font-size: initial;
-  //         text-transform: uppercase;
-  //         font-weight: 700;
-  //         color: orange;
-  //       }
-  //     }
-  //   }
-  // }
-  .tag_wrap {
-    @include animate(2, down);
-    position: initial;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-height: fit-content;
-    flex-direction: row;
-    width: 500px;
-    gap: 10px;
+    .hero_text {
+      flex: 1;
 
-    a {
-      display: block;
-      &:first-child {
-        color: #191919;
-        // background-color: rgb(201, 206, 255);
-        border: 1px solid transparent !important;
+      h1 {
+        font-size: 2.8rem;
+        margin-bottom: 12px;
+        color: var(--color-text-primary);
+        .accent {
+          color: var(--color-accent);
+          font-size: inherit;
+        }
       }
-      margin: 0px;
-      background-color: rgb(239, 239, 239);
-      padding: 7px;
-      border-radius: 5px;
+      .tagline {
+        font-size: 1.1rem;
+        color: var(--color-text-secondary);
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .sub {
+        font-size: 0.95rem;
+        color: var(--color-text-muted);
+        margin-bottom: 24px;
+      }
+      .hero_links {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+
+        .cta_btn {
+          display: inline-flex;
+          padding: 10px 24px;
+          background-color: var(--color-text-primary);
+          color: var(--color-bg);
+          border-radius: 6px;
+          font-weight: 600;
+          font-size: 0.95rem;
+          transition: opacity 0.2s;
+          &:hover {
+            opacity: 0.85;
+          }
+        }
+        .cta_link {
+          color: var(--color-text-secondary);
+          font-weight: 600;
+          font-size: 0.95rem;
+          &:hover {
+            color: var(--color-accent);
+          }
+        }
+      }
+    }
+
+    .hero_img {
+      @include animate(1, down);
+      img {
+        border-radius: 50%;
+        object-fit: cover;
+      }
     }
   }
-  .main_posts {
-    @include flex(center, initial);
-    gap: 30px;
-    flex-wrap: wrap;
-    padding: 30px;
 
-    li {
-      overflow: hidden;
+  // ===== Recent Posts =====
+  .recent_posts {
+    @include animate(1, down);
+
+    .section_header {
+      @include flex(center, space-between);
+      margin-bottom: 20px;
+      h2 {
+        font-size: 1.5rem;
+        color: var(--color-text-primary);
+      }
       a {
-        @include flex(center, initial);
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        .img {
-          border-radius: 50%;
+        color: var(--color-text-muted);
+        font-size: 0.9rem;
+        &:hover {
+          color: var(--color-accent);
         }
+      }
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+
+      li {
+        border-bottom: 1px solid var(--color-border-light);
+
+        a {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          padding: 18px 0;
+          transition: padding-left 0.2s;
+
+          &:hover {
+            padding-left: 8px;
+          }
+
+          h3 {
+            font-size: 1.1rem;
+            color: var(--color-text-primary);
+            font-weight: 600;
+          }
+          .excerpt {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            @include ellipsis;
+            max-width: 600px;
+          }
+          .date {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+          }
+        }
+      }
+    }
+  }
+
+  // ===== Tag Cloud =====
+  .tag_cloud {
+    @include animate(2, down);
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+      color: var(--color-text-primary);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .tag_pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 14px;
+        background-color: var(--color-tag-bg);
+        border: 1px solid var(--color-border-light);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: var(--color-text-secondary);
+        transition: all 0.2s;
+
+        span {
+          font-size: 0.75rem;
+          color: var(--color-text-muted);
+        }
+
+        &:hover {
+          background-color: var(--color-accent);
+          color: #fff;
+          border-color: var(--color-accent);
+          span {
+            color: rgba(255, 255, 255, 0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===== Mobile =====
+@media (max-width: 768px) {
+  .home_wrapper {
+    gap: 40px;
+    padding: 20px 0;
+
+    .hero {
+      flex-direction: column-reverse;
+      text-align: center;
+      gap: 24px;
+      padding: 20px 0;
+
+      .hero_text {
+        h1 {
+          font-size: 2rem;
+        }
+        .hero_links {
+          justify-content: center;
+        }
+      }
+
+      .hero_img img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    .recent_posts ul li a {
+      .excerpt {
+        max-width: 100%;
       }
     }
   }

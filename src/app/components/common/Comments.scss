@@ -14,21 +14,22 @@
       justify-items: flex-start;
       font-weight: 600;
       margin-bottom: 10px;
+      color: var(--color-text-primary);
     }
     textarea {
       display: block;
       border: none;
       width: 100%;
-      min-width: 450px;
       min-height: 100px;
       resize: none;
       padding: 20px;
-      background-color: aliceblue;
+      background-color: var(--color-comment-bg);
+      color: var(--color-text-primary);
     }
     button {
-      background-color: black;
+      background-color: var(--color-submit-bg);
       padding: 13px;
-      color: aliceblue;
+      color: var(--color-submit-text);
       border-radius: 5px;
       font-size: 12px;
       margin-top: 10px;
@@ -51,6 +52,7 @@
         @include flex(center, initial);
         gap: 10px;
         font-weight: 500;
+        color: var(--color-text-primary);
         .bin {
           background: url($img) no-repeat -155px -48px;
           width: 11px;
@@ -69,11 +71,12 @@
           cursor: pointer;
           width: 100px;
           display: block;
-          color: #ccc;
+          color: var(--color-text-muted);
         }
       }
       p {
         margin: 10px 0 20px 40px;
+        color: var(--color-text-primary);
         &.cm_reply {
           @include flex(center, initial);
           cursor: pointer;
@@ -93,5 +96,17 @@
   text-align: center;
   span {
     cursor: pointer;
+  }
+}
+
+// ===== Mobile =====
+@media (max-width: 768px) {
+  .comment_wrap {
+    form {
+      width: 100%;
+    }
+    .commented_wrap .commentedEl_wrap {
+      margin-left: 5px !important;
+    }
   }
 }

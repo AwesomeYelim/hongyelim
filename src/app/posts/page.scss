@@ -14,26 +14,52 @@
   }
   .posts_wrapper {
     .tag_wrap {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0 10px 0;
+      max-height: 500px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      top: 200px;
+      right: -120px;
+      width: 160px;
+      box-sizing: border-box;
       position: absolute;
       background-color: rgba(217, 217, 217, 0.332);
       border-radius: 3px;
-      // overflow-y: auto;
-      // display: table-caption;
-      scrollbar-gutter: stable both-edges; // scroll 생성시 width 값 그대로
+      scrollbar-gutter: stable both-edges;
+
       a {
+        display: block;
+        cursor: pointer;
+        border: 1px solid transparent;
         padding: 3px 5px;
+        color: var(--color-text-secondary);
+
         &:first-child {
+          color: var(--color-accent);
+          border-bottom: 1px solid var(--color-border);
+          padding-bottom: 10px;
           position: sticky;
           top: 0;
-          background-color: rgb(231, 242, 252);
+          background-color: var(--color-tag-bg-first);
+          a {
+            font-weight: 700;
+          }
         }
         &:nth-child(2) {
           margin-top: 20px;
         }
+        &.active {
+          font-weight: 600;
+        }
+        span {
+          margin-left: 5px;
+          letter-spacing: 1.5px;
+        }
       }
     }
     .list_wrapper {
-      // height: calc(100vh - 70px);
       .list {
         @include flex(center, initial);
         @include animate(1, down);
@@ -45,11 +71,12 @@
           @include flex(flex-start, initial);
           flex-direction: column;
           width: inherit;
-          height: 170px;
+          height: auto;
+          min-height: 170px;
           gap: 30px;
           box-sizing: border-box;
           padding: 30px 30px 50px 20px;
-          border-bottom: 1px solid rgb(0, 0, 0);
+          border-bottom: 1px solid var(--color-border);
           transition: 0.3s linear;
 
           .text_wrapper {
@@ -66,7 +93,6 @@
             @include flex(center, initial);
             gap: 10px;
             padding-left: 5px;
-            // height: 100px;
             font-size: 0.9rem;
             > * {
               color: rgb(118, 118, 118);
@@ -88,6 +114,38 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+// ===== Mobile =====
+@media (max-width: 768px) {
+  .techpost_page {
+    .post_title {
+      margin-bottom: 50px;
+      h1 {
+        font-size: 2rem;
+      }
+    }
+    .posts_wrapper {
+      .tag_wrap {
+        position: static;
+        width: 100%;
+        max-height: 200px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+
+        a {
+          padding: 5px 10px;
+          font-size: 0.85rem;
+        }
+      }
+      .list_wrapper .list li {
+        padding: 20px 15px 30px 10px;
+        min-height: auto;
+        gap: 15px;
       }
     }
   }

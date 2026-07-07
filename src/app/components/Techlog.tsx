@@ -5,19 +5,18 @@ import Link from "next/link";
 import { Post } from "@/service/posts";
 import classNames from "classnames";
 import { Selected, Tag } from "./Tag";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getPostsApi } from "./common/functions/myapi";
 import { useSession } from "next-auth/react";
 import { PageNation } from "./common/PageNation";
-import { useRecoilValue } from "recoil";
-import { postsAtom } from "./Recoil";
+import { usePostsStore } from "@/store/posts";
 import { useSearchParams } from "next/navigation";
 import dateFn from "./common/functions/date";
 
 export type PageNum = { current: number; total: number; selectedNum: number };
 
 export default function Techlog() {
-  const posts = useRecoilValue(postsAtom);
+  const posts = usePostsStore((s) => s.posts);
   const currentTag = useSearchParams().get("tag");
   const pageNumInit = { current: 1, total: 0, selectedNum: 0 };
   const pageNum = useState<PageNum>(pageNumInit);
@@ -27,12 +26,12 @@ export default function Techlog() {
 
   const { data } = useQuery({
     queryKey: ["Bit", pageNum[0]],
-    queryFn: (data) => {
+    queryFn: () => {
       return getPostsApi({
-        type: data.queryKey[0] as "Bit",
+        type: "Bit",
         condition: {
           offset,
-          startNum: data.queryKey[1] as { current: number; total: number },
+          startNum: pageNum[0],
         },
       });
     },

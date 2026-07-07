@@ -3,7 +3,7 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { Post } from "@/service/posts";
 import classNames from "classnames";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast, { Toaster } from "react-hot-toast";
 import { getTargetPostApi } from "./functions/myapi";
 import { useSession } from "next-auth/react";
@@ -23,8 +23,8 @@ export default function Heart(props: Post) {
   });
 
   const { data } = useQuery({
-    queryKey: title,
-    queryFn: (data) => getTargetPostApi(data.queryKey[0]),
+    queryKey: [title],
+    queryFn: () => getTargetPostApi(title),
   });
 
   const submitHeart = async (e: MouseEvent) => {
@@ -41,7 +41,6 @@ export default function Heart(props: Post) {
     const userHeart = user.data()?.heart ? !user.data()?.heart[title] : true;
 
     try {
-      /** 사용자별 게시물 heart 상태 세팅 & 업데이트 */
       await setDoc(userData, {
         ...user.data(),
         heart: user.data()?.heart
@@ -49,7 +48,6 @@ export default function Heart(props: Post) {
           : { [title]: userHeart },
       });
 
-      /** 게시물별 heart 개수 상태 업데이트 */
       await updateDoc(postData, {
         heart: {
           ...(await post()).data()?.heart,
@@ -69,35 +67,12 @@ export default function Heart(props: Post) {
     } catch (err) {
       console.log(err);
     }
-
-    // await axios
-    //   .post(
-    //     `/api/${title}/heart`,
-    //     JSON.stringify({
-    //       id,
-    //       title,
-    //     }),
-    //     {
-    //       headers: {
-    //         "Content-Type": `application/json`,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     const { heart, heart_count } = res.data.post;
-
-    //     setHeartNum({
-    //       heart: heart[session?.user?.email as string],
-    //       heart_count,
-    //     });
-    //     return res;
-    //   });
   };
 
   const mutation = useMutation({
     mutationFn: submitHeart,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: title });
+      queryClient.invalidateQueries({ queryKey: [title] });
     },
   });
 

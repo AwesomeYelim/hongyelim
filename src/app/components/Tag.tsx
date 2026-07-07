@@ -6,11 +6,9 @@ import { isEqual } from "lodash";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { useSetRecoilState } from "recoil";
-import { styled } from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { usePostsStore } from "@/store/posts";
 import { getPostsApi } from "./common/functions/myapi";
-import { postsAtom } from "./Recoil";
 import { PageNum } from "./Techlog";
 
 export type Selected = {
@@ -27,67 +25,32 @@ export interface Props {
   setSelected?: React.Dispatch<React.SetStateAction<Selected>>;
 }
 
-const TagWrap = styled.nav`
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0 10px 0;
-  max-height: 500px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  top: 200px;
-  right: -200px;
-  width: 220px;
-  box-sizing: border-box;
-
-  a {
-    display: block;
-    cursor: pointer;
-    border: 1px solid transparent;
-
-    &:first-child {
-      color: orange;
-      border-bottom: 1px solid black !important;
-      padding-bottom: 10px;
-      a {
-        font-weight: 700;
-      }
-    }
-
-    &.active {
-      font-weight: 600;
-    }
-
-    span {
-      margin-left: 5px;
-      letter-spacing: 1.5px;
-    }
-  }
-`;
 export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSelected }: Props): JSX.Element => {
   const [list, setList] = useState<string[]>();
   const location = usePathname();
-  const setPosts = useSetRecoilState(postsAtom);
+  const setPosts = usePostsStore((s) => s.setPosts);
 
   /**  tag 별 게시물 갯수  */
   const tagCount: { [key in string]: number } = {};
 
   const { data } = useQuery({
-    queryKey: "All",
-    queryFn: (data) => {
-      return getPostsApi({ type: data.queryKey[0] });
+    queryKey: ["All"],
+    queryFn: () => {
+      return getPostsApi({ type: "All" });
     },
   });
 
   const { data: bitData } = useQuery({
     queryKey: ["Bit", pageNum?.[0]],
-    queryFn: (data) =>
+    queryFn: () =>
       getPostsApi({
-        type: data.queryKey[0] as "Bit",
+        type: "Bit",
         condition: {
           offset: offset as number,
-          startNum: data.queryKey[1] as PageNum,
+          startNum: pageNum?.[0] as PageNum,
         },
       }),
+    enabled: !!offset && !!pageNum,
   });
 
   const { tagList, title } = {
@@ -103,20 +66,18 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
         }
         return arr.indexOf(item) === i;
       })
-      .sort((a, b) => tagCount[b] - tagCount[a]), // tag 별 게시물 많은수
+      .sort((a, b) => tagCount[b] - tagCount[a]),
 
     /** title 별 list   */
     title: data?.map((item: Post) => item.title),
   };
 
   useEffect(() => {
-    setPosts(data as Post[]);
-    // prettier-ignore
+    if (data) setPosts(data as Post[]);
     if(tagList?.length || title?.length) {
-      
       switch (location) {
         case "/": {
-          setList([...((tagList as string[]).filter(item => /^[a-z]/.test(item)))]); // 소문자로 시작되는 핵심 키워드만 골라준다.
+          setList([...((tagList as string[]).filter(item => /^[a-z]/.test(item)))]);
         } break;
         case "/posts": {
           setList(["All", ...(tagList as string[])]);
@@ -129,7 +90,6 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
   }, [data]);
 
   useEffect(() => {
-    /* 초깃값 일때 && 페이지 새로고침 시에만 state 설정 */
     if (pageNum && (isEqual(pageNum[0], pageNumInit) || (!pageNum[0].current && !pageNum[0].total))) {
       pageNum[1](() => {
         return {
@@ -142,7 +102,7 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
   }, []);
 
   return (
-    <TagWrap className="tag_wrap">
+    <nav className="tag_wrap">
       {list?.map((keyword) => {
         return (
           <Link
@@ -154,7 +114,8 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
             className={classNames({ active: keyword === selected?.keyword })}
             onClick={(e) => {
               if (setSelected) {
-                const select = data?.filter((el: Post) => el.tag.includes(currentTag as string));
+                const clickedKeyword = e.currentTarget.innerText.replace(/\s*\(\d+\)\s*$/, "");
+                const select = data?.filter((el: Post) => el.tag.includes(clickedKeyword));
                 setSelected({
                   keyword: e.currentTarget.innerText,
                   posts: select,
@@ -165,38 +126,29 @@ export const Tag = ({ offset, pageNum, pageNumInit, currentTag, selected, setSel
                     keyword: "All",
                     posts: [...(bitData as Post[])],
                   });
-                // /* main tag 영역 */
-                // if (list[0] === "Tag") {
-                //   setTag(e.currentTarget.innerText);
-                // }
-                /** memo tag  */
                 if (e.currentTarget.innerText === "Recommand Title") {
                   setSelected({ keyword: "" });
                 }
               }
             }}>
-            {/* main tag 영역 */}
             {
-              // post 하위 tag 영역
               keyword !== "All" && list[0] !== "Recommand Title" ? (
                 <>
                   {keyword}
                   {!!tagCount[keyword] && <span>({tagCount[keyword]})</span>}
                 </>
-              ) : // post All tag 영역
-              keyword === "All" ? (
+              ) : keyword === "All" ? (
                 <>
                   {keyword}
                   <span>({data?.length})</span>
                 </>
               ) : (
-                // memo tag 영역
                 keyword
               )
             }
           </Link>
         );
       })}
-    </TagWrap>
+    </nav>
   );
 };
