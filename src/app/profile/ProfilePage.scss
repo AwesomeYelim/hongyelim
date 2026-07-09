@@ -1,7 +1,6 @@
 @import "src/app/components/common/scss/utils.module.scss";
 
 .profile_wrap {
-  min-height: calc(100vh - 450px);
   padding-top: 24px;
 
   > h1 {
@@ -13,15 +12,22 @@
     border-bottom: 1px solid var(--color-border);
   }
 
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: var(--color-text-primary);
+  }
+
   .content_wrap {
     @include flex(center, center);
     @include animate(1, down);
-    gap: 72px;
-    padding: 32px;
+    gap: 64px;
+    padding: 40px;
     background-color: var(--color-card-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
+    margin-bottom: 48px;
 
     .img_area {
       @include flex(center, space-between);
@@ -38,6 +44,43 @@
         }
       }
     }
+
+    .intro_area {
+      .name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--color-text-primary);
+
+        span {
+          font-size: 0.95rem;
+          font-weight: 500;
+          color: var(--color-text-muted);
+          margin-left: 8px;
+        }
+      }
+
+      .role {
+        display: inline-block;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--color-accent);
+        background-color: var(--color-accent-soft);
+        padding: 5px 12px;
+        border-radius: var(--radius-full);
+        margin: 10px 0 14px;
+      }
+
+      .headline {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--color-text-primary);
+      }
+
+      .motto {
+        color: var(--color-accent);
+        font-size: 1.02rem;
+      }
+    }
   }
 
   p {
@@ -48,12 +91,103 @@
     color: var(--color-text-primary);
   }
 
+  .career_section {
+    @include animate(2, down);
+    margin-bottom: 48px;
+
+    .career_list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+
+      li {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 20px;
+        padding: 22px 24px;
+        background-color: var(--color-card-bg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-card);
+        transition: transform var(--duration-base) var(--ease-spring),
+          box-shadow var(--duration-base) ease;
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: var(--shadow-card-hover);
+        }
+
+        .period {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: var(--color-accent);
+          font-variant-numeric: tabular-nums;
+        }
+
+        .role_title {
+          font-weight: 700;
+          color: var(--color-text-primary);
+          margin-bottom: 6px;
+        }
+
+        .role_desc {
+          font-size: 0.9rem;
+          line-height: 1.65;
+        }
+      }
+    }
+  }
+
+  .skills_section {
+    @include animate(3, down);
+    margin-bottom: 40px;
+
+    .skill_group {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--color-border);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .skill_category {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--color-text-secondary);
+        padding-top: 6px;
+      }
+
+      .skill_tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .skill_tag {
+          font-size: 0.84rem;
+          font-weight: 600;
+          color: var(--color-text-secondary);
+          background-color: var(--color-tag-bg);
+          padding: 6px 13px;
+          border-radius: var(--radius-full);
+          transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+
+          &:hover {
+            background-color: var(--color-accent-soft);
+            color: var(--color-accent);
+          }
+        }
+      }
+    }
+  }
+
   .resume_wrap {
     @include flex(center, flex-end);
-    margin-top: 28px;
 
     .resume {
-      @include animate(2, down);
       width: fit-content;
       cursor: pointer;
       color: var(--color-accent);
@@ -84,6 +218,18 @@
       gap: 24px;
       text-align: center;
       padding: 24px;
+
+      .intro_area .role {
+        margin: 10px auto 14px;
+      }
+    }
+    .career_section .career_list li {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .skills_section .skill_group {
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
     .resume_wrap {
       justify-content: center;

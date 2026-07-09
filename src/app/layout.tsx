@@ -11,7 +11,7 @@ import "./styles/dark.scss";
 
 export const metadata: Metadata = {
   title: "hongyelim",
-  description: "https://hongyelim.vercel.app/",
+  description: "백엔드·보안 개발자 홍예림의 기술 블로그 — Go, 멀티플랫폼, 보안, 웹",
   authors: {
     name: "hongyelim",
   },

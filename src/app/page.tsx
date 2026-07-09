@@ -46,9 +46,9 @@ export default async function HomePage() {
         </Reveal>
         <Reveal delay={2}>
           <p className="hero_sub">
-            안녕하세요, 웹 개발자 <b>예림</b>입니다.
+            안녕하세요, 백엔드·보안 개발자 <b>예림</b>입니다.
             <br />
-            배운 것들을 하나씩 눌러 담고 있어요.
+            Go로 이질적인 멀티플랫폼을 하나의 체계로 묶는 일을 합니다.
           </p>
         </Reveal>
         <Reveal delay={3}>
