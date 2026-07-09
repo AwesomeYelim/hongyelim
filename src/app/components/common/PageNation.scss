@@ -2,26 +2,40 @@
 
 .pageNum_wrapper {
   @include flex(center, center);
-  margin-top: 30px;
+  grid-column: 1 / -1;
+  margin-top: 40px;
   width: 100%;
-  gap: 10px;
+  gap: 8px;
 
   // The outer <span key={el}> wrappers must not participate in flex layout
   > span {
     display: contents;
   }
+
   .pageNum_el {
     @include flex(center, center);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: var(--color-page-num);
-    color: #fff;
-    padding: 5px;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    color: var(--color-page-num-text);
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease,
+      transform var(--duration-fast) var(--ease-spring);
+
+    &:hover {
+      background-color: var(--color-bg-alt);
+      color: var(--color-text-primary);
+    }
+    &:active {
+      transform: scale(0.92);
+    }
 
     &.active {
-      background-color: var(--color-page-num-active);
+      background-color: var(--color-accent);
+      color: #fff;
     }
   }
 
@@ -30,11 +44,25 @@
     cursor: pointer;
     width: 10px;
     height: 16px;
+    padding: 10px;
+    box-sizing: content-box;
+    border-radius: var(--radius-sm);
+    background-origin: content-box;
+    transition: background-color var(--duration-fast) ease;
+
+    &:hover {
+      background-color: var(--color-bg-alt);
+    }
+
     &.left-btn {
-      background: url($img) no-repeat -177px -48px;
+      background-image: url($img);
+      background-repeat: no-repeat;
+      background-position: -177px -48px;
     }
     &.right-btn {
-      background: url($img) no-repeat -191px -48px;
+      background-image: url($img);
+      background-repeat: no-repeat;
+      background-position: -191px -48px;
     }
   }
 }

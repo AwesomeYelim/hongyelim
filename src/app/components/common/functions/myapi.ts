@@ -70,14 +70,7 @@ export const postsAddApi = async (data: { [key in string]: string }) => {
 };
 
 export const getTargetPostApi = async (queryKey: string) => {
-  const [post] = await getPostsApi({ type: "One", target: queryKey }).then((res) => {
-    return res;
-  });
-  const mdPost = axios.get(`/api/${queryKey}`, {
-    // headers: {
-    //   "Cache-Control": "no-store",
-    // },
-  });
+  const [post] = await getPostsApi({ type: "One", target: queryKey });
 
-  return { post: { ...post, comments: post.comments ? commentsTree(post.comments) : [] } as Post, mdPost };
+  return { post: { ...post, comments: post.comments ? commentsTree(post.comments) : [] } as Post };
 };

@@ -16,8 +16,13 @@ html,
 body {
   box-sizing: border-box;
   background-color: var(--color-bg);
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.25s ease, color 0.25s ease;
   overflow-x: hidden;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Apple SD Gothic Neo", Roboto, "Noto Sans KR", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 
   * {
     &::-webkit-scrollbar {
@@ -27,10 +32,14 @@ body {
 
     &::-webkit-scrollbar-thumb {
       width: 2px;
-      background-color: rgba(104, 104, 104, 0.41);
-      border-radius: 3px;
+      background-color: rgba(139, 149, 161, 0.4);
+      border-radius: 6px;
     }
   }
+}
+
+body {
+  font-family: inherit;
 }
 
 form {
@@ -39,8 +48,7 @@ form {
 
 @mixin no-outline {
   &,
-  &:active,
-  &:focus {
+  &:active {
     outline: none;
   }
 }
@@ -56,21 +64,36 @@ i {
   display: inline-block;
 }
 
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
 input {
   @include no-outline;
   margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   border: none;
 }
 
 button {
   @include no-outline;
   border: none;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.01em;
   cursor: pointer;
   background-color: initial;
   line-height: 0;
+  transition: transform var(--duration-fast) var(--ease-spring);
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 img {
@@ -83,9 +106,23 @@ li {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
 }
+
+h2 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
 span {
   font-size: 0.8rem;
   color: var(--color-text-muted);
+}
+
+::selection {
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent);
 }

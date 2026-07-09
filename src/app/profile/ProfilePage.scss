@@ -2,18 +2,27 @@
 
 .profile_wrap {
   min-height: calc(100vh - 450px);
+  padding-top: 24px;
+
   > h1 {
     @include animate(0, down);
     display: block;
+    font-size: 2.4rem;
+    padding-bottom: 24px;
+    margin-bottom: 40px;
     border-bottom: 1px solid var(--color-border);
-    padding-bottom: 20px;
-    margin-bottom: 30px;
   }
+
   .content_wrap {
     @include flex(center, center);
     @include animate(1, down);
+    gap: 72px;
+    padding: 32px;
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
 
-    gap: 80px;
     .img_area {
       @include flex(center, space-between);
       flex-direction: column;
@@ -22,22 +31,43 @@
       .main_img {
         margin-top: 20px;
         border-radius: 100%;
+        transition: transform 0.4s var(--ease-spring);
+
+        &:hover {
+          transform: scale(1.05) rotate(2deg);
+        }
       }
     }
   }
+
   p {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+  b {
     color: var(--color-text-primary);
   }
+
   .resume_wrap {
     @include flex(center, flex-end);
-    margin-right: 180px;
-    margin-top: 30px;
+    margin-top: 28px;
+
     .resume {
       @include animate(2, down);
       width: fit-content;
       cursor: pointer;
+      color: var(--color-accent);
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-accent-soft);
+      transition: background-color var(--duration-fast) ease,
+        transform var(--duration-fast) var(--ease-spring);
+
       &:hover {
-        border-bottom: 1px solid var(--color-border);
+        background-color: var(--color-accent);
+        color: #fff;
+        transform: translateY(-2px);
       }
     }
   }
@@ -47,16 +77,16 @@
 @media (max-width: 768px) {
   .profile_wrap {
     > h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
     .content_wrap {
       flex-direction: column;
-      gap: 30px;
+      gap: 24px;
       text-align: center;
+      padding: 24px;
     }
     .resume_wrap {
       justify-content: center;
-      margin-right: 0;
     }
   }
 }

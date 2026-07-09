@@ -16,12 +16,22 @@
     z-index: 99;
     width: 100vw;
     background-color: var(--color-nav-bg);
-    transition: 0.2s ease-in-out;
-    overflow: hidden;
+    backdrop-filter: blur(16px) saturate(1.8);
+    -webkit-backdrop-filter: blur(16px) saturate(1.8);
+    box-shadow: var(--shadow-nav);
+    transition: transform var(--duration-base) var(--ease-spring);
     padding: 0 calc((100% - 1024px) / 2);
 
+    &.nav-hidden {
+      transform: translateY(-100%);
+    }
+
     .logo {
-      padding: 30px;
+      padding: 18px 30px;
+      transition: transform var(--duration-fast) var(--ease-spring);
+      &:hover {
+        transform: scale(1.06);
+      }
       > i {
         background: url($img) no-repeat -4px -31px;
         width: 17px;
@@ -43,10 +53,11 @@
 
       span {
         display: block;
-        width: 24px;
+        width: 22px;
         height: 2px;
+        border-radius: 2px;
         background-color: var(--color-text-primary);
-        transition: 0.3s;
+        transition: 0.3s var(--ease-spring);
         font-size: 0;
         color: transparent;
       }
@@ -54,23 +65,45 @@
 
     nav {
       @include flex(center, flex-end);
-      gap: 30px;
-      padding: 30px;
+      gap: 8px;
+      padding: 18px 30px;
+
       > a {
         color: var(--color-text-secondary);
-        font-weight: 700;
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 8px 14px;
+        border-radius: var(--radius-sm);
+        transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease,
+          transform var(--duration-fast) var(--ease-spring);
+
+        &:hover {
+          background-color: var(--color-bg-alt);
+          color: var(--color-text-primary);
+        }
+        &:active {
+          transform: scale(0.95);
+        }
         &.active {
-          color: var(--color-text-muted);
+          color: var(--color-accent);
+          background-color: var(--color-accent-soft);
         }
       }
+
       .icon-btn {
         background: none;
         border: none;
         cursor: pointer;
-        padding: 0;
+        padding: 8px;
+        border-radius: var(--radius-sm);
         display: flex;
         align-items: center;
         color: var(--color-text-secondary);
+        transition: background-color var(--duration-fast) ease;
+
+        &:hover {
+          background-color: var(--color-bg-alt);
+        }
       }
       .login-btn {
         line-height: 0;
@@ -101,30 +134,39 @@
     max-width: 1024px;
     padding: 20px;
     flex: 1;
+    overflow-x: hidden;
     &:not(:has(.main_wrapper)) {
-      margin: 80px 0 50px 0;
+      margin: 60px 0 50px 0;
     }
   }
 
   .footer_wrapper {
+    width: 100%;
+
     footer {
       @include flex(center, initial);
       width: 100%;
       flex-direction: column;
-      padding-bottom: 20px;
-      gap: 10px;
+      padding: 40px 0 32px;
+      gap: 14px;
+      border-top: 1px solid var(--color-border);
 
       .icon_group {
         @include flex(center, initial);
-        gap: 20px;
+        gap: 8px;
 
         a {
           display: flex;
           align-items: center;
+          padding: 10px;
+          border-radius: var(--radius-full);
           color: var(--color-text-secondary);
-          transition: color 0.2s;
+          transition: background-color var(--duration-fast) ease,
+            transform var(--duration-fast) var(--ease-spring);
+
           &:hover {
-            color: var(--color-accent);
+            background-color: var(--color-bg-alt);
+            transform: translateY(-2px);
           }
         }
 
@@ -170,25 +212,28 @@
         position: fixed;
         top: 0;
         right: -100%;
-        width: 70%;
+        width: 72%;
         max-width: 300px;
         height: 100vh;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        padding: 80px 30px 30px;
-        background-color: var(--color-nav-bg);
-        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-        transition: right 0.3s ease;
+        padding: 80px 24px 30px;
+        background-color: var(--color-bg);
+        box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
+        transition: right 0.35s var(--ease-spring);
         z-index: 100;
-        gap: 20px;
+        gap: 8px;
 
         &.open {
           right: 0;
         }
 
         > a {
-          font-size: 1.1rem;
+          font-size: 1.05rem;
+          width: 100%;
+          padding: 14px 16px;
+          border-radius: var(--radius-md);
         }
       }
     }
@@ -204,14 +249,6 @@
   .wrapper {
     .nav_wrapper {
       padding: 0 20px;
-    }
-
-    .posts_wrapper {
-      .tag_wrap {
-        position: static;
-        width: 100%;
-        height: fit-content;
-      }
     }
 
     .detail_page_wrapper {

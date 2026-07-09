@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getPosts } from "@/service/posts";
 import "./page.scss";
 
+export const revalidate = 3600;
+
 export default async function ArchivesPage() {
   const posts = await getPosts();
   const sorted = posts.sort((a, b) => b.created_at - a.created_at);
@@ -34,8 +36,10 @@ export default async function ArchivesPage() {
             <ul>
               {items.map((post) => (
                 <li key={post.id}>
-                  <span className="post_date">{formatDate(post.created_at)}</span>
-                  <Link href={`/posts/${post.title}`}>{post.post_title}</Link>
+                  <Link href={`/posts/${post.title}`}>
+                    <span className="post_date">{formatDate(post.created_at)}</span>
+                    {post.post_title}
+                  </Link>
                 </li>
               ))}
             </ul>

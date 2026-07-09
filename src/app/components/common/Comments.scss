@@ -3,36 +3,68 @@
 .comment_wrap {
   @include flex(flex-end, flex-end);
   flex-direction: column;
+  margin-top: 40px;
 
   form {
     @include flex(flex-end, flex-end);
     position: relative;
-    width: 80%;
+    width: 100%;
     flex-direction: column;
     margin-bottom: 30px;
+
     label {
-      justify-items: flex-start;
-      font-weight: 600;
-      margin-bottom: 10px;
+      align-self: flex-start;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 14px;
       color: var(--color-text-primary);
     }
+
     textarea {
       display: block;
-      border: none;
+      border: 1px solid var(--color-border);
       width: 100%;
-      min-height: 100px;
+      min-height: 110px;
       resize: none;
-      padding: 20px;
+      padding: 18px;
+      box-sizing: border-box;
       background-color: var(--color-comment-bg);
       color: var(--color-text-primary);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+
+      &:focus {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px var(--color-accent-soft);
+        outline: none;
+      }
+
+      &::placeholder {
+        color: var(--color-text-muted);
+      }
     }
+
     button {
       background-color: var(--color-submit-bg);
-      padding: 13px;
+      padding: 12px 24px;
       color: var(--color-submit-text);
-      border-radius: 5px;
-      font-size: 12px;
-      margin-top: 10px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-top: 12px;
+      line-height: 1.2;
+      transition: background-color var(--duration-fast) ease,
+        transform var(--duration-fast) var(--ease-spring);
+
+      &:hover:not(:disabled) {
+        background-color: var(--color-accent-hover);
+      }
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
     }
   }
 
@@ -40,50 +72,81 @@
     @include flex(initial, initial);
     flex-direction: column;
     width: 100%;
-    gap: 15px;
+    gap: 8px;
 
     .commentedEl_wrap {
       @include flex(initial, initial);
       flex-direction: column;
       flex-wrap: wrap;
-      margin-top: 30px;
+      margin-top: 20px;
+      padding: 18px;
+      background-color: var(--color-bg-alt);
+      border-radius: var(--radius-md);
 
       .cm_img_wrap {
         @include flex(center, initial);
         gap: 10px;
-        font-weight: 500;
+        font-weight: 600;
         color: var(--color-text-primary);
+
         .bin {
           background: url($img) no-repeat -155px -48px;
           width: 11px;
           height: 13px;
           cursor: pointer;
+          opacity: 0.6;
+          transition: opacity var(--duration-fast) ease;
+
+          &:hover {
+            opacity: 1;
+          }
         }
       }
+
       span {
-        font-size: 13px;
+        font-size: 12px;
         padding-left: 37px;
 
         &.cm_cancel {
           position: relative;
-          bottom: 50px;
-          left: 10px;
           cursor: pointer;
           width: 100px;
           display: block;
           color: var(--color-text-muted);
+          padding: 6px 0 0 4px;
+
+          &:hover {
+            color: var(--color-text-secondary);
+          }
         }
       }
+
       p {
-        margin: 10px 0 20px 40px;
-        color: var(--color-text-primary);
+        margin: 10px 0 12px 37px;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        font-size: 0.95rem;
+
         &.cm_reply {
           @include flex(center, initial);
           cursor: pointer;
           width: fit-content;
+          font-size: 0.82rem;
+          font-weight: 600;
+          color: var(--color-text-muted);
+          margin: 0 0 0 37px;
+          padding: 6px 10px;
+          border-radius: var(--radius-sm);
+          transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+
+          &:hover {
+            background-color: var(--color-accent-soft);
+            color: var(--color-accent);
+          }
+
           span {
             display: block;
-            padding-left: 10px;
+            padding: 0 6px 0 0;
             transform: rotateY(180deg);
           }
         }
@@ -102,9 +165,6 @@
 // ===== Mobile =====
 @media (max-width: 768px) {
   .comment_wrap {
-    form {
-      width: 100%;
-    }
     .commented_wrap .commentedEl_wrap {
       margin-left: 5px !important;
     }

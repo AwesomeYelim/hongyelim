@@ -7,22 +7,26 @@ import Heart from "@/app/components/common/heart";
 import { getPost } from "@/service/posts";
 import { notFound } from "next/navigation";
 import { PrevNextButton } from "@/app/components/PrevNextButton";
-import { GetSessionParams } from "next-auth/react";
 import { DetailTag } from "@/app/components/DetailTag";
 import "./page.scss";
 
 type Props = {
-  params:
-    | {
-        slug: string;
-      }
-    | GetSessionParams;
-};
-
-export default async function page({ params }: Props) {
-  const { slug } = params as {
+  params: {
     slug: string;
   };
+};
+
+/** 정적 생성 + 1시간 캐시 (ISR) — 요청마다 Firestore를 읽지 않는다 */
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const mdDir = path.join(process.cwd(), "data/md");
+  const files = fs.readdirSync(mdDir).filter((f) => f.endsWith(".md"));
+  return files.map((f) => ({ slug: f.replace(/\.md$/, "") }));
+}
+
+export default async function page({ params }: Props) {
+  const { slug } = params;
 
   const { post, mdPost } = await getPost(slug);
   if (!post) {
@@ -43,7 +47,7 @@ export default async function page({ params }: Props) {
       <div className="detail_img">
         <Image
           src={`/images/${isImagepath ? title : "empty"}.png`}
-          alt={title}
+          alt={post.post_title || title}
           width={1000}
           height={1000}
           loading="eager"

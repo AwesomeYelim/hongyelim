@@ -1,71 +1,72 @@
 @import "src/app/components/common/scss/utils.module.scss";
 
 .archive_page {
+  padding-top: 24px;
+
   > .ar_title {
     @include animate(0, down);
     h1 {
       display: block;
       width: fit-content;
+      font-size: 2.4rem;
       color: var(--color-text-primary);
     }
   }
   > .ar_sub {
     @include animate(1, down);
     display: block;
-    margin: 10px 0 40px 0;
+    margin: 10px 0 48px 0;
+    font-size: 0.95rem;
   }
 
   .timeline {
     @include animate(1, down);
 
     .timeline_group {
-      margin-bottom: 30px;
-      padding-left: 20px;
-      border-left: 2px solid var(--color-border-light);
+      margin-bottom: 40px;
 
       .timeline_date {
-        font-size: 1.3rem;
-        font-weight: 700;
+        font-size: 1.05rem;
+        font-weight: 800;
         color: var(--color-accent);
-        margin-bottom: 12px;
-        position: relative;
-
-        &::before {
-          content: "";
-          position: absolute;
-          left: -27px;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 12px;
-          height: 12px;
-          background-color: var(--color-accent);
-          border-radius: 50%;
-        }
+        margin-bottom: 14px;
+        display: inline-block;
+        background-color: var(--color-accent-soft);
+        padding: 6px 16px;
+        border-radius: var(--radius-full);
       }
 
       ul {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
 
         li {
-          @include flex(center, initial);
-          gap: 16px;
-          padding: 8px 0;
-          border-bottom: 1px solid rgba(204, 204, 204, 0.2);
+          border-radius: var(--radius-md);
+          transition: background-color var(--duration-fast) ease;
 
-          .post_date {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            min-width: 45px;
+          &:hover {
+            background-color: var(--color-bg-alt);
+
+            a {
+              color: var(--color-accent);
+            }
           }
 
           a {
+            @include flex(center, initial);
+            gap: 18px;
+            padding: 14px 16px;
             color: var(--color-text-primary);
-            font-size: 0.95rem;
-            transition: color 0.2s;
-            &:hover {
-              color: var(--color-accent);
+            font-size: 0.98rem;
+            font-weight: 500;
+            transition: color var(--duration-fast) ease;
+
+            .post_date {
+              font-size: 0.82rem;
+              color: var(--color-text-muted);
+              min-width: 48px;
+              font-variant-numeric: tabular-nums;
             }
           }
         }
@@ -78,24 +79,12 @@
 @media (max-width: 768px) {
   .archive_page {
     .ar_title h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
-    .timeline .timeline_group {
-      padding-left: 15px;
-
-      .timeline_date {
-        font-size: 1.1rem;
-        &::before {
-          width: 10px;
-          height: 10px;
-          left: -22px;
-        }
-      }
-      ul li {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-      }
+    .timeline .timeline_group ul li a {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
     }
   }
 }

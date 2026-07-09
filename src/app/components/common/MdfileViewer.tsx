@@ -1,27 +1,55 @@
 "use client";
 
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
+import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
+import jsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx";
+import tsx from "react-syntax-highlighter/dist/esm/languages/prism/tsx";
+import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
+import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
+import css from "react-syntax-highlighter/dist/esm/languages/prism/css";
+import scss from "react-syntax-highlighter/dist/esm/languages/prism/scss";
+import go from "react-syntax-highlighter/dist/esm/languages/prism/go";
+import sql from "react-syntax-highlighter/dist/esm/languages/prism/sql";
+import yaml from "react-syntax-highlighter/dist/esm/languages/prism/yaml";
+import markdown from "react-syntax-highlighter/dist/esm/languages/prism/markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { ElementContent, Position } from "react-markdown/lib/ast-to-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import dateFn from "./functions/date";
-import { Inter } from "next/font/google";
 import { throttle } from "lodash";
 import React from "react";
 import titleCondition from "react-text-settle";
 import "./MdfileViewer.scss";
+
+SyntaxHighlighter.registerLanguage("javascript", javascript);
+SyntaxHighlighter.registerLanguage("js", javascript);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("ts", typescript);
+SyntaxHighlighter.registerLanguage("jsx", jsx);
+SyntaxHighlighter.registerLanguage("tsx", tsx);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("shell", bash);
+SyntaxHighlighter.registerLanguage("sh", bash);
+SyntaxHighlighter.registerLanguage("json", json);
+SyntaxHighlighter.registerLanguage("css", css);
+SyntaxHighlighter.registerLanguage("scss", scss);
+SyntaxHighlighter.registerLanguage("go", go);
+SyntaxHighlighter.registerLanguage("golang", go);
+SyntaxHighlighter.registerLanguage("sql", sql);
+SyntaxHighlighter.registerLanguage("yaml", yaml);
+SyntaxHighlighter.registerLanguage("markdown", markdown);
+SyntaxHighlighter.registerLanguage("md", markdown);
 
 interface MarkdownViewProps {
   created_at: number;
   mdPost: string;
   useToc?: boolean;
 }
-
-const inter = Inter({ subsets: ["latin"] });
 
 const Heading = ({
   level,
@@ -192,7 +220,7 @@ const MdfileViewer = ({ mdPost, useToc = false, created_at }: MarkdownViewProps)
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
-                <code className={`${inter.className} ${className}`} {...props}>
+                <code className={className} {...props}>
                   {children}
                 </code>
               );

@@ -28,8 +28,17 @@ export default function NavBar() {
   }, []);
 
   useEffect(() => {
-    document.addEventListener("scroll", scrollToHide);
-    return () => document.removeEventListener("scroll", scrollToHide);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        scrollToHide();
+        ticking = false;
+      });
+    };
+    document.addEventListener("scroll", onScroll, { passive: true });
+    return () => document.removeEventListener("scroll", onScroll);
   }, [scrollToHide]);
 
   useEffect(() => {
@@ -43,8 +52,7 @@ export default function NavBar() {
 
   return (
     <header
-      className="nav_wrapper"
-      style={{ height: navInfo.hide ? "111px" : "0px" }}
+      className={classNames("nav_wrapper", { "nav-hidden": !navInfo.hide && !mobileOpen })}
     >
       <Link href="/" className="logo">
         <i />

@@ -3,22 +3,39 @@
 .detail_page_wrapper {
   .detail_img {
     @include flex(center, initial);
-    padding-top: 150px;
+    padding-top: 120px;
     width: 100% !important;
     height: 300px !important;
     overflow: hidden;
+    border-radius: var(--radius-lg);
+
+    img {
+      border-radius: var(--radius-lg);
+    }
   }
 
   .tag_area {
-    margin-top: 30px;
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
     a {
-      display: inline;
-      margin-right: 10px;
-      font-size: 0.9rem;
-      color: var(--color-text-muted);
+      display: inline-flex;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      background-color: var(--color-tag-bg);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
       cursor: pointer;
+      transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease,
+        transform var(--duration-fast) var(--ease-spring);
+
       &:hover {
-        color: var(--color-text-secondary);
+        background-color: var(--color-accent);
+        color: #fff;
+        transform: translateY(-2px);
       }
     }
   }
@@ -26,16 +43,29 @@
   .btn_wrap {
     display: flex;
     justify-content: space-between;
-    margin: 50px auto;
-    gap: 10px;
+    margin: 48px auto;
+    gap: 12px;
+
     a {
       display: flex;
       align-items: center;
-      border: 1px solid var(--color-border-light);
+      border: 1px solid var(--color-border);
+      background-color: var(--color-card-bg);
       color: var(--color-text-secondary);
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 13px;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-card);
+      transition: transform var(--duration-base) var(--ease-spring),
+        box-shadow var(--duration-base) ease, color var(--duration-fast) ease;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-card-hover);
+        color: var(--color-accent);
+      }
+
       &:first-child {
         justify-content: flex-start;
       }
@@ -50,7 +80,7 @@
 @media (max-width: 768px) {
   .detail_page_wrapper {
     .detail_img {
-      padding-top: 80px;
+      padding-top: 70px;
       height: 200px !important;
     }
 
@@ -59,6 +89,7 @@
       a {
         width: 100%;
         justify-content: center;
+        box-sizing: border-box;
       }
     }
   }

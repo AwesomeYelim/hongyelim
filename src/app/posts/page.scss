@@ -2,103 +2,150 @@
 
 .techpost_page {
   position: relative;
+  padding-top: 24px;
+
   .post_title {
     display: block;
-    margin-bottom: 100px;
+    margin-bottom: 56px;
+
     h1 {
       @include animate(0, down);
+      font-size: 2.4rem;
     }
     span {
       @include animate(1, down);
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
     }
   }
+
   .posts_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 28px;
+    align-items: start;
+
     .tag_wrap {
       display: flex;
       flex-direction: column;
-      margin: 10px 0 10px 0;
-      max-height: 500px;
+      grid-column: 2;
+      grid-row: 1;
+      position: sticky;
+      top: 90px;
+      max-height: calc(100vh - 130px);
       overflow-y: auto;
       overflow-x: hidden;
-      top: 200px;
-      right: -120px;
-      width: 160px;
       box-sizing: border-box;
-      position: absolute;
-      background-color: rgba(217, 217, 217, 0.332);
-      border-radius: 3px;
-      scrollbar-gutter: stable both-edges;
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      padding: 8px;
 
       a {
         display: block;
         cursor: pointer;
-        border: 1px solid transparent;
-        padding: 3px 5px;
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
         color: var(--color-text-secondary);
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+
+        &:hover {
+          background-color: var(--color-bg-alt);
+          color: var(--color-text-primary);
+        }
 
         &:first-child {
           color: var(--color-accent);
-          border-bottom: 1px solid var(--color-border);
-          padding-bottom: 10px;
+          font-weight: 700;
           position: sticky;
           top: 0;
-          background-color: var(--color-tag-bg-first);
-          a {
-            font-weight: 700;
-          }
-        }
-        &:nth-child(2) {
-          margin-top: 20px;
+          background-color: var(--color-card-bg);
+          border-bottom: 1px solid var(--color-border);
+          border-radius: 0;
+          padding-bottom: 12px;
+          margin-bottom: 8px;
         }
         &.active {
-          font-weight: 600;
+          color: var(--color-accent);
+          background-color: var(--color-accent-soft);
+          font-weight: 700;
         }
         span {
           margin-left: 5px;
-          letter-spacing: 1.5px;
+          font-size: 0.75rem;
         }
       }
     }
+
     .list_wrapper {
+      grid-column: 1;
+      grid-row: 1;
+
       .list {
         @include flex(center, initial);
         @include animate(1, down);
 
         flex-wrap: wrap;
-        width: 98%;
+        width: 100%;
+        gap: 14px;
 
         li {
           @include flex(flex-start, initial);
           flex-direction: column;
           width: inherit;
-          height: auto;
-          min-height: 170px;
-          gap: 30px;
+          gap: 16px;
           box-sizing: border-box;
-          padding: 30px 30px 50px 20px;
-          border-bottom: 1px solid var(--color-border);
-          transition: 0.3s linear;
+          padding: 28px;
+          background-color: var(--color-card-bg);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-lg);
+          box-shadow: var(--shadow-card);
+          transition: transform var(--duration-base) var(--ease-spring),
+            box-shadow var(--duration-base) ease,
+            border-color var(--duration-base) ease;
+
+          &:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: transparent;
+
+            .text_wrapper h2 {
+              color: var(--color-accent);
+            }
+          }
 
           .text_wrapper {
             @include flex(initial, initial);
             flex-direction: column;
             gap: 10px;
 
+            h2 {
+              font-size: 1.25rem;
+              font-weight: 700;
+              transition: color var(--duration-fast) ease;
+            }
+
             span {
-              font-size: 13px;
+              font-size: 0.88rem;
+              line-height: 1.6;
+              color: var(--color-text-muted);
+              @include vertical-ellipsis;
             }
           }
 
           .bottom_wrap {
             @include flex(center, initial);
             gap: 10px;
-            padding-left: 5px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+
             > * {
-              color: rgb(118, 118, 118);
+              color: var(--color-text-muted);
             }
             .date {
-              margin-right: 20px;
+              margin-right: 12px;
             }
             .static_heart {
               background: url($img) no-repeat -4px -5px;
@@ -123,29 +170,38 @@
 @media (max-width: 768px) {
   .techpost_page {
     .post_title {
-      margin-bottom: 50px;
+      margin-bottom: 36px;
       h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
       }
     }
     .posts_wrapper {
+      display: block;
+
       .tag_wrap {
         position: static;
         width: 100%;
-        max-height: 200px;
+        max-height: 180px;
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 5px;
+        gap: 4px;
+        margin-bottom: 20px;
 
         a {
-          padding: 5px 10px;
-          font-size: 0.85rem;
+          padding: 6px 12px;
+          font-size: 0.82rem;
+
+          &:first-child {
+            position: static;
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 6px;
+          }
         }
       }
       .list_wrapper .list li {
-        padding: 20px 15px 30px 10px;
-        min-height: auto;
-        gap: 15px;
+        padding: 20px;
+        gap: 12px;
       }
     }
   }

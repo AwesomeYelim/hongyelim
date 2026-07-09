@@ -1,78 +1,113 @@
-// ===== CSS Custom Properties Theme System =====
+// ===== Toss-inspired Design Token System =====
 
 :root {
   // Background
   --color-bg: #ffffff;
-  --color-bg-alt: #f0f0f0;
+  --color-bg-alt: #f2f4f6;
+  --color-card-bg: #ffffff;
+  --color-card-hover-bg: #f8fafb;
 
-  // Text
-  --color-text-primary: #191919;
-  --color-text-secondary: #565656;
-  --color-text-muted: #bbbbbb;
+  // Text (Toss grayscale)
+  --color-text-primary: #191f28;
+  --color-text-secondary: #4e5968;
+  --color-text-muted: #8b95a1;
 
   // Border
-  --color-border: #000000;
-  --color-border-light: #cccccc;
+  --color-border: #e5e8eb;
+  --color-border-light: #e5e8eb;
 
-  // Accent
-  --color-accent: orange;
+  // Accent (Toss Blue)
+  --color-accent: #3182f6;
+  --color-accent-hover: #1b64da;
+  --color-accent-soft: #e8f3ff;
 
   // Link
-  --color-link: #005a8e;
+  --color-link: #3182f6;
 
   // Code
-  --color-code-bg: rgba(243, 213, 182, 0.47);
-  --color-md-block: #f0f0f0;
+  --color-code-bg: #f2f4f6;
+  --color-md-block: #f2f4f6;
 
   // Components
-  --color-tag-bg: rgb(239, 239, 239);
-  --color-tag-bg-first: rgb(231, 242, 252);
-  --color-nav-bg: #ffffff;
-  --color-comment-bg: aliceblue;
-  --color-heart-count: #333333;
-  --color-submit-bg: #000000;
-  --color-submit-text: aliceblue;
-  --color-page-num: rgba(204, 204, 204, 0.555);
-  --color-page-num-active: rgba(35, 35, 35, 0.555);
-  --color-table-header: #e3e3e3;
-  --color-blockquote-border: #edebeb;
-  --color-details-bg: #e3e3e32f;
-  --color-code-shadow: #ccc;
+  --color-tag-bg: #f2f4f6;
+  --color-tag-bg-first: #e8f3ff;
+  --color-nav-bg: rgba(255, 255, 255, 0.8);
+  --color-comment-bg: #f2f4f6;
+  --color-heart-count: #4e5968;
+  --color-submit-bg: #3182f6;
+  --color-submit-text: #ffffff;
+  --color-page-num: #f2f4f6;
+  --color-page-num-text: #8b95a1;
+  --color-page-num-active: #3182f6;
+  --color-table-header: #f2f4f6;
+  --color-blockquote-border: #3182f6;
+  --color-details-bg: #f8fafb;
+  --color-code-shadow: transparent;
+
+  // Elevation (Toss-style soft shadows)
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(0, 0, 0, 0.08);
+  --shadow-nav: 0 1px 0 rgba(0, 0, 0, 0.04);
+
+  // Radius
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  // Motion (Toss spring-like easing)
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 0.15s;
+  --duration-base: 0.25s;
+  --duration-slow: 0.45s;
 }
 
 html[data-theme="dark"] {
   // Background
-  --color-bg: #252527;
-  --color-bg-alt: #2b2b2b;
+  --color-bg: #17171c;
+  --color-bg-alt: #1e1e24;
+  --color-card-bg: #222229;
+  --color-card-hover-bg: #26262e;
 
   // Text
   --color-text-primary: #ffffff;
-  --color-text-secondary: #cccccc;
-  --color-text-muted: #8a8a8a;
+  --color-text-secondary: #c3c8cf;
+  --color-text-muted: #7d848d;
 
   // Border
-  --color-border: #ffffff;
-  --color-border-light: #cccccc;
+  --color-border: #2c2c35;
+  --color-border-light: #2c2c35;
+
+  // Accent
+  --color-accent: #4593fc;
+  --color-accent-hover: #6aa8fd;
+  --color-accent-soft: rgba(49, 130, 246, 0.16);
 
   // Link
-  --color-link: #69afff;
+  --color-link: #4593fc;
 
   // Code
-  --color-code-bg: #2b2b2b;
-  --color-md-block: #2b2b2b;
+  --color-code-bg: #1e1e24;
+  --color-md-block: #1e1e24;
 
   // Components
-  --color-tag-bg: transparent;
-  --color-tag-bg-first: transparent;
-  --color-nav-bg: #252527;
-  --color-comment-bg: #3e3e3e;
-  --color-heart-count: #cccccc;
-  --color-submit-bg: #555555;
+  --color-tag-bg: #26262e;
+  --color-tag-bg-first: rgba(49, 130, 246, 0.16);
+  --color-nav-bg: rgba(23, 23, 28, 0.8);
+  --color-comment-bg: #26262e;
+  --color-heart-count: #c3c8cf;
+  --color-submit-bg: #3182f6;
   --color-submit-text: #ffffff;
-  --color-page-num: rgba(204, 204, 204, 0.3);
-  --color-page-num-active: rgba(200, 200, 200, 0.555);
-  --color-table-header: #3a3a3a;
-  --color-blockquote-border: #555555;
-  --color-details-bg: #3a3a3a2f;
-  --color-code-shadow: none;
+  --color-page-num: #26262e;
+  --color-page-num-text: #7d848d;
+  --color-page-num-active: #4593fc;
+  --color-table-header: #26262e;
+  --color-blockquote-border: #4593fc;
+  --color-details-bg: #1e1e24;
+  --color-code-shadow: transparent;
+
+  // Elevation
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.35);
+  --shadow-nav: 0 1px 0 rgba(255, 255, 255, 0.06);
 }

@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import { Footer } from "./Footer";
 import NavBar from "./components/NavBar";
 import Providers from "./components/Providers";
@@ -9,8 +8,6 @@ import "./styles/variables.scss";
 import "./styles/reset.scss";
 import "./styles/layout.scss";
 import "./styles/dark.scss";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "hongyelim",
@@ -37,6 +34,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <meta name="googlebot" content="index, follow" />
         <meta name="google-site-verification" content="2s1XEZhZCijhcLEsQR5t6LFthsxawdQRPmx15i9n_XI" />
+        <link
+          rel="stylesheet"
+          // eslint-disable-next-line react/no-invalid-html-attribute
+          as="style"
+          crossOrigin="anonymous"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -50,7 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}></script>
       </head>
       <Providers>
-        <body className={inter.className}>
+        <body>
           <div className="wrapper">
             <NavBar />
             <main className="content">{children}</main>
