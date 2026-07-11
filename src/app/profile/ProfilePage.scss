@@ -37,6 +37,7 @@
       .main_img {
         margin-top: 20px;
         border-radius: 100%;
+        object-fit: cover;
         transition: transform 0.4s var(--ease-spring);
 
         &:hover {
